@@ -8,21 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital,wght@0,
-      100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;
-      1,700;1,800;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Calistoga&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lobster&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
     <!-- Virtual Section starts -->
-    <div class="center text gap">
+    <!-- Dive Into Dreams -->
+    <div class="center borderLine text gap">
       <div class="font lobster-regular">Dive Into Dreams</div>
       <p class="fontSmall poppins-medium">
         Experience the future of real estate with DreamView House's immersive
@@ -30,11 +23,52 @@
       </p>
       <button type="button" class="button poppins-medium">Discover More</button>
     </div>
+    <!-- /Dive Into Dreams -->
+    <!-- VirtualVideo -->
     <div class="blackBox">
       <video autoplay muted loop id="VirtualBackgroundVideo" class="VBvideo">
         <source src="Img-videos/VirtualBackgroundVideo.mp4" type="video/mp4" />
       </video>
     </div>
+    <!-- /VirtualVideo -->
     <!-- /Virtual Section ends -->
+
+    <!-- chat section starts -->
+
+    <div class="chat">
+      <!-- chatBot Section -->
+      <div class="borderLine chatCenter botAnimation">
+        <img
+          src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg"
+          alt=""
+          srcset=""
+          class="image"
+        />
+        <div class="calistoga-regular chatGap">Chat Bot</div>
+        <h3 class="josefin-sans chatGap">Need quick answers?</h3>
+        <p class="poppins-light chatGap">
+          "Our AI-powered chatbot is here 24/7 to provide you with instant
+          support and solutions!"
+        </p>
+      </div>
+      <!-- /chatBot Section -->
+      <!-- chatWithSeller Section -->
+      <div class="borderLine chatCenter sellerAnimation">
+        <img
+          src="https://png.pngtree.com/png-vector/20220621/ourmid/pngtree-black-speech-bubble-icon-for-chatting-or-speaking-with-two-people-vector-png-image_46317112.jpg"
+          alt=""
+          srcset=""
+          class="imageSeller"
+        />
+        <div class="calistoga-regular chatGap">Chat with Seller</div>
+        <h3 class="josefin-sans chatGap">Looking for expert advice?</h3>
+        <p class="poppins-light chatGap">
+          "Chat directly with our seller for personalized help and solutions
+          available around the clock!"
+        </p>
+      </div>
+      <!-- /chatWithSeller Section -->
+    </div>
+    <!-- /chat section starts -->
   </body>
 </html>

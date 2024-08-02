@@ -2,11 +2,13 @@
   margin: 0;
   padding: 0;
 }
-.center {
-  background-color: white;
+.borderLine {
   border-style: solid;
   border-color: #ecaeff;
   border-radius: 25px;
+}
+.center {
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,12 +65,99 @@ button:hover {
 .blackBox {
   background-color: rgba(0, 0, 0, 0.852);
 }
+.chat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+  margin: 40px 0px;
+}
+.image {
+  border-radius: 1000px;
+  width: 30%;
+  height: 20%;
+}
+.imageSeller {
+  border-radius: 1000px;
+  width: 27%;
+  height: 20%;
+}
+.image:hover {
+  transition: transform 0.2s;
+  transform: scale(1.1);
+}
+.chatCenter:hover {
+  transition: transform 0.2s;
+  transform: scale(1.1);
+}
+.imageSeller:hover {
+  transition: transform 0.2s;
+  transform: scale(1.1);
+}
+.chatCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  padding: 20px 10px 40px 10px;
+}
+.sellerAnimation {
+  animation: Seller-animation 1.3s 1;
+}
+.botAnimation {
+  animation: Bot-animation 1.3s 1;
+}
+.calistoga-regular {
+  font-family: "Calistoga", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: xxx-large;
+}
+.josefin-sans {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  font-style: normal;
+}
+.poppins-light {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: small;
+}
+.chatGap {
+  padding-bottom: 15px;
+  text-align: center;
+}
+@media screen and (max-width: 900px) {
+  .calistoga-regular {
+    font-size: xx-large;
+  }
+  .josefin-sans {
+    font-size: large;
+  }
+  .poppins-light {
+    font-size: smaller;
+  }
+}
 @media screen and (max-width: 815px) {
   .font {
     font-size: 40px;
   }
   .fontSmall {
     font-size: 17px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .calistoga-regular {
+    font-size: x-large;
+  }
+  .josefin-sans {
+    font-size: small;
+  }
+  .poppins-light {
+    font-size: x-small;
   }
 }
 @media screen and (max-width: 450px) {
@@ -82,6 +171,16 @@ button:hover {
     padding: 10px 20px;
     font-size: x-small;
   }
+  .chat {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .calistoga-regular {
+    font-size: larger;
+  }
+  .chatCenter {
+    width: 75%;
+  }
 }
 @keyframes enter-animation {
   0% {
@@ -91,5 +190,17 @@ button:hover {
   100% {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+@keyframes Seller-animation {
+  0% {
+    transform: translatex(400px);
+    opacity: 0;
+  }
+}
+@keyframes Bot-animation {
+  0% {
+    transform: translatex(-400px);
+    opacity: 0;
   }
 }
