@@ -204,3 +204,113 @@ button:hover {
     opacity: 0;
   }
 }
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(224, 224, 224, 0.8);
+  padding: 10px 20px;
+  position: sticky;
+  top: 10px; 
+  margin-left: 85px;
+  border-radius: 40px;
+  z-index: 1000;
+  width: 1300px;
+}
+.antonio {
+  font-family: "Antonio", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-size: 30px;
+}
+ .tourney{
+  font-family: "Tourney", sans-serif;
+  font-optical-sizing: auto;
+  font-weight:450;
+  font-style: bold;
+  font-size: 40px;
+  font-variation-settings:"wdth" 100;
+}
+#antonio {
+    color: rgb(23 53 69);
+   }
+ 
+#tourney {
+    color: #0e323f;
+   }
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+}
+.navbar .logo img {
+  width: 70px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 40px;
+}
+.navbar .nav-links {
+  display: flex;
+  gap: 30px;
+}
+.navbar .nav-links a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+}
+.navbar .explore-btn {
+  height: 50px;
+  background-color: #0d7199;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.hero-section {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.hero-section video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 1;
+}
+.hero-section .content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgb(255, 255, 255);
+  z-index: 1;
+}
+.hero-section .content h1 {
+  font-size: 80px;
+  font-weight: bold;
+  color:rgba(226, 233, 27, 0.949)
+}
+.hero-section .content p {
+  font-size: 20px;
+  margin: 10px 0;
+}
+.hero-section .content .discover-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid white;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.hero-section .content .discover-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
