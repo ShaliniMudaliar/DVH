@@ -258,7 +258,7 @@ button:hover {
   margin-left: 85px;
   border-radius: 40px;
   z-index: 1000;
-  width: 1300px;
+  width: 100%;
 }
 .antonio {
   font-family: "Antonio", sans-serif;
@@ -356,4 +356,92 @@ button:hover {
 }
 .hero-section .content .discover-btn:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  margin: 20px;
+  animation: CardAnimation 1s ease-in;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card1{
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding: 25px;
+  margin: 20px;
+  animation: Card1Animation 1s ease-in;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+transform: scale(1.05);
+}
+.card1:hover {
+  transform: scale(1.05);
+}
+@keyframes CardAnimation {
+from {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+to {
+  transform: translateX(0);
+  opacity: 1;
+}
+}
+@keyframes Card1Animation {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  }
+.icon img {
+  width: 200px;
+  height: 200px;
+  margin-right: 20px;
+}
+.content {
+  flex: 1;
+}
+h2 {
+  font-family: "Calistoga", serif;
+  margin: 0 0 10px;
+  font-size: 40px;
+  font-weight: 400;
+}
+p {
+  margin: 0 0 20px;
+  font-size: 25px;
+  color: #555;
+}
+.btn {
+  background-color: #fefefe;
+  color: rgb(45, 35, 234);
+  border: 1px solid rgb(45, 35, 234);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+.btn:hover {
+  background-color: #bbd4ed;
 }
