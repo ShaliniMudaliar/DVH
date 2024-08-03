@@ -130,6 +130,46 @@ button:hover {
   padding-bottom: 15px;
   text-align: center;
 }
+.reviewBlock {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 30px;
+  margin: 0 20px;
+  animation: enter-animation 0.8s 1;
+}
+.reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.reviews:hover {
+  transition: transform 0.2s;
+  transform: scale(1.1);
+  border-style: solid;
+  border-color: #ecaeff;
+  border-radius: 25px;
+}
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: xxx-large;
+  margin-bottom: 5%;
+  animation: enter-animation 0.8s 1;
+  /* color: #0e323f; */
+}
+
+.imageRating {
+  width: 20%;
+}
+.ratingStar {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 @media screen and (max-width: 900px) {
   .calistoga-regular {
     font-size: xx-large;
@@ -147,6 +187,9 @@ button:hover {
   }
   .fontSmall {
     font-size: 17px;
+  }
+  .reviewBlock {
+    grid-template-columns: auto auto;
   }
 }
 @media screen and (max-width: 600px) {
@@ -211,7 +254,7 @@ button:hover {
   background-color: rgba(224, 224, 224, 0.8);
   padding: 10px 20px;
   position: sticky;
-  top: 10px; 
+  top: 10px;
   margin-left: 85px;
   border-radius: 40px;
   z-index: 1000;
@@ -223,21 +266,21 @@ button:hover {
   font-weight: 900;
   font-size: 30px;
 }
- .tourney{
+.tourney {
   font-family: "Tourney", sans-serif;
   font-optical-sizing: auto;
-  font-weight:450;
+  font-weight: 450;
   font-style: bold;
   font-size: 40px;
-  font-variation-settings:"wdth" 100;
+  font-variation-settings: "wdth" 100;
 }
 #antonio {
-    color: rgb(23 53 69);
-   }
- 
+  color: rgb(23 53 69);
+}
+
 #tourney {
-    color: #0e323f;
-   }
+  color: #0e323f;
+}
 
 .navbar .logo {
   display: flex;
@@ -295,7 +338,7 @@ button:hover {
 .hero-section .content h1 {
   font-size: 80px;
   font-weight: bold;
-  color:rgba(226, 233, 27, 0.949)
+  color: rgba(226, 233, 27, 0.949);
 }
 .hero-section .content p {
   font-size: 20px;
