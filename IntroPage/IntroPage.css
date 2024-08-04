@@ -170,82 +170,18 @@ button:hover {
   align-items: center;
   justify-content: center;
 }
-@media screen and (max-width: 900px) {
-  .calistoga-regular {
-    font-size: xx-large;
-  }
-  .josefin-sans {
-    font-size: large;
-  }
-  .poppins-light {
-    font-size: smaller;
-  }
+.footerCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-@media screen and (max-width: 815px) {
-  .font {
-    font-size: 40px;
-  }
-  .fontSmall {
-    font-size: 17px;
-  }
-  .reviewBlock {
-    grid-template-columns: auto auto;
-  }
+.footerGap {
+  padding: 20px 20px;
+  cursor: pointer;
 }
-@media screen and (max-width: 600px) {
-  .calistoga-regular {
-    font-size: x-large;
-  }
-  .josefin-sans {
-    font-size: small;
-  }
-  .poppins-light {
-    font-size: x-small;
-  }
-}
-@media screen and (max-width: 450px) {
-  .font {
-    font-size: 30px;
-  }
-  .fontSmall {
-    font-size: 12px;
-  }
-  .button {
-    padding: 10px 20px;
-    font-size: x-small;
-  }
-  .chat {
-    flex-direction: column;
-    gap: 30px;
-  }
-  .calistoga-regular {
-    font-size: larger;
-  }
-  .chatCenter {
-    width: 75%;
-  }
-}
-@keyframes enter-animation {
-  0% {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-@keyframes Seller-animation {
-  0% {
-    transform: translatex(400px);
-    opacity: 0;
-  }
-}
-@keyframes Bot-animation {
-  0% {
-    transform: translatex(-400px);
-    opacity: 0;
-  }
+.footerGap:hover {
+  transition: transform 0.2s;
+  transform: scale(1.1);
 }
 .navbar {
   display: flex;
@@ -255,10 +191,10 @@ button:hover {
   padding: 10px 20px;
   position: sticky;
   top: 10px;
-  margin-left: 85px;
+  margin: 20px;
   border-radius: 40px;
   z-index: 1000;
-  width: 100%;
+  /* width: 100%; */
 }
 .antonio {
   font-family: "Antonio", sans-serif;
@@ -287,8 +223,8 @@ button:hover {
   align-items: center;
 }
 .navbar .logo img {
-  width: 70px;
-  height: 60px;
+  width: 12%;
+  /* height: 60px; */
   margin-right: 10px;
   border-radius: 40px;
 }
@@ -302,10 +238,9 @@ button:hover {
   font-size: 18px;
 }
 .navbar .explore-btn {
-  height: 50px;
   background-color: #0d7199;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 20px;
   border: none;
   border-radius: 25px;
   font-size: 18px;
@@ -321,19 +256,20 @@ button:hover {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 102.8%;
   object-fit: cover;
   z-index: -1;
   opacity: 1;
 }
 .hero-section .content {
   position: relative;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   color: rgb(255, 255, 255);
   z-index: 1;
+  margin: 7px;
 }
 .hero-section .content h1 {
   font-size: 80px;
@@ -373,7 +309,7 @@ button:hover {
   animation: CardAnimation 1s ease-in;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.card1{
+.card1 {
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -386,20 +322,130 @@ button:hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card:hover {
-transform: scale(1.05);
+  transform: scale(1.05);
 }
 .card1:hover {
   transform: scale(1.05);
 }
+@media screen and (max-width: 900px) {
+  .calistoga-regular {
+    font-size: xx-large;
+  }
+  .josefin-sans {
+    font-size: large;
+  }
+  .poppins-light {
+    font-size: smaller;
+  }
+}
+@media screen and (max-width: 815px) {
+  .font {
+    font-size: 40px;
+  }
+  .fontSmall {
+    font-size: 17px;
+  }
+  .reviewBlock {
+    grid-template-columns: auto auto;
+  }
+  .navbar .nav-links {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .calistoga-regular {
+    font-size: x-large;
+  }
+  .josefin-sans {
+    font-size: small;
+  }
+  .poppins-light {
+    font-size: x-small;
+  }
+  .footerIcons {
+    width: 60%;
+  }
+  .antonio {
+    font-size: 20px;
+  }
+  .tourney {
+    font-size: 30px;
+  }
+  .navbar .explore-btn {
+    font-size: small;
+  }
+  .hero-section .content h1 {
+    font-size: 55px;
+  }
+  .hero-section .content p {
+    font-size: 15px;
+  }
+  .hero-section .content .discover-btn {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .font {
+    font-size: 30px;
+  }
+  .fontSmall {
+    font-size: 12px;
+  }
+  .button {
+    padding: 10px 20px;
+    font-size: x-small;
+  }
+  .chat {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .calistoga-regular {
+    font-size: larger;
+  }
+  .chatCenter {
+    width: 75%;
+  }
+  .antonio {
+    font-size: 15px;
+  }
+  .tourney {
+    font-size: 20px;
+  }
+  .navbar .explore-btn {
+    font-size: x-small;
+  }
+}
+@keyframes enter-animation {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes Seller-animation {
+  0% {
+    transform: translatex(400px);
+    opacity: 0;
+  }
+}
+@keyframes Bot-animation {
+  0% {
+    transform: translatex(-400px);
+    opacity: 0;
+  }
+}
 @keyframes CardAnimation {
-from {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-to {
-  transform: translateX(0);
-  opacity: 1;
-}
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 @keyframes Card1Animation {
   from {
@@ -410,7 +456,7 @@ to {
     transform: translateX(0);
     opacity: 1;
   }
-  }
+}
 .icon img {
   width: 200px;
   height: 200px;
