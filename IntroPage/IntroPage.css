@@ -327,6 +327,75 @@ button:hover {
 .card1:hover {
   transform: scale(1.05);
 }
+.Arcontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 3px solid #ecaeff;
+  border-radius: 30px;
+  max-width: 80%;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  flex-direction: row;
+}
+.image-section {
+  padding: 30px;
+ }
+.image-section img {
+  max-width: 230px;
+  height: 230px;
+}
+.img:hover {
+  transition: transform 0.3s;
+  transform: scale(1.1);
+}
+.Arcontainer:hover{
+  transition: transform 0.3s; 
+  transform: scale(1.1);
+}
+.content-section h1 {
+  font-family: "Calistoga", serif;
+  font-size: 45px;
+  color: #333;
+  font-weight: 400;
+  margin: 0 0 10px;
+
+}
+.content-section p {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 20px;
+}
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.imageanime{
+  animation: slideInLeft 1s ease-in-out forwards;
+}
+.contentanime {
+  animation: slideInRight 1s ease-in-out forwards;
+}
+
 @media screen and (max-width: 900px) {
   .calistoga-regular {
     font-size: xx-large;
