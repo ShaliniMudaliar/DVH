@@ -279,6 +279,7 @@ button:hover {
 .hero-section .content p {
   font-size: 20px;
   margin: 10px 0;
+  color:#eaedef;
 }
 .hero-section .content .discover-btn {
   background-color: rgba(255, 255, 255, 0.1);
@@ -320,6 +321,40 @@ button:hover {
   margin: 20px;
   animation: Card1Animation 1s ease-in;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.icon img {
+  width: 200px;
+  height: 200px;
+  margin-right: 20px;
+}
+.content {
+  flex: 1;
+}
+.content h2 {
+  font-family: "Calistoga", serif;
+  margin: 0 0 10px;
+  font-size: 40px;
+  font-weight: 400;
+}
+.content p {
+  margin: 0 0 20px;
+  font-size: 25px;
+  color: #555;
+}
+.content .btn {
+  background-color: #fefefe;
+  color: rgb(45, 35, 234);
+  border: 1px solid rgb(45, 35, 234);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+.content .btn:hover {
+  background-color: #bbd4ed;
 }
 .card:hover {
   transform: scale(1.05);
@@ -406,6 +441,19 @@ button:hover {
   .poppins-light {
     font-size: smaller;
   }
+  .icon img {
+    width: 150px;
+    height: 150px;
+  }
+  .content h2 {
+    font-size: 35px;
+  }
+  .content p {
+    font-size: 22px;
+  }
+  .content .btn {
+    font-size: 18px;
+  }
 }
 @media screen and (max-width: 815px) {
   .font {
@@ -419,6 +467,16 @@ button:hover {
   }
   .navbar .nav-links {
     display: none;
+  }
+  .image-section img {
+    max-width: 190px;
+    height: 190px;
+  }
+    .icon img {
+    margin: 0 0 20px 0;
+  }
+  .card1 .icon img {
+    margin-left: 0;
   }
 }
 @media screen and (max-width: 600px) {
@@ -452,6 +510,30 @@ button:hover {
   .hero-section .content .discover-btn {
     font-size: 15px;
   }
+  .image-section img {
+    max-width: 160px;
+    height: 160px;
+  }
+    .content-section h1 {
+    font-size: xx-large;
+  }
+  .content-section p{
+    font-size: medium;
+  }
+    .icon img {
+      width: 120px;
+      height: 120px;
+    }
+    .content h2 {
+      font-size: 30px;
+    }
+    .content p {
+      font-size: 20px;
+    }
+    .content .btn {
+      font-size: 16px;
+    }
+    
 }
 @media screen and (max-width: 450px) {
   .font {
@@ -483,6 +565,41 @@ button:hover {
   .navbar .explore-btn {
     font-size: x-small;
   }
+  .Arcontainer {
+   flex-direction: column;
+   text-align: center;
+  }
+  .image-section img {
+    max-width: 120px;
+    height: 120px;
+  }
+ .content-section h1 {
+    font-size: x-large;
+  }
+  .content-section p {
+    font-size: medium;
+  }
+  .container {
+    flex-direction: column;
+  }
+  .card, .card1 {
+    flex-direction: column;
+    text-align: center;
+  }
+      .icon img {
+      width: 100px;
+      height: 100px;
+    }
+    .content h2 {
+      font-size: 25px;
+    }
+    .content p {
+      font-size: 18px;
+    }
+    .content .btn {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
 }
 @keyframes enter-animation {
   0% {
@@ -526,37 +643,4 @@ button:hover {
     opacity: 1;
   }
 }
-.icon img {
-  width: 200px;
-  height: 200px;
-  margin-right: 20px;
-}
-.content {
-  flex: 1;
-}
-h2 {
-  font-family: "Calistoga", serif;
-  margin: 0 0 10px;
-  font-size: 40px;
-  font-weight: 400;
-}
-p {
-  margin: 0 0 20px;
-  font-size: 25px;
-  color: #555;
-}
-.btn {
-  background-color: #fefefe;
-  color: rgb(45, 35, 234);
-  border: 1px solid rgb(45, 35, 234);
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-}
-.btn:hover {
-  background-color: #bbd4ed;
-}
+
