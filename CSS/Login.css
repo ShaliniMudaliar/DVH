@@ -1,0 +1,248 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.BackgroundVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 1;
+}
+.container {
+  width: auto;
+  height: auto;
+  padding: 0 5%;
+  border: 3px solid #ecaeff;
+  border-radius: 40px;
+  background-color: rgba(0, 0, 0, 0.412);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  animation: enter-animation 0.8s 1;
+  /* padding: 0px  20px; */
+}
+/* .logo {
+  width: 15%;
+  border-radius: 40px;
+  position: absolute;
+  left: 5%;
+} */
+.login {
+  margin: 40px;
+}
+/* .icons{
+    padding: 5.5px;
+    width: 25px;
+  
+    position: absolute;
+    top: 0%;
+    left: -15%;
+    border: 2px solid #ecaeff;
+    border-bottom-left-radius:10px ;
+    border-top-left-radius:10px ;
+} */
+.icons {
+  width: 25px;
+  position: absolute;
+  top: 19%;
+  left: 7px;
+}
+.line {
+  position: absolute;
+  height: 39px;
+  left: 28px;
+  top: -17%;
+  border: 1px solid #ecaeff;
+}
+.inputField {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.inputField input {
+  height: 40px;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 0 15px;
+  padding-left: 45px;
+  border: 2px solid white;
+  background: transparent;
+  outline: none;
+  color: white;
+}
+.inputField label {
+  position: absolute;
+  top: 25%;
+  left: 65px;
+  transform: translate(-25%);
+  color: rgba(255, 255, 255, 0.922);
+  font-size: 19px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+input:focus {
+  border: 2px solid #1cd679;
+}
+input:focus ~ label,
+input:valid ~ label {
+  top: -50%;
+  left: 20px;
+  font-size: 16px;
+  padding: 0 10px;
+  /* background: #000000; */
+}
+.orTag {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+
+  /* justify-content: center; */
+}
+.or {
+  width: 100px;
+  height: 0px;
+  margin: 30px;
+}
+.forPasswd {
+  position: absolute;
+  left: 2%;
+  top: 110%;
+  text-decoration: none;
+  color: #ecaeff;
+}
+.forPasswd:hover {
+  color: #1cd679;
+}
+.loginBtn {
+  border: 2px solid #ecaeff;
+  color: white;
+  padding: 10px 120px;
+  border-radius: 40px;
+  font-size: large;
+  text-decoration: none;
+  font-weight: 600;
+}
+.signUpBtn {
+  border: 2px solid #ecaeff;
+  color: white;
+  padding: 10px 107px;
+  border-radius: 40px;
+  font-size: large;
+  text-decoration: none;
+  font-weight: 600;
+}
+.loginMar {
+  margin: 20px;
+}
+.loginMar:hover {
+  transition: transform 0.2s;
+  transform: scale(1.1);
+}
+.loginBtn:hover {
+  border: #1cd679;
+  background-color: #1cd679;
+  color: black;
+  transition: 0.3s;
+}
+.signUpBtn:hover {
+  border: #1cd679;
+  background-color: #1cd679;
+  color: black;
+  transition: 0.3s;
+}
+.googleBtn {
+  border: 2px solid white;
+  color: white;
+  padding: 10px 75px;
+  border-radius: 10px;
+  font-size: medium;
+  text-decoration: none;
+  /* font-weight: bold; */
+  position: relative;
+}
+.googleLogo {
+  position: absolute;
+  top: -30px;
+  left: 35px;
+}
+.googleBtn:hover {
+  border-color: #1cd679;
+}
+.registerHereAcc {
+  margin-top: 14px;
+  margin-bottom: 40px;
+}
+.registerHere {
+  color: rgb(0, 119, 255);
+}
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.poppins-light {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: small;
+}
+/* @media screen and (max-width: 1300px) {
+  .container {
+    width: 35%;
+    height: 85%;
+  }
+}
+@media screen and (max-width: 900px) {
+  .container {
+    width: 50%;
+    height: 66%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .container {
+    width: 63%;
+    height: 70%;
+  }
+}
+
+
+@media screen and (max-width: 495px) {
+  .container {
+    width: 93%;
+    height: 75%;
+  }
+  .googleBtn {
+    padding: 10px 67px;
+  }
+} */
+@keyframes enter-animation {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .container {
+    /* width:%; */
+    padding: 0;
+    height: 95%;
+  }
+}
