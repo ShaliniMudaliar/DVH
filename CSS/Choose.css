@@ -1,0 +1,88 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  justify-content: center;
+  /* background-color: rgba(0, 0, 0, 0.449); */
+}
+.bgImgBuy {
+  background-image: url("https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600");
+  /* z-index: 1 !important; */
+}
+
+.bgImgSell {
+  background-image: url("https://images.pexels.com/photos/7642000/pexels-photo-7642000.jpeg?auto=compress&cs=tinysrgb&w=600");
+}
+.bgImgRent {
+  background-image: url("https://images.pexels.com/photos/1838640/pexels-photo-1838640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
+.bgImg {
+  height: 100vh;
+  width: 33.33vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* z-index: -1; */
+}
+button {
+  padding: 15px 40px;
+  font-size: xx-large;
+  border: 2px solid;
+}
+.btnCenter {
+  text-decoration: none;
+  color: black;
+}
+button:hover {
+  border-color: white;
+  background-color: black;
+  /* color: white; */
+}
+button:hover {
+  .btnCenter {
+    color: white;
+  }
+  transition: 0.3s;
+  transition: transform 0.2s;
+  transform: scale(1.2);
+}
+.bgImgBuy:hover {
+  transition: 0.3s;
+  transition: transform 0.2s;
+  transform: scale(0.9);
+}
+.bgImgSell:hover {
+  transition: 0.3s;
+  transition: transform 0.2s;
+  transform: scale(0.9);
+}
+.bgImgRent:hover {
+  transition: 0.3s;
+  transition: transform 0.2s;
+  transform: scale(0.9);
+}
+.josefin-sans {
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+@media screen and (max-width: 850px) {
+  .center {
+    grid-template-columns: auto;
+  }
+  .bgImg {
+    height: 33.33vh;
+    width: 100vw;
+  }
+  button {
+    font-size: x-large;
+  }
+}
