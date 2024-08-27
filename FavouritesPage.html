@@ -3,110 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="CSS/SellerHomePage.css">
+    <title>Favourites</title>
+    <!-- <link rel="stylesheet" href="CSS/FavouritesPage.css"> -->
+    <link rel="stylesheet" href="CSS/HomePage.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Calistoga&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lobster&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
-    />
-    <link
+    /> <link
       href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Kalnia+Glaze:wght@100..700&family=Playwrite+NL:wght@100..400&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
 </head>
 <body>
+    <!-- NavBar -->
     <header>
-    <div class="top-nav">
-        <div class="logo">
-            <img src="Img-videos\logo.jpg" alt="DVH Logo" />
-            <span class="antonio" id="antonio">DreamView</span>
-            <span class="tourney" id="tourney">House</span>
+        <div class="top-nav">
+            <div class="logo">
+                <img src="Img-videos\logo.jpg" alt="DVH Logo" />
+                <span class="antonio" id="antonio">DreamView</span>
+                <span class="tourney" id="tourney">House</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">New Arrivals</a>
+            </div>
+            <div class="user-icon">
+                <a href="#"></a><img src=https://cdn-icons-png.flaticon.com/128/3033/3033143.png></a> 
+            </div>
         </div>
-     <div class="top">
-        <div class="menu-item">
-            <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/10472/10472937.png" alt="chatbot" /></a> 
-         </div>
-        <div class="user-icon">
-            <a href="#"></a><img src=https://cdn-icons-png.flaticon.com/128/3033/3033143.png></a> 
+        
+        <div class="bottom-nav">
+            <div class="search-bar">
+                <input type="text" placeholder="Search_by_Location" >
+            </div>
+            <button class="filter">
+                <img src="https://cdn-icons-png.flaticon.com/128/7854/7854753.png" alt="filter" />
+                <span>Filter</span>
+            </button>
+            <div class="menu-items">
+                 <div class="menu-item">
+                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/10472/10472937.png" alt="chatbot" /></a> 
+                     
+                 </div>
+                <!-- <div class="menu-item">
+                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/151/151910.png" alt="fav" /></a>
+                </div> -->
+            </div>
         </div>
-
-     </div>
-    </div>
-</header>
-    <div class="propertyContainer">
-        <!--Card1 starts -->
-               <div class="property-card">
-                <div class="property-image" style="background-image: url('https://images.nobroker.in/images/8a9f8e838fbe040e018fbe1b679a0afc/8a9f8e838fbe040e018fbe1b679a0afc_3146_625693_medium.jpg');"></div>
-                <div class="property-details">
-                    <div>
-                        <h2 class="property-title">1 BHK Flat In Kukreja complex</h2>
-                        <p class="property-description">Bhandup Village Rd Near Bright High School and Jr College (Bhandup West)</p>
-                    </div>
-                    <div class="property-info">
-                        <div class="property-icons">
-                            <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                              </svg> -->
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
-                              </svg>
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                              </svg>
-                      </div>
-                        <div class="property-views">
-                            <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            width="18px"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="size-6 eye"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                            />
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                            />
-                          </svg>                       
-                           <p>1.2K</p>
+    </header>
+<!-- /NavBar -->
+  <!-- Property Card starts -->   
+  <div class="propertyContainer">
+    <!--Card1 starts -->
+           <div class="property-card">
+            <div class="property-image" style="background-image: url('https://images.nobroker.in/images/8a9f8e838fbe040e018fbe1b679a0afc/8a9f8e838fbe040e018fbe1b679a0afc_3146_625693_medium.jpg');"></div>
+            <div class="property-details">
+                <div>
+                    <h2 class="property-title">1 BHK Flat In Kukreja complex</h2>
+                    <p class="property-description">Bhandup Village Rd Near Bright High School and Jr College (Bhandup West)</p>
+                </div>
+                <div class="property-info">
+                    <div class="property-icons">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 favIcon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                          </svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                          </svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                          </svg>
+                  </div>
+                    <div class="property-views">
+                    <img src="https://cdn-icons-png.flaticon.com/128/11411/11411790.png" alt="views">
+                    <p>1.2K</p>
                     </div>
                     <div class="property-price">₹1.15 Crores</div>
-                    <div class="property-date">
-                        <a href=""> <div>Edit</div></a>
-                        <div>Posted: 5 days ago</div>
-                    </div>
-                    </div>
-                     </div>
-            </div>
-            <!--/Card1 ends -->
-       </div>
-       <!-- add a card -->
-        <a href="" class="addCard">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25px"
-             fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>  
-            <h1>Add New Property</h1>
-    </a>
-       <!-- /add a card -->
-<!-- footer -->
+                    <div class="property-date">Posted: 5 days ago</div>
+                </div>
+                 </div>
+        </div>
+        <!--/Card1 ends -->
+   </div>
+<!--/Property Card ends-->  
 <div class="center">
     <div class="content">
       <ul class="ulContent josefin-sans">
         <h3>
           <li><a href="#">HOME</a></li>
-          <li><a href="#">Edit profile</a></li>
+          <li><a href="#">New Arrivals</a></li>
           <li><a href="#">Chat With Bot</a></li>
+          <li><a href="#">Favourites</a></li>
         </h3>
       </ul>
       <div class="about josefin-sans">
@@ -190,7 +181,6 @@
       &copy; 2024 DreamView House. All Rights Reserved.
     </p>
   </div>
-<!-- /footer -->
-
+<script src="FavouritesPage.js"></script>
 </body>
 </html>

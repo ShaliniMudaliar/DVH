@@ -339,6 +339,13 @@ li a:hover {
   p {
     text-align: center;
   }
+  .property-date {
+    font-size: 8px;
+    gap: 5px;
+    right: 0px;
+    top: 71%;
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 450px) {
