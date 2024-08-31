@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Property Form</title>
+        <link rel="stylesheet" href="CSS/SellerForm.css">
+        <!-- Include Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- Include jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Include Select2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Calistoga&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lobster&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet"
+        />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Kalnia+Glaze:wght@100..700&family=Playwrite+NL:wght@100..400&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet"
+        />
+</head>
+<body>
+    <!-- NavBar starts -->
+    <header>
+        <div class="top-nav">
+            <div class="logo">
+                <img src="Img-videos\logo.jpg" alt="DVH Logo" />
+                <span class="antonio" id="antonio">DreamView</span>
+                <span class="tourney" id="tourney">House</span>
+            </div>
+            <div class="top">
+              <div class="menu-item">
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/2076/2076218.png" alt="chatbot" /></a> 
+              </div>
+              <div class="user-icon">
+                <a href="#"></a><img src=https://cdn-icons-png.flaticon.com/128/3033/3033143.png></a> 
+              </div>
+            </div>
+        </div>
+    </header>
+    <!-- /NavBar ends -->
+
+    <!-- Form section starts -->
+    <div class="container">
+        <h2>Fill the details of the property</h2>
+        <form>
+            <label for="heading">Heading of the property</label>
+            <input type="text" id="heading" name="heading">
+
+            <!-- Description section starts -->
+            <label for="description">Description of the property</label>
+            <div class="description-content">
+                    <div class="suggestions">
+                        <div class="suggestion-item">
+                            <input type="checkbox" id="livingArea" value="Spacious and Modern living area" onclick="toggleDescription(this, value)">
+                            <p for="livingArea">Spacious and Modern living area</p>
+                        </div>
+                        <div class="suggestion-item">
+                            <input type="checkbox" id="kitchen"  value="Compact, functional kitchen with basic appliances (stove, fridge, sink)" onclick="toggleDescription(this, value)">
+                            <p for="kitchen">Compact, functional kitchen with basic appliances (stove, fridge, sink)</p>
+                        </div>
+                        <!-- <div class="suggestion-item">
+                            <input type="checkbox" id="balcony"  value="Small balcony or rooftop access for outdoor space" onclick="toggleDescription(this, value)">
+                            <label for="balcony"> Small balcony or rooftop access for outdoor space</label>
+                        </div> -->
+                        <div class="suggestion-item">
+                            <input type="checkbox" id="storage"  value="Clever storage solutions and modern appliances" onclick="toggleDescription(this, value)">
+                            <p for="storage"> Clever storage solutions and modern appliances</p>
+                        </div>
+                        <div class="suggestion-item">
+                            <input type="checkbox" id="layout"  value="Highly efficient layout with open living, dining, and kitchen areas" onclick="toggleDescription(this, value)">
+                            <p for="layout">Highly efficient layout with open living, dining, and kitchen areas</p>
+                        </div>
+                        <div class="suggestion-item">
+                            <input type="checkbox" id="bedroom"  value="Bedrooms with minimal storage" onclick="toggleDescription(this, value)">
+                            <p for="bedroom">Bedrooms with minimal storage</p>
+                        </div>
+                        <div class="suggestion-item">
+                            <input type="checkbox" id="bathroom"  value="Small bathroom with standard fixtures" onclick="toggleDescription(this, value)">
+                            <p for="bathroom">Small bathroom with standard fixtures</p>
+                        </div>
+                        <input type="text" id="customDescriptionInput" placeholder="Add your own description">
+                        <button type="button" onclick="addCustomDescription()">Add</button>
+                    </div>
+                    <div></div>
+                    <div class="description-output">
+                        <!-- <h4>Property Description</h4> -->
+                        <!-- <ul id="descriptionList"></ul> -->
+                        <textarea id="finalDescription" onkeypress="handleTextareaKeyPress(event)"></textarea>
+                    </div>
+            </div>
+     <!-- /Description section endss -->
+
+       <!-- sell/rent section starts -->
+            <label for="sellOrRent">Is this property for Sell or Rent?</label>
+            <div class="radio-group">
+                <input type="radio" id="sell" name="sellOrRent" value="sell" onclick="togglePriceFields()" checked>
+                <label for="sell">Sell</label>
+                <input type="radio" id="rent" name="sellOrRent" value="rent" onclick="togglePriceFields()">
+                <label for="rent">Rent</label>
+            </div>
+
+            <label id="priceLabel" for="price">Price of the property</label>
+            <input type="number" id="price" name="price">
+
+            <label id="depositLabel" for="deposit" style="display:none;">Deposit Amount</label>
+            <input type="number" id="deposit" name="deposit" style="display:none;">
+        <!-- /sell/rent section endss -->
+
+            <label for="address">Address of the property</label>
+            <input type="text" id="address" name="address">
+
+            <label for="city">City of the property</label>
+            <select id="city" name="city" style="width: 100%;">
+                <option>Select City</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Bengaluru">Bengaluru (Bangalore)</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Pune">Pune</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Jaipur">Jaipur</option>
+                <option value="Lucknow">Lucknow</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Indore">Indore</option>
+                <option value="Coimbatore">Coimbatore</option>
+                <option value="Nagpur">Nagpur</option>
+                <option value="Surat">Surat</option>
+                <option value="Goa">Goa</option>
+                <option value="Udaipur">Udaipur</option>
+                <option value="Shimla">Shimla</option>
+                <option value="Manali">Manali</option>
+                <option value="Ooty">Ooty</option>
+            </select>
+
+            <label for="state">State of the property</label>
+            <select id="state" name="state" style="width: 100%;">
+                <option>Select State</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                <option value="Lakshadweep">Lakshadweep</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Puducherry">Puducherry</option>
+                <option value="Ladakh">Ladakh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+            </select>
+
+            <label for="zipcode">Zipcode of the property</label>
+            <input type="text" id="zipcode" name="zipcode">
+
+            <label for="property_type">Property type</label>
+            <select id="property_type" name="property_type" style="width: 100%;">
+                <option>Select Property Type</option>
+                <option>Apartment</option>
+		        <option>Chawl</option>
+		        <option>Bunglow</option>
+		        <option>Villa</option>
+            </select>
+
+            <label for="bedrooms">Numbers of Bedroom</label>
+            <input type="number" id="bedrooms" name="bedrooms" min="0">
+
+            <label for="bathrooms">Numbers of Bathroom</label>
+            <input type="number" id="bathrooms" name="bathrooms" min="0">
+
+            <label for="year_built">Year Built</label>
+            <input type="number" id="year_built" name="year_built" min="1900">
+
+            <label for="square_feet">Square Feet</label>
+            <input type="text" id="square_feet" name="square_feet">
+
+            <label for="floor">Floor</label>
+            <input type="number" id="floor" name="floor" min="0">
+
+            <label for="facing">Facing</label>
+            <select id="facing" name="facing" style="width: 100%;">
+                <option>Select Facing</option>
+                <option>East</option>
+		        <option>West</option>
+		        <option>North</option>
+		        <option>South</option>
+            </select>
+<!-- Amenity section starts -->
+            <label for="amenities">Amenities of the property</label>
+            <div class="amenity-container">
+                <div class="amenity">
+                    <input type="checkbox" id="Hall">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/6688/6688715.png"></i>
+                    <label for="Hall">Multipurpose Hall</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="gym">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/6061/6061858.png"></i>
+                    <label for="gym">Gym/YogaCenter</label>
+                </div>
+                
+                <div class="amenity">
+                    <input type="checkbox" id="parking">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/708/708949.png"></i>
+                    <label for="parking">Parking</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="garden">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2204/2204154.png"></i>
+                    <label for="garden">Garden</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="watersupply">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2634/2634366.png"></i>
+                    <label for="watersupply">24*7 Water Supply</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="security">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2642/2642550.png"></i>
+                    <label for="security">Security/CCTV</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="lift">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/3503/3503695.png"></i>
+                    <label for="lift">Lift</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="ground">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2883/2883680.png"></i>
+                    <label for="ground">Playground</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="streetlight">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2434/2434097.png"></i>
+                    <label for="streetlight">Street Light</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="library">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/5186/5186208.png"></i>
+                    <label for="library">Library</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="firesystem">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/11389/11389913.png"></i>
+                    <label for="firesystem">Fire Fighting system</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="indoorgames">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/6651/6651749.png"></i>
+                    <label for="indoorgames">Indoor Games</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="solar">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/12996/12996887.png"></i>
+                    <label for="solar">Solar Energy</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="swimming-pool">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2784/2784593.png"></i>
+                    <label for="swimming-pool">Swimming Pool</label>
+                </div>
+                <div class="amenity">
+                    <input type="checkbox" id="rainwater">
+                    <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/16998/16998783.png"></i>
+                    <label for="rainwater">Rainwater Harvesting</label>
+                </div>
+            </div>
+<!-- /Amenity section ends -->
+
+ <!-- photo upload starts -->
+            <label for="upload">Upload photos of the property</label>
+            <input type="file" id="photos" name="photos" multiple onchange="checkPhotosLimit()" accept="image/*">
+            <div></div>
+            <button type="button" onclick="document.getElementById('photos').click()">+ Add photos</button>
+            <div></div>
+            <p id="photo-error" style="color: red; display: none;">You can upload a maximum of 7 photos only.</p>
+            <div id="image-preview"></div>
+            <div></div>
+ <!-- /photo upload ends-->
+            <input type="Submit" value="Submit"/>
+            </form>
+      </div>
+      <!-- /Form section ends -->
+    
+<script src="JS/SellerForm.js"></script>
+</body>
+</html>
