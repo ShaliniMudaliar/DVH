@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SellerProfileForSeller</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Calistoga&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lobster&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet"
+        />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Kalnia+Glaze:wght@100..700&family=Playwrite+NL:wght@100..400&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet"
+        />
+    <link rel="stylesheet" href="CSS/SProfileForSeller.css">
+</head>
+<body> 
+ <!-- NavBar starts -->
+ <header>
+    <div class="top-nav">
+        <div class="logo">
+            <img src="Img-videos\logo.jpg" alt="DVH Logo" />
+            <span class="antonio" id="antonio">DreamView</span>
+            <span class="tourney" id="tourney">House</span>
+        </div>
+        <div class="top">
+          <div class="menu-item">
+            <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/2076/2076218.png" alt="chatbot" /></a> 
+          </div>
+          <div class="user-icon">
+            <a href="#"></a><img src=https://cdn-icons-png.flaticon.com/128/3033/3033143.png></a> 
+          </div>
+        </div>
+    </div>
+</header>
+<!-- /NavBar ends -->
+
+ <!-- FormHeader starts -->
+    <div class="container">
+     <div class="main-content">
+       <div class="header">
+          <h2>My Profile</h2>
+        <div>
+        <div class="save-btn">
+          <button id="edit-save-btn" onclick="toggleEditSave()">Save</button>
+        </div>
+        </div>
+    </div>
+ <!-- /FormHeader endss -->
+
+  <!-- Profile img starts -->
+    <div class="profile-form">
+    <form id="profileForm">
+
+    <div class="profile">
+    <div class="profile-pic">
+        <img id="profile-pic-preview" src="https://cdn-icons-png.flaticon.com/128/64/64572.png" alt="User">
+        <i class="fas fa-pencil-alt edit-icon"></i>
+    <input type="file" id="profile-pic" accept="image/*" onchange="previewProfilePic(event)">
+    </div>
+</div>
+  <!-- /Profile img endss -->
+    <!-- Form starts -->  
+  <div class="form-row">
+        <div class="form-group">
+        <label for="first-name">
+        First Name
+        </label>
+        <input id="first-name" type="text" value="" required/>
+        </div>
+        <div class="form-group">
+        <label for="last-name">
+        Last Name
+        </label>
+        <input id="last-name" type="text" value="" required/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">
+        Email
+        </label>
+        <input id="email" type="email" value="abc@gmail.com" readonly/>
+    </div>
+    <div class="form-group">
+        <label for="contact-number">
+        Contacts Number
+        </label>
+        <input id="contact-number" type="text" value="" required/>
+    </div>
+    <div class="form-group">
+        <label for="description">
+            Description
+        </label>
+        <input id="description" type="text" value=""/>
+        </div>
+    <div class="form-group">
+        <label for="address">
+        Address
+        </label>
+        <input id="address" type="text" value="" required/>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+        <label for="city">
+        City
+        </label>
+        <input id="city" type="text" value="" required/>
+        </div>
+        <div class="form-group">
+        <label for="state">
+        State
+        </label>
+        <input id="state" type="text" value="" required/>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+        <label for="country">
+        Country
+        </label>
+        <input id="country" type="text" value="" required/>
+        </div>
+        <div class="form-group">
+        <label for="zip-code">
+        Zip code
+        </label>
+        <input id="zip-code" type="text" value="" required/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">
+        Password
+        </label>
+        <input id="password" type="password" value="12345678" required/>
+        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('password')"></i>
+    </div>
+</form>
+</div>
+</div>
+</div>
+ <!--/ Form ends -->  
+
+<script src="JS/SProfileForSeller.js"></script>
+</body>
+</html>
