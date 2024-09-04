@@ -1,0 +1,252 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.chatContent {
+  display: grid;
+  grid-template-columns: 20% auto;
+}
+.chatSection {
+  height: 89vh;
+  overflow-y: scroll;
+}
+
+.chatSide {
+  width: 259px;
+  background-color: rgb(228, 233, 231);
+  height: 89vh;
+  overflow-y: scroll;
+}
+.no-Scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.search {
+  width: 100%;
+  background-color: rgba(200, 198, 221, 0.873);
+  padding: 15px 20px;
+  border: none;
+  font-size: large;
+}
+.chat {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 10px;
+
+  background-color: rgb(228, 233, 231);
+  /* justify-content: ; */
+}
+
+.chatIcon img {
+  width: 45px;
+}
+
+.chat h4 {
+  padding-bottom: 5px;
+  font-size: large;
+}
+.chat p {
+  font-size: small;
+  text-align: left;
+  overflow: hidden;
+}
+.selected {
+  background-color: rgb(124, 135, 135);
+  color: #eaeaea;
+}
+
+.chatDate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.chatDate hr {
+  width: 30%;
+}
+.date {
+  background-color: rgb(153, 144, 144);
+  color: white;
+  padding: 6px 10px;
+  font-size: small;
+  border-radius: 20px;
+}
+.sender {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 15px;
+  margin: 30px 40px;
+}
+.senderTime {
+  font-size: small;
+  color: #9b9191;
+}
+.senderChat {
+  width: 50%;
+  background-color: rgb(55, 55, 208);
+  color: white;
+  padding: 20px 10px;
+  border-radius: 15px;
+  text-align: left;
+}
+.receiver {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 15px;
+  margin: 30px 40px;
+}
+.receiverTime {
+  font-size: small;
+  color: #9b9191;
+}
+.receiverChat {
+  width: 50%;
+  border: 2px solid #9b9191;
+  /* background-color: rgb(55, 55, 208); */
+  /* color: white; */
+  padding: 20px 10px;
+  border-radius: 15px;
+  text-align: left;
+}
+.sendBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 10px;
+  width: 80%;
+}
+.sendBox input {
+  width: 85%;
+  padding: 20px;
+}
+.sendBtn {
+  width: 40px;
+  padding: 9px;
+  background-color: rgb(55, 55, 208);
+  color: white;
+}
+.sendBtn:hover {
+  background-color: #1cd679;
+  transition: 0.3s;
+  transition: transform 0.2s;
+  transform: scale(1.1);
+}
+.lastMsg {
+  margin-bottom: 80px;
+}
+.arrowRight,
+.arrowLeft {
+  display: none;
+}
+
+@keyframes chatList-animation {
+  0% {
+    transform: translatex(200px);
+    opacity: 0;
+  }
+}
+@keyframes List-animation {
+  0% {
+    transform: translatex(-200px);
+    opacity: 0;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .chatContent {
+    grid-template-columns: 32% auto;
+  }
+  .sendBox {
+    width: 67%;
+  }
+  .chatSide {
+    height: 95vh;
+  }
+}
+@media screen and (max-width: 850px) {
+  .chatContent {
+    grid-template-columns: 35% auto;
+  }
+  .sendBox {
+    width: 63%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .chatContent {
+    grid-template-columns: auto;
+  }
+  .sendBox {
+    width: 63%;
+  }
+  .chatSide {
+    width: 90%;
+  }
+  .hidden {
+    display: none;
+  }
+  .display {
+    display: block;
+  }
+  .arrowRight {
+    display: block;
+    width: 10%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    border-radius: 12px;
+    border: 2px solid blue;
+    color: #9b9191;
+  }
+  .arrowLeft {
+    display: block;
+    width: 10%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    border-radius: 12px;
+    border: 2px solid blue;
+    color: #9b9191;
+  }
+  .arrowRight:hover,
+  .arrowLeft:hover {
+    background-color: #ecaeff;
+    /* border-color: #1cd679; */
+    transition: 0.3s;
+    transition: transform 0.2s;
+    transform: scale(0.9);
+    color: white;
+  }
+  .chat h4 {
+    font-size: medium;
+  }
+  .chat p {
+    font-size: x-small;
+    text-align: left;
+    overflow: hidden;
+  }
+  .sendBox {
+    width: 100%;
+  }
+  .sendBox input {
+    width: 73%;
+  }
+  .sender {
+    margin: 30px 10px;
+  }
+  .receiver {
+    margin: 30px 10px;
+  }
+  .lastMsg {
+    margin-bottom: 80px;
+  }
+  .chatListAnimation {
+    animation: chatList-animation 0.5s 1;
+  }
+  .ListAnimation {
+    animation: List-animation 0.5s 1;
+  }
+}
