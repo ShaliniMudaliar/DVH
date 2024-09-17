@@ -76,6 +76,43 @@ header {
   color: #0a0111;
   font-size: large;
   font-weight: 200;
+  position: relative;
+}
+.chatOption {
+  background-color: white;
+  height: auto;
+  width: auto;
+  border: 2px solid black;
+  border-radius: 0 0 15px 15px;
+  position: absolute;
+  top: 99%;
+  right: 20px;
+  overflow: hidden;
+}
+.chat {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+.chatOption a {
+  text-decoration: none;
+  color: black;
+}
+.chatB:hover {
+  background-color: rgb(21, 21, 68);
+  color: white;
+  transition: 0.3s;
+}
+.chatS:hover {
+  background-color: rgb(21, 21, 68);
+  color: white;
+  transition: 0.3s;
+}
+.hidden {
+  display: none;
+}
+.show {
+  display: block;
 }
 
 .menu-item img {

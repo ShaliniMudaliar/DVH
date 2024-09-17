@@ -6,6 +6,7 @@
     <title>Favourites</title>
     <!-- <link rel="stylesheet" href="CSS/FavouritesPage.css"> -->
     <link rel="stylesheet" href="CSS/HomePage.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -44,10 +45,15 @@
                 <span>Filter</span>
             </button>
             <div class="menu-items">
-                 <div class="menu-item">
-                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/10472/10472937.png" alt="chatbot" /></a> 
-                     
-                 </div>
+              <div class="menu-item" >
+                <a href="#" ><img src="https://cdn-icons-png.flaticon.com/128/2076/2076218.png" alt="chatbot" onclick="chatFunction()" class="item"/></a> 
+              </div>
+              <div class="hidden" id="chooseChat">
+                <div class="chatOption">
+                  <div ><a href="ChatBot.html" class="chatB chat">Chat with Bot</a></div>
+                  <div><a href="LiveChatWithSeller.html" class="chatS chat">Chat with Seller</a></div>
+                </div>
+             </div>
                 <!-- <div class="menu-item">
                     <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/151/151910.png" alt="fav" /></a>
                 </div> -->
@@ -181,6 +187,7 @@
       &copy; 2024 DreamView House. All Rights Reserved.
     </p>
   </div>
-<script src="FavouritesPage.js"></script>
+<script src="js/SProfileForSeller.js"></script>
+
 </body>
 </html>

@@ -27,15 +27,22 @@
             <span class="tourney" id="tourney">House</span>
         </div>
         <div class="top">
-          <div class="menu-item">
-            <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/2076/2076218.png" alt="chatbot" /></a> 
+          <div class="menu-item" >
+            <a href="#" ><img src="https://cdn-icons-png.flaticon.com/128/2076/2076218.png" alt="chatbot" onclick="chatFunction()" class="item"/></a> 
           </div>
+          <div class="hidden" id="chooseChat">
+            <div class="chatOption">
+              <div ><a href="ChatBot.html" class="chatB chat">Chat with Bot</a></div>
+              <div><a href="LiveChatWithSeller.html" class="chatS chat">Chat with Seller</a></div>
+            </div>
+         </div>
           <div class="user-icon">
             <a href="#"></a><img src=https://cdn-icons-png.flaticon.com/128/3033/3033143.png></a> 
           </div>
         </div>
     </div>
 </header>
+
 <!-- /NavBar ends -->
 
  <!-- FormHeader starts -->
@@ -90,12 +97,7 @@
         </label>
         <input id="contact-number" type="text" value="" required/>
     </div>
-    <div class="form-group">
-        <label for="description">
-            Description
-        </label>
-        <input id="description" type="text" value=""/>
-        </div>
+    
     <div class="form-group">
         <label for="address">
         Address
@@ -130,6 +132,46 @@
         <input id="zip-code" type="text" value="" required/>
         </div>
     </div>
+    <!-- Agent -->
+    <div>
+        <div class="radioGroup">
+            <label for="AgentOrNon">Who are you?</label>
+            <div class="Agent-group">
+                <input type="radio" id="Non-Agent" name="Agent" value="Non-Agent" onclick="toggleFields()" checked>
+                <label for="Non-Agent">Non-Agent</label>
+                <input type="radio" id="Agent" name="Agent" value="Agent" onclick="toggleFields()">
+                <label for="Agent">Agent</label>
+            </div>
+        </div>
+        <div class="hidden" id="AgentList">
+        <div class="form-group">
+            <label for="description">
+              Agent  Description
+            </label>
+            <input id="description" type="text" value=""/>
+        </div>
+        <div class="form-group">
+            <label for="Agency">
+              Agency
+            </label>
+            <input id="Agency" type="text" value=""/>
+        </div>
+        <div class="form-group">
+            <label for="AgentLicense">
+              Agent License
+            </label>
+            <input id="AgentLicense" type="text" value="" placeholder="1234 5678 9101 112"/>
+        </div>
+        <div class="form-group">
+            <label for="TaxNumber">
+              Tax Number
+            </label>
+            <input id="TaxNumber" type="text" value=""/>
+        </div>
+    </div>
+        
+    </div>
+    <!-- /Agent -->
     <div class="form-group">
         <label for="password">
         Password

@@ -43,19 +43,96 @@
             <div class="search-bar">
                 <input type="text" placeholder="Search_by_Location" >
             </div>
-            <button class="filter">
+            <button class="filter filterDropdown" onclick="myFunction()">
                 <img src="https://cdn-icons-png.flaticon.com/128/7854/7854753.png" alt="filter" />
                 <span>Filter</span>
             </button>
             <div class="menu-items">
-                 <div class="menu-item">
-                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/10472/10472937.png" alt="chatbot" /></a> 
-                     
-                 </div>
+              
+                <div class="menu-item" >
+                  <a href="#" ><img src="https://cdn-icons-png.flaticon.com/128/2076/2076218.png" alt="chatbot" onclick="chatFunction()" class="item"/></a> 
+                </div>
+                <div class="hidden" id="chooseChat">
+                  <div class="chatOption">
+                    <div ><a href="ChatBot.html" class="chatB chat">Chat with Bot</a></div>
+                    <div><a href="LiveChatWithSeller.html" class="chatS chat">Chat with Seller</a></div>
+                  </div>
+               </div>
                 <div class="menu-item">
                     <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/151/151910.png" alt="fav" /></a>
                     
                 </div>
+            </div>
+            <div class="dropdownFilter dropdownContent" id="filter">
+              <div class="filterReset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+                <div>Reset</div>
+              </div>
+              <div>
+              <div class="boldType">BHK Type</div>
+              <div class="bhkList">
+                <div>1 RK</div>
+                <div>1 BHK</div>
+                <div class="bhkSelected">2 BHK</div>
+                <div>3 BHK</div>
+                <div>4 BHK</div>
+                <div>4+ BHK</div>
+              </div>
+            </div>
+            <div>
+              <div class="boldType">Price Range: &#8377;0 to &#8377; 10 Cr</div>
+              <input type="range" name="" id="">
+            </div>
+            <!-- <div>
+              <div class="boldType">Property Status</div>
+              <div class="filterRadio">
+              <input type="radio" name="filterRadio" id="Under"><label for="Under">Under Construction</label>  
+              <input type="radio" name="filterRadio" id="Ready "><label for="Ready ">Ready</label>
+            </div>
+            </div> -->
+            <div>
+              <div class="boldType">Furnishing</div>
+                <div class="furnishing">
+                  <div>
+                    <input type="checkbox" id="Full">
+                    <label for="Full">Full</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="Semi">
+                    <label for="Semi">Semi</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="None">
+                    <label for="None">None</label>
+                  </div>
+                </div>
+              </div>
+              <div class="boldType">Property Type</div>
+                <div class="filterProperty">
+                  <div>
+                    <input type="checkbox" id="Apartment">
+                    <label for="Apartment">Apartment</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="Chawl">
+                    <label for="Chawl">Chawl</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="Bunglow">
+                    <label for="Bunglow">Bunglow</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="Villa">
+                    <label for="Villa">Villa</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              
             </div>
         </div>
     </header>
@@ -270,5 +347,6 @@
   </div>
 
     <script src="JS/HomePage.js"></script>
+    <script src="JS/SProfileForSeller.js"></script>
 </body>
 </html>
