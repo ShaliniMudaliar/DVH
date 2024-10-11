@@ -69,7 +69,8 @@ header {
   font-size: large;
 }
 .nav-links a:hover {
-  color: #16f3d2;
+  color: #f37a16;
+  text-decoration: underline;
 }
 .hidden {
   display: none;
@@ -162,6 +163,7 @@ header {
   width: 35px;
   height: 35px;
   border-radius: 40%;
+  margin: 0 15px;
 }
 .menu-item img:hover {
   transform: scale(1.2);
@@ -254,7 +256,8 @@ header {
   border-radius: 50px;
   backdrop-filter: blur(5px);
   position: absolute;
-  top: 45%;
+  top: 40%;
+  left: 3%;
   padding: 10px 20px;
   /* left:10%;
     transform: translate(-50%, -50%);*/
@@ -579,7 +582,7 @@ header {
   }
   .slideContent {
     width: 40%;
-    top: 55%;
+    top: 48%;
     padding: 10px;
   }
 
@@ -685,7 +688,7 @@ header {
   }
   .slideContent {
     width: 40%;
-    top: 60%;
+    top: 50%;
     padding: 10px;
   }
 
@@ -796,7 +799,8 @@ header {
   }
   .slideContent {
     width: 40%;
-    top: 55%;
+    top: 45%;
+    left: 7%;
     padding: 10px;
   }
 
@@ -912,7 +916,7 @@ header {
   }
   .slideContent {
     width: 45%;
-    top: 55%;
+    top: 52%;
     padding: 10px;
   }
 
@@ -1040,6 +1044,8 @@ li a {
 li a:hover {
   transition: transform 0.2s;
   transform: scale(0.9);
+  color: rgb(19, 139, 127);
+  text-decoration: underline;
 }
 .about {
   text-wrap: balance;

@@ -306,6 +306,8 @@ li a {
 li a:hover {
   transition: transform 0.2s;
   transform: scale(0.9);
+  color: rgb(19, 139, 127);
+  text-decoration: underline;
 }
 .about {
   text-wrap: balance;
