@@ -199,6 +199,19 @@ input:valid ~ label {
   font-style: normal;
   font-size: small;
 }
+.msgForOtp {
+  width: 250px;
+  margin-bottom: 30px;
+  border: 2px solid #1cd679;
+  background-color: #9bdebc;
+  color: rgb(53, 50, 50);
+  padding: 10px 20px;
+  border-radius: 10px;
+  /* margin-bottom: 40px; */
+}
+.gapForBottom {
+  margin: 5px 0 50px 0;
+}
 /* @media screen and (max-width: 1300px) {
   .container {
     width: 35%;
