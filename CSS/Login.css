@@ -64,7 +64,8 @@
   position: absolute;
   height: 39px;
   left: 28px;
-  top: -17%;
+  top: -30%;
+  /* //-17% */
   border: 1px solid #ecaeff;
 }
 .inputField {
@@ -104,6 +105,43 @@ input:valid ~ label {
   padding: 0 10px;
   /* background: #000000; */
 }
+
+.error {
+  color: #ff3860;
+  font-size: 12px;
+  height: 13px;
+  font-weight: 500;
+  /* margin-bottom: 50px; */
+}
+.inputField.error input {
+  border-color: #ff3860;
+}
+.label {
+  input:focus ~ label,
+  input:valid ~ label {
+    top: -196%;
+    left: 20px;
+    font-size: 16px;
+    padding: 0 10px;
+    /* background: #000000; */
+  }
+  margin-bottom: 80px;
+  .icons {
+    width: 25px;
+    position: absolute;
+    top: 50%;
+    left: 7px;
+  }
+  .line {
+    position: absolute;
+    height: 39px;
+    left: 28px;
+    top: -20%;
+    /* //-17% */
+    border: 1px solid #ecaeff;
+  }
+}
+
 .orTag {
   display: grid;
   grid-template-columns: auto auto auto;
@@ -136,6 +174,7 @@ input:valid ~ label {
   font-weight: 600;
 }
 .signUpBtn {
+  background-color: rgba(0, 0, 0, 0);
   border: 2px solid #ecaeff;
   color: white;
   padding: 10px 107px;
@@ -145,7 +184,7 @@ input:valid ~ label {
   font-weight: 600;
 }
 .loginMar {
-  margin: 20px;
+  margin: 0px 20px 20px 20px;
 }
 .loginMar:hover {
   transition: transform 0.2s;
