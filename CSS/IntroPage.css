@@ -16,6 +16,7 @@
   margin: 15px auto;
   width: 60%;
   animation: enter-animation 0.8s 1;
+  /* animation-timeline: view(); */
 }
 .text {
   text-align: center;

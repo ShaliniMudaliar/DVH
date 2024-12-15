@@ -126,6 +126,7 @@ input:valid ~ label {
     /* background: #000000; */
   }
   margin-bottom: 80px;
+  /* margin-top: 5px; */
   .icons {
     width: 25px;
     position: absolute;
