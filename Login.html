@@ -14,11 +14,12 @@
     />
   </head>
   <body>
+    <form id="form" method="POST">
     <div class="center">
       <video loop autoplay muted class="BackgroundVideo">
         <source src="Img-videos/loginBackgroundVideo.mp4" type="" />
       </video>
-
+      
       <div class="container center">
         <!-- <div class="">
           <img src="Img-videos\logo.jpg" alt="DVH Logo" class="logo" />
@@ -42,9 +43,11 @@
             </svg>
             <hr class="line" />
           </div>
-          <input type="text" required />
-          <label>Username</label>
+          <input type="text" id="username" name="username" required />
+          <label>Username/Email</label>
+          <div class="error"></div>
         </div>
+       
         <div class="inputField">
           <div class="icons">
             <svg
@@ -63,14 +66,18 @@
             </svg>
             <hr class="line" />
           </div>
-          <input type="password" required />
+          <input type="password" id="password" name="password" required />
           <label>Password</label>
+          <div class="error"></div>
           <div>
-            <a href="NewPassword.html" class="forPasswd">Forgot password?</a>
+            
+            <a href="NewPassword.html" class="forPasswd" id="forgot-password-link">Forgot password?</a>
           </div>
         </div>
+        
         <div class="loginMar poppins-light">
-          <a href="" class="loginBtn">Login</a>
+          <button type="submit" class="loginBtn">Login</button>
+         <!--<a href="" class="loginBtn">Login</a>-->
         </div>
         <div class="orTag poppins-light">
           <hr class="or" />
@@ -103,17 +110,21 @@
               <path
                 fill="#1565c0"
                 d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
-              ></path></svg
-            >Login with google</a
-          >
+              ></path></svg>
+            Login with google</a>
+          
         </div>
         <div class="registerHereAcc poppins-light">
           <p>
             Don't have an account ?
             <a href="SignUp.html" class="registerHere">Register here</a>
           </p>
+          </div>
         </div>
       </div>
+   
     </div>
+  </form>
+    <script src="JS/Login.js"></script>
   </body>
 </html>
