@@ -85,6 +85,7 @@
   color: white;
 }
 .inputField label {
+  display: block;
   position: absolute;
   top: 25%;
   left: 65px;
@@ -93,6 +94,7 @@
   font-size: 19px;
   pointer-events: none;
   transition: 0.3s;
+  margin-left:10px;
 }
 input:focus {
   border: 2px solid #1cd679;
@@ -109,8 +111,9 @@ input:valid ~ label {
 .error {
   color: #ff3860;
   font-size: 12px;
-  height: 13px;
+  /* height: 13px; */
   font-weight: 500;
+  display: block; 
   /* margin-bottom: 50px; */
 }
 .inputField.error input {
@@ -126,7 +129,6 @@ input:valid ~ label {
     /* background: #000000; */
   }
   margin-bottom: 80px;
-  /* margin-top: 5px; */
   .icons {
     width: 25px;
     position: absolute;
@@ -166,6 +168,7 @@ input:valid ~ label {
   color: #1cd679;
 }
 .loginBtn {
+  background-color: rgba(0, 0, 0, 0);
   border: 2px solid #ecaeff;
   color: white;
   padding: 10px 120px;
@@ -185,7 +188,7 @@ input:valid ~ label {
   font-weight: 600;
 }
 .loginMar {
-  margin: 0px 20px 20px 20px;
+  margin: 20px 20px 20px 20px;
 }
 .loginMar:hover {
   transition: transform 0.2s;
@@ -252,6 +255,28 @@ input:valid ~ label {
 .gapForBottom {
   margin: 5px 0 50px 0;
 }
+
+#message-container {
+  margin: 20px;
+  font-size: 16px;
+}
+
+#message-container div {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#message-container div.success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+#message-container div.error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
 /* @media screen and (max-width: 1300px) {
   .container {
     width: 35%;
