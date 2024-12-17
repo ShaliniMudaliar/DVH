@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
               localStorage.setItem("email", emailValue);
               localStorage.setItem("password", passwordValue);
 
+               // Redirect to OTP page
+               window.location.assign("Otp.html");
+
               // Send the email to the backend to request OTP only if email check is successful
               fetch("http://localhost:3000/send-otp", {
                 method: "POST",
@@ -46,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   if (data.success) {
                     console.log("Email sent successfully.");
                     // Redirect to OTP page
-                    window.location.assign("Otp.html");
+                    // window.location.assign("Otp.html");
                   } else {
                     alert("Error sending OTP: " + data.message);
                   }
