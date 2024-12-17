@@ -14,7 +14,7 @@
     />
   </head>
   <body>
-    <form id="form" method="POST">
+    <form id="form">
     <div class="center">
       <video loop autoplay muted class="BackgroundVideo">
         <source src="Img-videos/loginBackgroundVideo.mp4" type="" />
@@ -43,7 +43,7 @@
             </svg>
             <hr class="line" />
           </div>
-          <input type="text" id="username" name="username" required />
+          <input type="text" id="username" name="username" required autocomplete="off"/>
           <label>Username/Email</label>
           <div class="error"></div>
         </div>
@@ -66,12 +66,12 @@
             </svg>
             <hr class="line" />
           </div>
-          <input type="password" id="password" name="password" required />
+          <input type="password" id="password" name="password" required autocomplete="off"/>
           <label>Password</label>
           <div class="error"></div>
           <div>
             
-            <a href="NewPassword.html" class="forPasswd" id="forgot-password-link">Forgot password?</a>
+            <a href="#" class="forPasswd" id="forgot-password-link">Forgot password?</a>
           </div>
         </div>
         
