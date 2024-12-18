@@ -295,6 +295,37 @@ app.post("/check-email", (req, res) => {
   });
 });
 
+// Route to check if username exists in the database
+app.post("/check-username", (req, res) => {
+  const { username } = req.body;
+
+  // Check if username is provided
+  if (!username) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Username is required." });
+  }
+
+  const query = "SELECT * FROM user WHERE UserName = ?";
+  db.query(query, [username], (error, results) => {
+    if (error) {
+      console.error("Error checking username existence:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Error checking username existence.",
+      });
+    }
+
+    // If username exists, return true; otherwise, return false
+    if (results.length > 0) {
+      return res.json({ exists: true });
+    } else {
+      return res.json({ exists: false });
+    }
+  });
+});
+
+
 // Route to register user (this should be called after OTP verification)
 // This route is used to store user data after OTP verification
 app.post("/register", async (req, res) => {

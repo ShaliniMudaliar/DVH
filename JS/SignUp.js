@@ -15,17 +15,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // If the email is valid, check if it exists in the database
     if (em === true) {
       const emailValue = email.value.trim();
-      checkEmailExistence(emailValue)
-        .then((emailExists) => {
-          if (emailExists) {
-            setError(email, "Email is already taken");
-            em = false;
+      const usernameValue = username.value.trim();
+      Promise.all([
+        checkEmailExistence(emailValue), 
+        checkUsernameExistence(usernameValue)
+      ])
+      .then(([emailExists, usernameExists]) => {
+        if (emailExists) {
+          setError(email, "Email is already taken");
+          em = false;
+        } else if (usernameExists) {
+          setError(username, "Username is already taken");
+          uname = false;
           } else {
             // If email doesn't exist, proceed with other field validations
             validateInputs();
 
             if (uname === true && em === true && pass === true) {
-              const usernameValue = username.value.trim();
+              // const usernameValue = username.value.trim();
               const passwordValue = password.value.trim();
 
               // Store user data in localStorage
@@ -86,6 +93,25 @@ const checkEmailExistence = async (email) => {
     throw new Error("Network or server error"); // Throw error to catch in the caller
   }
 };
+
+// Function to check if the username already exists
+const checkUsernameExistence = async (username) => {
+  try {
+    const response = await fetch("http://localhost:8080/check-username", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: username }),
+    });
+    const data = await response.json();
+    return data.exists; // Backend should return { exists: true/false }
+  } catch (error) {
+    console.error("Error checking username existence:", error);
+    throw new Error("Network or server error"); // Throw error to catch in the caller
+  }
+};
+
 
 // Email Validation function
 const validateEmail = () => {
