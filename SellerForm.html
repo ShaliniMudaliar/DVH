@@ -53,11 +53,11 @@
     <!-- /NavBar ends -->
 
     <!-- Form section starts -->
-    <div class="container">
+<div class="container">
         <h2>Fill the details of the property</h2>
-        <form>
+        <form id="property-form" method="post">
             <label for="heading">Heading of the property</label>
-            <input type="text" id="heading" name="heading">
+            <input type="text" id="heading" name="heading" required>
 
             <!-- Description section starts -->
             <label for="description">Description of the property</label>
@@ -100,6 +100,8 @@
                         <!-- <ul id="descriptionList"></ul> -->
                         <textarea id="finalDescription" onkeypress="handleTextareaKeyPress(event)"></textarea>
                     </div>
+                     <!-- Error message for description -->
+    <span id="descriptionError" style="color: red; display: none;">Please select or enter a description.</span>
             </div>
      <!-- /Description section endss -->
 
@@ -113,17 +115,17 @@
             </div>
 
             <label id="priceLabel" for="price">Price of the property</label>
-            <input type="number" id="price" name="price">
+            <input type="number" id="price" name="price" required>
 
             <label id="depositLabel" for="deposit" style="display:none;">Deposit Amount</label>
             <input type="number" id="deposit" name="deposit" style="display:none;">
         <!-- /sell/rent section endss -->
 
             <label for="address">Address of the property</label>
-            <input type="text" id="address" name="address">
+            <input type="text" id="address" name="address" required>
 
             <label for="city">City of the property</label>
-            <select id="city" name="city" style="width: 100%;">
+            <select id="city" name="city" style="width: 100%;" required>
                 <option>Select City</option>
                 <option value="Mumbai">Mumbai</option>
                 <option value="Delhi">Delhi</option>
@@ -148,7 +150,7 @@
             </select>
 
             <label for="state">State of the property</label>
-            <select id="state" name="state" style="width: 100%;">
+            <select id="state" name="state" style="width: 100%;" required>
                 <option>Select State</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
                 <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -189,10 +191,10 @@
             </select>
 
             <label for="zipcode">Zipcode of the property</label>
-            <input type="text" id="zipcode" name="zipcode">
+            <input type="text" id="zipcode" name="zipcode" required>
 
             <label for="property_type">Property type</label>
-            <select id="property_type" name="property_type" style="width: 100%;">
+            <select id="property_type" name="property_type" style="width: 100%;" required>
                 <option>Select Property Type</option>
                 <option>Apartment</option>
 		        <option>Chawl</option>
@@ -201,22 +203,22 @@
             </select>
 
             <label for="bedrooms">Numbers of Bedroom</label>
-            <input type="number" id="bedrooms" name="bedrooms" min="0">
+            <input type="number" id="bedrooms" name="bedrooms" min="0" required>
 
             <label for="bathrooms">Numbers of Bathroom</label>
-            <input type="number" id="bathrooms" name="bathrooms" min="0">
+            <input type="number" id="bathrooms" name="bathrooms" min="0" required>
 
             <label for="year_built">Year Built</label>
-            <input type="number" id="year_built" name="year_built" min="1900">
+            <input type="number" id="year_built" name="year_built" min="1900" required>
 
             <label for="square_feet">Square Feet</label>
-            <input type="text" id="square_feet" name="square_feet">
+            <input type="text" id="square_feet" name="square_feet" required>
 
             <label for="floor">Floor</label>
-            <input type="number" id="floor" name="floor" min="0">
+            <input type="number" id="floor" name="floor" min="0" required>
 
             <label for="facing">Facing</label>
-            <select id="facing" name="facing" style="width: 100%;">
+            <select id="facing" name="facing" style="width: 100%;" required>
                 <option>Select Facing</option>
                 <option>East</option>
 		        <option>West</option>
@@ -227,87 +229,88 @@
             <label for="amenities">Amenities of the property</label>
             <div class="amenity-container">
                 <div class="amenity">
-                    <input type="checkbox" id="Hall">
+                    <input type="checkbox" id="Hall" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/6688/6688715.png"></i>
                     <label for="Hall">Multipurpose Hall</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="gym">
+                    <input type="checkbox" id="gym" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/6061/6061858.png"></i>
                     <label for="gym">Gym/YogaCenter</label>
                 </div>
                 
                 <div class="amenity">
-                    <input type="checkbox" id="parking">
+                    <input type="checkbox" id="parking" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/708/708949.png"></i>
                     <label for="parking">Parking</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="garden">
+                    <input type="checkbox" id="garden" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2204/2204154.png"></i>
                     <label for="garden">Garden</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="watersupply">
+                    <input type="checkbox" id="watersupply" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2634/2634366.png"></i>
                     <label for="watersupply">24*7 Water Supply</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="security">
+                    <input type="checkbox" id="security" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2642/2642550.png"></i>
                     <label for="security">Security/CCTV</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="lift">
+                    <input type="checkbox" id="lift" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/3503/3503695.png"></i>
                     <label for="lift">Lift</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="ground">
+                    <input type="checkbox" id="ground" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2883/2883680.png"></i>
                     <label for="ground">Playground</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="streetlight">
+                    <input type="checkbox" id="streetlight" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2434/2434097.png"></i>
                     <label for="streetlight">Street Light</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="library">
+                    <input type="checkbox" id="library" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/5186/5186208.png"></i>
                     <label for="library">Library</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="firesystem">
+                    <input type="checkbox" id="firesystem" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/11389/11389913.png"></i>
                     <label for="firesystem">Fire Fighting system</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="indoorgames">
+                    <input type="checkbox" id="indoorgames" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/6651/6651749.png"></i>
                     <label for="indoorgames">Indoor Games</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="solar">
+                    <input type="checkbox" id="solar" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/12996/12996887.png"></i>
                     <label for="solar">Solar Energy</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="swimming-pool">
+                    <input type="checkbox" id="swimming-pool" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/2784/2784593.png"></i>
                     <label for="swimming-pool">Swimming Pool</label>
                 </div>
                 <div class="amenity">
-                    <input type="checkbox" id="rainwater">
+                    <input type="checkbox" id="rainwater" name="amenities">
                     <i class="amenity-icon"><img src="https://cdn-icons-png.flaticon.com/128/16998/16998783.png"></i>
                     <label for="rainwater">Rainwater Harvesting</label>
                 </div>
+                <span id="amenitiesError" style="color: red; display: none;">Please select at least one amenity.</span>
             </div>
 <!-- /Amenity section ends -->
 
  <!-- photo upload starts -->
             <label for="upload">Upload photos of the property</label>
-            <input type="file" id="photos" name="photos" multiple onchange="checkPhotosLimit()" accept="image/*">
+            <input type="file" id="photos" name="photos[]" multiple onchange="checkPhotosLimit()" accept="image/*" required>
             <div></div>
             <button type="button" onclick="document.getElementById('photos').click()">+ Add photos</button>
             <div></div>
@@ -321,6 +324,6 @@
       <!-- /Form section ends -->
     
 <script src="JS/SellerForm.js"></script>
-<script src="JS/SProfileForSeller.js"></script>
+<!-- <script src="JS/SProfileForSeller.js"></script> -->
 </body>
 </html>
