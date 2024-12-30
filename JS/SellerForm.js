@@ -150,7 +150,8 @@ function validateForm() {
 }
 
 // Retrieve email from localStorage
-const userEmail = localStorage.getItem("username");
+const userEmail =
+  localStorage.getItem("email") || localStorage.getItem("username");
 
 document.getElementById("property-form").onsubmit = function (event) {
   event.preventDefault();
