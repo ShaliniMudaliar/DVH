@@ -18,7 +18,6 @@ app.post("/send-otp", (req, res) => {
 
   // Generate a random 6-digit OTP
   generatedOtp = Math.floor(100000 + Math.random() * 900000);
-  console.log("Generated OTP for registration:", generatedOtp);
 
   // Configure nodemailer transport (using Gmail in this case)
   const transporter = nodemailer.createTransport({

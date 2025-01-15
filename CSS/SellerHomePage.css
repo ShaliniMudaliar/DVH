@@ -22,7 +22,7 @@ header {
 .top {
   display: flex;
   align-items: center;
-  gap: 30px;
+  /* gap: 10px; */
 }
 .logo {
   display: flex;
@@ -32,6 +32,7 @@ header {
   width: 10%;
   /* height: 60px; */
   margin-right: 10px;
+
   border-radius: 40px;
 }
 .antonio {
@@ -62,6 +63,7 @@ header {
   background-color: #d3d3d3;
   border-radius: 50%;
   margin-right: 5px;
+  margin-left: 20px;
   cursor: pointer;
   transition: transform 0.3s;
 }
@@ -128,11 +130,13 @@ header {
   /* width: 90%; */
   margin: 20px 10px;
   display: flex;
+  flex-direction: column-reverse;
+  overflow-x: hidden;
   align-items: center;
   /* justify-content: center; */
   gap: 2%;
   flex-wrap: nowrap;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 .property-card {
@@ -225,7 +229,8 @@ header {
   margin-right: 10px;
   display: flex;
   align-items: center;
-  position: absolute;
+
+  /* position: absolute; */
   top: 70%;
   right: 10px;
   gap: 30px;
@@ -235,6 +240,7 @@ header {
   text-decoration: none;
   font-size: 18px;
   color: #0a0111;
+  display: flex;
 }
 .property-price {
   font-size: 20px;
@@ -287,15 +293,15 @@ header {
   justify-content: center;
   color: white;
 }
-.content {
+/* .content {
   display: grid;
   grid-template-columns: auto auto auto;
   align-items: center;
-  padding: 30px;
-  margin-left: 10%;
-  /* justify-content: center; */
-  gap: 17%;
-}
+  padding: 10px 30px;
+  /* margin-left: 10%; */
+/* justify-content: center; */
+/* gap: 17%; */
+/* } */
 li,
 li a {
   display: flex;
@@ -457,6 +463,7 @@ li a:hover {
     gap: 5px;
     right: 0px;
     top: 71%;
+    /* display: flex; */
     flex-direction: column;
   }
   .property-views {
@@ -472,8 +479,11 @@ li a:hover {
   .property-info .property-icons {
     gap: 5px;
   }
-  .property-date a {
+  .property-date a,
+  svg {
     font-size: 12px;
+    width: 10px;
+    /* display: flex; */
   }
   .addCard {
     font-size: medium;

@@ -50,7 +50,12 @@ const sendOtpEmail = (email, otp) => {
     from: "dreamviewhouserealestate@gmail.com", // Your email address
     to: email,
     subject: "Your OTP Code",
-    text: `Your OTP for password reset is: ${otp}. It is valid for 10 minutes.`,
+    text: `Thank you for choosing Dream View House Real Estate. To complete your request, please use the One-Time Password (OTP) below to verify your identity:
+Your OTP:  ${otp}
+This OTP is valid for the next 10 minutes. If you did not request this verification, please ignore this message.
+If you have any questions or need assistance, feel free to contact us.
+Best regards,
+The Dream View House Real Estate Team`,
   };
 
   return transporter.sendMail(mailOptions);
@@ -229,7 +234,7 @@ app.post("/login", (req, res) => {
     }
 
     const user = results[0];
-    
+
     // Compare passwords using bcrypt
     bcrypt.compare(password, user.Password, (err, isMatch) => {
       if (err) {
@@ -246,20 +251,27 @@ app.post("/login", (req, res) => {
           .json({ success: false, message: "Incorrect password" });
       }
 
-      const token = jwt.sign({
-         id: user.UserID, username: user.UserName, email: user.Email},
-        "your_jwt_secret_key", {
-        expiresIn: "1h",
-      });
+      const token = jwt.sign(
+        {
+          id: user.UserID,
+          username: user.UserName,
+          email: user.Email,
+        },
+        "your_jwt_secret_key",
+        {
+          expiresIn: "1h",
+        }
+      );
 
       res.cookie("authToken", token, {
-         httpOnly: true, 
-         maxAge: 3600000
-         });
+        httpOnly: true,
+        maxAge: 3600000,
+      });
 
       res.json({
         success: true,
-        message: "Login successful", token
+        message: "Login successful",
+        token,
       });
     });
   });
@@ -325,7 +337,6 @@ app.post("/check-username", (req, res) => {
   });
 });
 
-
 // Route to register user (this should be called after OTP verification)
 // This route is used to store user data after OTP verification
 app.post("/register", async (req, res) => {
@@ -380,8 +391,6 @@ app.post("/register", async (req, res) => {
     });
   });
 });
-
-
 
 // Start Server
 app.listen(8080, () => {

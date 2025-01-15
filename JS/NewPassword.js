@@ -105,6 +105,7 @@ const resetPassword = async (event) => {
     console.log(result);
     if (response.ok && result.success) {
       window.location.href = "Login.html"; // Redirect to login
+      localStorage.removeItem("email");
     } else if (result.message.includes("Incorrect OTP.")) {
       document.querySelector(".msgForOtp").innerText = result.message;
       document.querySelector(".msgForOtp").style.backgroundColor = "#de9b9b";

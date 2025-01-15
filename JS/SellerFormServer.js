@@ -97,9 +97,10 @@ app.post("/api/saveProperty", upload.array("photos[]", 7), async (req, res) => {
 
   try {
     // Step 1: Fetch user ID from MySQL using email
-    const [rows] = await db.query("SELECT UserID FROM user WHERE Email = ?", [
-      email,
-    ]); // Using .query() with promises
+    const [rows] = await db.query(
+      "SELECT UserID FROM user WHERE UserName = ? OR Email = ?",
+      [email, email]
+    ); // Using .query() with promises
 
     if (rows.length > 0) {
       const userId = rows[0].UserID;
@@ -115,9 +116,9 @@ app.post("/api/saveProperty", upload.array("photos[]", 7), async (req, res) => {
         userId,
         heading,
         description,
+        sellOrRent,
         price,
         depositAmount: sellOrRent === "rent" ? depositAmount : null,
-        sellOrRent,
         address,
         city,
         state,

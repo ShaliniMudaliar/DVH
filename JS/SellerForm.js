@@ -48,7 +48,6 @@ function togglePriceFields() {
     depositField.style.display = "inline-block";
   }
 }
-
 // Function to toggle a description item in the textarea
 function toggleDescription(checkbox, description) {
   const descriptionList = document.getElementById("finalDescription");
@@ -82,7 +81,6 @@ function addCustomDescription() {
     customInput.value = ""; // Clear the custom input field after adding
   }
 }
-
 function checkPhotosLimit() {
   const photosInput = document.getElementById("photos");
   const photoError = document.getElementById("photo-error");
@@ -110,7 +108,6 @@ function checkPhotosLimit() {
     reader.readAsDataURL(file);
   });
 }
-
 // Form validation before submission
 function validateForm() {
   // Check if at least one checkbox is checked or if custom description is entered
@@ -149,11 +146,129 @@ function validateForm() {
   return true;
 }
 
-// Retrieve email from localStorage
-const userEmail =
-  localStorage.getItem("email") || localStorage.getItem("username");
+async function fetchPropertyDetailsForEdit(propertyId) {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/getPropertyDetailsById?propertyId=${propertyId}`
+    );
+    const property = await response.json();
+
+    if (!property || !property.photos) {
+      alert("Property not found or no photos.");
+      return;
+    }
+
+    // Fill the form with the fetched property details
+    document.getElementById("heading").value = property.heading;
+    document.getElementById("finalDescription").value = property.description;
+    document.getElementById("price").value = property.price;
+    document.getElementById("deposit").value = property.depositAmount;
+    document.getElementById("address").value = property.address;
+    document.getElementById("city").value = property.city;
+    document.getElementById("state").value = property.state;
+    document.getElementById("zipcode").value = property.zipcode;
+    document.getElementById("property_type").value = property.propertyType;
+    document.getElementById("bedrooms").value = property.bedrooms;
+    document.getElementById("bathrooms").value = property.bathrooms;
+    document.getElementById("year_built").value = property.yearBuilt;
+    document.getElementById("square_feet").value = property.squareFeet;
+    document.getElementById("floor").value = property.floor;
+    document.getElementById("facing").value = property.facing;
+
+    // Trigger select2 change events to update the dropdowns
+    $("#city").val(property.city).trigger("change");
+    $("#state").val(property.state).trigger("change");
+    $("#property_type").val(property.propertyType).trigger("change");
+    $("#facing").val(property.facing).trigger("change");
+
+    // Pre-select the amenities
+    if (property.amenities && property.amenities.length > 0) {
+      property.amenities.forEach((amenity) => {
+        const checkbox = document.querySelector(`input[id='${amenity}']`);
+        if (checkbox) {
+          checkbox.checked = true;
+        }
+      });
+    }
+    // Set the sell/rent radio button
+    if (property.sellOrRent === "sell") {
+      document.getElementById("sell").checked = true;
+    } else if (property.sellOrRent === "rent") {
+      document.getElementById("rent").checked = true;
+    }
+    // Call togglePriceFields to adjust price/deposit fields based on the radio button
+    togglePriceFields();
+
+    // Display all images from the 'photos' field
+    const imagesContainer = document.getElementById("image-preview");
+    imagesContainer.innerHTML = ""; // Clear existing images list
+    if (property.photos && property.photos.length > 0) {
+      property.photos.forEach((imageUrl, index) => {
+        const imgElement = document.createElement("img");
+        imgElement.src = `JS/${imageUrl}`;
+        imgElement.alt = `Image ${index + 1}`;
+        imgElement.classList.add("property-image");
+        imgElement.style.maxWidth = "100px";
+        imgElement.style.margin = "5px";
+        imagesContainer.appendChild(imgElement);
+      });
+
+      // Do not require new photos if there are already existing photos
+      document.getElementById("photos").required = false;
+    }
+    // const photos = document.getElementById("photos").files;
+    if (photos.length === 0) {
+      document.getElementById("photos").required = true;
+      return;
+    }
+    // Store the existing photos in a global variable
+    window.existingPhotos = property.photos;
+
+    // Set the propertyId for the update operation
+    // document.getElementById("property-id").value = property.propertyId;
+  } catch (error) {
+    console.error("Error fetching property details:", error);
+  }
+}
+
+window.onload = function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const propertyId = urlParams.get("propertyId");
+
+  if (!propertyId) {
+    alert("Property ID is required in the URL.");
+    return;
+  }
+
+  // console.log("Editing property with ID:", propertyId); // Verify in console
+  fetchPropertyDetailsForEdit(propertyId);
+
+  // Attach the submit handler to the form
+  // document.getElementById("property-form").onsubmit = function (event) {
+  //   event.preventDefault();
+  //   handleUpdateSubmit(event, propertyId);
+  // };
+};
 
 document.getElementById("property-form").onsubmit = function (event) {
+  event.preventDefault();
+
+  const propertyId = new URLSearchParams(window.location.search).get(
+    "propertyId"
+  );
+
+  if (propertyId) {
+    console.log(propertyId + "  1");
+    // If propertyId exists, update the existing property
+    handleUpdateSubmit(event, propertyId);
+  } else {
+    // Else, create a new property
+    handleCreateSubmit(event);
+  }
+};
+const userEmail =
+  localStorage.getItem("email") || localStorage.getItem("username");
+async function handleCreateSubmit(event) {
   event.preventDefault();
   if (validateForm()) {
     var amenitiesSelected = document.querySelectorAll(
@@ -241,11 +356,12 @@ document.getElementById("property-form").onsubmit = function (event) {
     formData.append("squareFeet", squareFeet);
     formData.append("floor", floor);
     formData.append("facing", facing);
+    formData.append("sellOrRent", sellOrRent.value);
     formData.append("amenities", JSON.stringify(amenities));
 
     if (photos instanceof FileList) {
       Array.from(photos).forEach((photo) => {
-        formData.append("photos[]", photo);
+        formData.append("photos", photo);
       });
     }
 
@@ -277,4 +393,108 @@ document.getElementById("property-form").onsubmit = function (event) {
         alert(`There was an error saving the property: ${error.message}`);
       });
   }
-};
+}
+
+async function handleUpdateSubmit(event, propertyId) {
+  event.preventDefault(); // Prevent default form submission
+
+  const formData = new FormData();
+  const heading = document.getElementById("heading").value;
+  const description = document.getElementById("finalDescription").value;
+  const price = document.getElementById("price").value;
+  const address = document.getElementById("address").value;
+  const city = document.getElementById("city").value;
+  const state = document.getElementById("state").value;
+  const zipcode = document.getElementById("zipcode").value;
+  const propertyType = document.getElementById("property_type").value;
+  const bedrooms = document.getElementById("bedrooms").value;
+  const bathrooms = document.getElementById("bathrooms").value;
+  const yearBuilt = document.getElementById("year_built").value;
+  const squareFeet = document.getElementById("square_feet").value;
+  const floor = document.getElementById("floor").value;
+  const facing = document.getElementById("facing").value;
+  const sellOrRent = document.querySelector('input[name="sellOrRent"]:checked');
+
+  // Collect amenities
+  const amenities = [];
+  document
+    .querySelectorAll('input[name="amenities"]:checked')
+    .forEach((checkbox) => amenities.push(checkbox.id));
+
+  // Append data to formData
+  formData.append("propertyId", propertyId);
+  formData.append("heading", heading);
+  formData.append("description", description);
+  formData.append("price", price);
+  formData.append("address", address);
+  formData.append("city", city);
+  formData.append("state", state);
+  formData.append("zipcode", zipcode);
+  formData.append("propertyType", propertyType);
+  formData.append("bedrooms", bedrooms);
+  formData.append("bathrooms", bathrooms);
+  formData.append("yearBuilt", yearBuilt);
+  formData.append("squareFeet", squareFeet);
+  formData.append("floor", floor);
+  formData.append("facing", facing);
+  formData.append("sellOrRent", sellOrRent.value);
+  formData.append("amenities", JSON.stringify(amenities));
+
+  // If the property is for rent, append the deposit amount
+  if (sellOrRent.value === "rent") {
+    const depositAmount = document.getElementById("deposit").value;
+    if (!depositAmount || depositAmount <= 0) {
+      alert("Please enter a valid deposit amount for the property.");
+      return;
+    }
+    formData.append("depositAmount", depositAmount);
+  }
+
+  // Check if new photos were uploaded
+  const photos = document.getElementById("photos").files;
+  if (photos.length > 0) {
+    Array.from(photos).forEach((photo) => {
+      formData.append("photos[]", photo);
+    });
+  }
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/updateProperty/${propertyId}`,
+      {
+        method: "PUT", // Using PUT for updating
+        body: formData,
+      }
+    );
+
+    const text = await response.text(); // Get raw response text
+    console.log("Raw response:", text); // Log raw response
+
+    if (!response.ok) {
+      // If the response status is not OK, it means there was an error
+      throw new Error("Error updating property: " + text);
+    }
+
+    // Try parsing the response as JSON
+    let data;
+    try {
+      data = JSON.parse(text); // Parse the JSON if the response is JSON
+      console.log("Response data:", data);
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      alert("Failed to parse server response.");
+      return;
+    }
+
+    // Check the success message and redirect
+    if (data.message === "Property updated successfully") {
+      window.location.href = "SellerHomePage.html"; // Redirect after successful update
+    } else {
+      console.error("Update failed:", data.message);
+      alert("Update failed: " + data.message);
+    }
+  } catch (error) {
+    console.error("Error updating property:", error);
+    alert("An error occurred while updating the property.");
+  }
+}

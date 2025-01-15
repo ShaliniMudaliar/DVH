@@ -17,16 +17,16 @@ document.addEventListener("DOMContentLoaded", function () {
       const emailValue = email.value.trim();
       const usernameValue = username.value.trim();
       Promise.all([
-        checkEmailExistence(emailValue), 
-        checkUsernameExistence(usernameValue)
+        checkEmailExistence(emailValue),
+        checkUsernameExistence(usernameValue),
       ])
-      .then(([emailExists, usernameExists]) => {
-        if (emailExists) {
-          setError(email, "Email is already taken");
-          em = false;
-        } else if (usernameExists) {
-          setError(username, "Username is already taken");
-          uname = false;
+        .then(([emailExists, usernameExists]) => {
+          if (emailExists) {
+            setError(email, "Email is already taken");
+            em = false;
+          } else if (usernameExists) {
+            setError(username, "Username is already taken");
+            uname = false;
           } else {
             // If email doesn't exist, proceed with other field validations
             validateInputs();
@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
               localStorage.setItem("email", emailValue);
               localStorage.setItem("password", passwordValue);
 
-               // Redirect to OTP page
-               window.location.assign("Otp.html");
+              // Redirect to OTP page
+              window.location.assign("Otp.html");
 
               // Send the email to the backend to request OTP only if email check is successful
               fetch("http://localhost:3000/send-otp", {
@@ -112,7 +112,6 @@ const checkUsernameExistence = async (username) => {
   }
 };
 
-
 // Email Validation function
 const validateEmail = () => {
   const emailValue = email.value.trim();
@@ -174,7 +173,7 @@ const setError = (element, message) => {
   const errorDisplay = inputControl.querySelector(".error");
   errorDisplay.innerText = message;
   inputControl.classList.add("error");
-  inputControl.classList.add("label");
+  // inputControl.classList.add("label");
 };
 
 const setSuccess = (element) => {
@@ -182,7 +181,7 @@ const setSuccess = (element) => {
   const errorDisplay = inputControl.querySelector(".error");
   errorDisplay.innerText = "";
   inputControl.classList.remove("error");
-  inputControl.classList.remove("label");
+  // inputControl.classList.remove("label");
 };
 
 // Verify OTP and send user data to backend
@@ -221,6 +220,8 @@ document.getElementById("verify-otp").addEventListener("click", function () {
           .then((data) => {
             if (data.success) {
               window.location.assign("Choose.html"); // Example redirect
+              localStorage.removeItem("email");
+              localStorage.removeItem("password");
             } else {
               alert("Registration failed: " + data.message);
             }
