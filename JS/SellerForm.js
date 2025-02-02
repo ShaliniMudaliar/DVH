@@ -1,3 +1,5 @@
+const PortForUrlID = 3003;
+const PortForSaveProperty = 3002;
 $(document).ready(function () {
   // Initialize select2 for city, state, property type, and facing
   $("#city").select2({
@@ -149,7 +151,7 @@ function validateForm() {
 async function fetchPropertyDetailsForEdit(propertyId) {
   try {
     const response = await fetch(
-      `http://localhost:3000/getPropertyDetailsById?propertyId=${propertyId}`
+      `http://localhost:${PortForUrlID}/getPropertyDetailsById?propertyId=${propertyId}`
     );
     const property = await response.json();
 
@@ -236,7 +238,7 @@ window.onload = function () {
   const propertyId = urlParams.get("propertyId");
 
   if (!propertyId) {
-    alert("Property ID is required in the URL.");
+    // alert("Property ID is required in the URL.");
     return;
   }
 
@@ -266,8 +268,7 @@ document.getElementById("property-form").onsubmit = function (event) {
     handleCreateSubmit(event);
   }
 };
-const userEmail =
-  localStorage.getItem("email") || localStorage.getItem("username");
+const userEmail = localStorage.getItem("username");
 async function handleCreateSubmit(event) {
   event.preventDefault();
   if (validateForm()) {
@@ -374,7 +375,7 @@ async function handleCreateSubmit(event) {
       formData.append("depositAmount", depositAmount);
     }
 
-    fetch("http://localhost:3000/api/saveProperty", {
+    fetch(`http://localhost:${PortForSaveProperty}/api/saveProperty`, {
       method: "POST",
       body: formData,
     })
@@ -460,7 +461,7 @@ async function handleUpdateSubmit(event, propertyId) {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/updateProperty/${propertyId}`,
+      `http://localhost:${PortForUrlID}/updateProperty/${propertyId}`,
       {
         method: "PUT", // Using PUT for updating
         body: formData,

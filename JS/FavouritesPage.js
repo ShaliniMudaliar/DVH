@@ -1,3 +1,4 @@
+const PORT = 3001;
 // Function to set cookies
 function setCookie(name, value, days) {
   const expires = new Date(
@@ -30,7 +31,7 @@ function getCookie(name) {
 // Fetch userId for a given username
 async function getUserIdFromUsername(username) {
   try {
-    const response = await fetch("http://localhost:3000/getUserId", {
+    const response = await fetch(`http://localhost:${PORT}/getUserId`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

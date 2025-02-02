@@ -19,7 +19,6 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-
 // Database Connection
 const db = mysql.createConnection({
   host: "localhost",
@@ -27,7 +26,6 @@ const db = mysql.createConnection({
   password: "",
   database: "account",
 });
-
 db.connect((err) => {
   if (err) {
     console.error("Database connection failed:", err);

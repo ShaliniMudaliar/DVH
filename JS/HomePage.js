@@ -1,3 +1,4 @@
+const PORT = 3001;
 let slideIndex = 0;
 const slides = document.querySelectorAll(".slide");
 const dots = document.querySelectorAll(".dot");
@@ -143,7 +144,9 @@ function toggleFavorite(event, propertyData, userId) {
 // Function to get all property details from the backend
 async function fetchAllPropertyDetails(userId) {
   try {
-    const response = await fetch("http://localhost:3000/getAllProperties");
+    // Show the loading spinner
+    document.getElementById("loading").style.display = "flex";
+    const response = await fetch("http://localhost:3001/getAllProperties");
 
     if (!response.ok) {
       throw new Error("Failed to fetch property details");
@@ -176,7 +179,7 @@ async function fetchAllPropertyDetails(userId) {
       );
 
       propertyContainer.innerHTML += `
-        <div class="property-card">
+        <div class="property-card" data-property-id="${property.propertyId}">
           <div class="property-image" style="background-image: url('${imageUrl}');"></div>
           <div class="property-details">
             <div>
@@ -199,9 +202,8 @@ async function fetchAllPropertyDetails(userId) {
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                 </svg>
-
               </div>
-             <div class="property-views">
+              <div class="property-views">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="18px" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 eye">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
@@ -210,11 +212,37 @@ async function fetchAllPropertyDetails(userId) {
               </div>
               <div class="property-price">Price: ₹${property.price}</div>
               <div class="property-date">Posted: ${property.createdAtAgo}</div>
-            
             </div>
           </div>
         </div>
       `;
+    });
+    // Hide the loading spinner after data is loaded
+    document.getElementById("loading").style.display = "none";
+
+    // Add event listener using event delegation
+    propertyContainer.addEventListener("click", (event) => {
+      // Check if the clicked target is an SVG or any element inside it
+      if (event.target.closest("svg")) {
+        // If an SVG was clicked, stop the event from propagating
+        event.stopPropagation();
+        return; // Prevent further action
+      }
+
+      // Check if the clicked target is a property card (if it's a direct child of .property-card)
+      if (event.target.closest(".property-card")) {
+        const propertyCard = event.target.closest(".property-card");
+        const propertyId = propertyCard.getAttribute("data-property-id");
+        const property = propertyData.find((p) => p.propertyId === propertyId);
+
+        if (property) {
+          // Store the property details in sessionStorage
+          sessionStorage.setItem("selectedProperty", JSON.stringify(property));
+
+          // Redirect to the item page
+          window.location.href = "itempage.html";
+        }
+      }
     });
 
     // Add event listeners to all heartWrapper elements after DOM is updated
@@ -228,13 +256,14 @@ async function fetchAllPropertyDetails(userId) {
     console.error("Error fetching property details:", error);
     document.querySelector(".property-card").innerHTML =
       "<p>Error loading property details. Please try again later.</p>";
+    document.getElementById("loading").style.display = "none"; // Hide spinner if there's an error
   }
 }
 
 // Function to get the userId from the backend based on username
 async function getUserIdFromUsername(username) {
   try {
-    const response = await fetch("http://localhost:3000/getUserId", {
+    const response = await fetch(`http://localhost:${PORT}/getUserId`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Ensure you're sending JSON

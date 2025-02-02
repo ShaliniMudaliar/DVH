@@ -2,6 +2,26 @@ const form = document.getElementById("form");
 const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
+
+// Get elements
+const passwordField = document.getElementById("password");
+const openEye = document.querySelector(".open_eye");
+const closeEye = document.querySelector(".close_eye");
+
+// Add event listener to open eye icon
+openEye.addEventListener("click", () => {
+  passwordField.type = "text"; // Show password
+  openEye.style.display = "none"; // Hide open eye
+  closeEye.style.display = "block"; // Show close eye
+});
+
+// Add event listener to close eye icon
+closeEye.addEventListener("click", () => {
+  passwordField.type = "password"; // Hide password
+  closeEye.style.display = "none"; // Hide close eye
+  openEye.style.display = "block"; // Show open eye
+});
+
 let uname = true;
 let em = true;
 let pass = true;

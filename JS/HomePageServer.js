@@ -18,6 +18,7 @@ const pool = mysql.createPool({
   user: "root",
   password: "",
   database: "account",
+  port: 3306,
 });
 
 // Route to fetch userId based on username or email
@@ -28,7 +29,7 @@ app.post("/getUserId", async (req, res) => {
     if (!username) {
       return res.status(400).json({ error: "Username is required" });
     }
-
+    console.log("sql");
     // Query to get the userId where either UserName or Email matches the same value
     const query = "SELECT UserID FROM user WHERE UserName = ? OR Email = ?";
 
@@ -50,35 +51,6 @@ app.post("/getUserId", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-// // Endpoint to fetch userId based on username or email
-// app.get("/api/getUserId", async (req, res) => {
-//   const { username } = req.query; // Username is being passed here
-
-//   if (!username) {
-//     return res.status(400).json({ error: "Username is required" });
-//   }
-
-//   try {
-//     // Query to fetch the UserID based on either UserName or Email
-//     const [rows] = await pool.query(
-//       "SELECT UserID FROM user WHERE UserName = ? OR Email = ?",
-//       [username, username]
-//     );
-
-//     if (rows.length > 0) {
-//       const userId = rows[0].UserID;
-//       return res.json({ userId });
-//     } else {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     return res
-//       .status(500)
-//       .json({ error: "An error occurred while fetching userId" });
-//   }
-// });
 
 // MongoDB Connection
 const mongoUrl = "mongodb+srv://DVH:ishalu2627@clusterdvh.3sbj7.mongodb.net/";
@@ -107,12 +79,26 @@ async function getAllProperties(callback) {
     // Map through properties and format the required data
     const propertyData = properties.map((property) => ({
       firstImage: property.photos ? property.photos[0] : "",
+      allImage: property.photos,
       propertyId: property.propertyId,
       heading: property.heading,
       address: property.address,
       price: property.price,
       city: property.city,
       state: property.state,
+      userId: property.userId,
+      description: property.description,
+      depositAmount: property.depositAmount,
+      sellOrRent: property.sellOrRent,
+      zipcode: property.zipcode,
+      propertyType: property.propertyType,
+      bedrooms: property.bedrooms,
+      bathrooms: property.bathrooms,
+      yearBuilt: property.yearBuilt,
+      squareFeet: property.squareFeet,
+      floor: property.floor,
+      facing: property.facing,
+      amenities: property.amenities,
       createdAtAgo: getTimeAgo(property.createdAt),
     }));
 
@@ -128,11 +114,27 @@ async function getAllProperties(callback) {
 function getTimeAgo(date) {
   const now = new Date();
   const diffInSeconds = Math.floor((now - new Date(date)) / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInSeconds / (60 * 60));
   const diffInDays = Math.floor(diffInSeconds / (60 * 60 * 24));
+  const diffInMonths = Math.floor(diffInDays / 30); // Approximate number of days in a month
+  const diffInYears = Math.floor(diffInDays / 365); // Approximate number of days in a year
 
-  if (diffInDays <= 0) return "Today";
+  if (diffInSeconds < 60) return "Just now"; // less than a minute
+  if (diffInMinutes === 1) return "1 minute ago";
+  if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+
+  if (diffInHours === 1) return "1 hour ago";
+  if (diffInHours < 24) return `${diffInHours} hours ago`;
+
   if (diffInDays === 1) return "1 day ago";
-  return `${diffInDays} days ago`;
+  if (diffInDays < 30) return `${diffInDays} days ago`;
+
+  if (diffInMonths === 1) return "1 month ago";
+  if (diffInMonths < 12) return `${diffInMonths} months ago`;
+
+  if (diffInYears === 1) return "1 year ago";
+  return `${diffInYears} years ago`;
 }
 
 app.get("/getAllProperties", (req, res) => {
@@ -146,7 +148,7 @@ app.get("/getAllProperties", (req, res) => {
 });
 
 // Start the server
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

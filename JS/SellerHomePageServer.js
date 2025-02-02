@@ -118,11 +118,27 @@ async function getPropertyDetails(userId, callback) {
 function getTimeAgo(date) {
   const now = new Date();
   const diffInSeconds = Math.floor((now - new Date(date)) / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInSeconds / (60 * 60));
   const diffInDays = Math.floor(diffInSeconds / (60 * 60 * 24));
+  const diffInMonths = Math.floor(diffInDays / 30); // Approximate number of days in a month
+  const diffInYears = Math.floor(diffInDays / 365); // Approximate number of days in a year
 
-  if (diffInDays <= 0) return "Today";
+  if (diffInSeconds < 60) return "Just now"; // less than a minute
+  if (diffInMinutes === 1) return "1 minute ago";
+  if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+
+  if (diffInHours === 1) return "1 hour ago";
+  if (diffInHours < 24) return `${diffInHours} hours ago`;
+
   if (diffInDays === 1) return "1 day ago";
-  return `${diffInDays} days ago`;
+  if (diffInDays < 30) return `${diffInDays} days ago`;
+
+  if (diffInMonths === 1) return "1 month ago";
+  if (diffInMonths < 12) return `${diffInMonths} months ago`;
+
+  if (diffInYears === 1) return "1 year ago";
+  return `${diffInYears} years ago`;
 }
 
 // Example route to serve property data for a given email/username
@@ -291,7 +307,7 @@ app.put(
 );
 
 // Start the server
-const PORT = 3000;
+const PORT = 3003;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

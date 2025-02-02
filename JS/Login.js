@@ -3,6 +3,24 @@ const form = document.getElementById("form");
 const username = document.getElementById("username");
 const password = document.getElementById("password");
 const forgotPasswordLink = document.getElementById("forgot-password-link");
+// Get elements
+const passwordField = document.getElementById("password");
+const openEye = document.querySelector(".open_eye");
+const closeEye = document.querySelector(".close_eye");
+
+// Add event listener to open eye icon
+openEye.addEventListener("click", () => {
+  passwordField.type = "text"; // Show password
+  openEye.style.display = "none"; // Hide open eye
+  closeEye.style.display = "block"; // Show close eye
+});
+
+// Add event listener to close eye icon
+closeEye.addEventListener("click", () => {
+  passwordField.type = "password"; // Hide password
+  closeEye.style.display = "none"; // Hide close eye
+  openEye.style.display = "block"; // Show open eye
+});
 
 // Event Listeners
 form.addEventListener("submit", (e) => {

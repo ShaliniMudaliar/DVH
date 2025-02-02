@@ -64,7 +64,7 @@
   position: absolute;
   height: 39px;
   left: 28px;
-  top: -30%;
+  top: -23%;
   /* //-17% */
   border: 1px solid #ecaeff;
 }
@@ -108,13 +108,45 @@ input:valid ~ label {
   padding: 0 10px;
   /* background: #000000; */
 }
-
+/* .password_eye {
+  position: relative;
+} */
+.open_eye,
+.close_eye,
+.open_eyeC,
+.close_eyeC {
+  position: absolute;
+  width: 25px;
+  right: 10px;
+  bottom: 9px;
+}
+.close_eye,
+.close_eyeC {
+  display: none;
+}
 .error {
   color: #ff3860;
   font-size: 12px;
   /* height: 13px; */
   font-weight: 500;
   display: block;
+  .open_eye,
+  .close_eye,
+  .open_eyeC,
+  .close_eyeC {
+    position: absolute;
+    color: white;
+    bottom: 22px;
+  }
+  .line {
+    top: -34%;
+  }
+  input:focus ~ label,
+  input:valid ~ label {
+    top: -38%;
+
+    /* background: #000000; */
+  }
   /* margin-bottom: 50px; */
 }
 .inputField.error input {

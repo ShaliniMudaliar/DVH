@@ -69,7 +69,7 @@ async function initializeMongoDb() {
 initializeMongoDb();
 
 // Endpoint to handle property form submission
-app.post("/api/saveProperty", upload.array("photos[]", 7), async (req, res) => {
+app.post("/api/saveProperty", upload.array("photos", 7), async (req, res) => {
   console.log(req.body);
   console.log("Uploaded files:", req.files);
   const {
@@ -132,8 +132,9 @@ app.post("/api/saveProperty", upload.array("photos[]", 7), async (req, res) => {
         facing,
         amenities: JSON.parse(amenities),
         createdAt: currentTime,
-        photos: photos.map((photo) => `${uploadFolder}/${photo.filename}`),
+        photos: photos.map((photo) => `uploads/images/${photo.filename}`), // Ensure the relative path
       };
+      console.log(photos);
 
       // Step 4: Store data in MongoDB
       await mongoDb.collection("Property").insertOne(propertyData);
@@ -155,6 +156,6 @@ app.post("/api/saveProperty", upload.array("photos[]", 7), async (req, res) => {
 });
 
 // Start the server
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+app.listen(3002, () => {
+  console.log("Server running on http://localhost:3002");
 });

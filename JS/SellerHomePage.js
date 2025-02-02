@@ -1,3 +1,5 @@
+const PORT = 3003;
+
 // Function to get property details from the backend
 async function fetchPropertyDetails() {
   const emailOrUsername =
@@ -9,9 +11,12 @@ async function fetchPropertyDetails() {
   }
 
   try {
+    // Show the loading spinner
+    document.getElementById("loading").style.display = "flex";
+
     // Fetch the property details from the backend using the email/username
     const response = await fetch(
-      `http://localhost:3000/getPropertyDetails?emailOrUsername=${emailOrUsername}`
+      `http://localhost:${PORT}/getPropertyDetails?emailOrUsername=${emailOrUsername}`
     );
 
     // Check if the response is successful
@@ -81,6 +86,9 @@ async function fetchPropertyDetails() {
       </div>
     `;
     });
+
+    // Hide the loading spinner after data is loaded
+    document.getElementById("loading").style.display = "none";
     // console.log(property.propertyId);
     // Add event listener for editing the property
     const editButtons = document.querySelectorAll(".edit-button");
@@ -95,7 +103,10 @@ async function fetchPropertyDetails() {
   } catch (error) {
     console.error("Error fetching property details:", error);
     document.querySelector(".propertyContainer").innerHTML =
-      "<p>Error loading property details. Please try again later.</p>";
+      "<p>No Property Added yet.</p>";
+
+    // Hide the loading spinner after data is loaded
+    document.getElementById("loading").style.display = "none";
   }
 }
 
@@ -111,7 +122,7 @@ async function openEditForm(propertyId) {
   // }
 
   const response = await fetch(
-    `http://localhost:3000/getPropertyDetailsById?id=${propertyId}`
+    `http://localhost:${PORT}/getPropertyDetailsById?id=${propertyId}`
   );
   const property = await response.json();
 

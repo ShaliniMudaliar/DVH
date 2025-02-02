@@ -3,6 +3,41 @@ const otpInput = document.getElementById("otp");
 const newPasswordInput = document.getElementById("newPassword");
 const confirmPasswordInput = document.getElementById("confirmPassword");
 
+// Get elements
+const newPassword = document.getElementById("newPassword");
+const confirmPassword = document.getElementById("confirmPassword");
+const openEye = document.querySelector(".open_eye");
+const closeEye = document.querySelector(".close_eye");
+const openEyeC = document.querySelector(".open_eyeC");
+const closeEyeC = document.querySelector(".close_eyeC");
+
+// Add event listener to open eye icon
+openEye.addEventListener("click", () => {
+  newPassword.type = "text"; // Show password
+  openEye.style.display = "none"; // Hide open eye
+  closeEye.style.display = "block"; // Show close eye
+});
+
+// Add event listener to close eye icon
+closeEye.addEventListener("click", () => {
+  newPassword.type = "password"; // Hide password
+  closeEye.style.display = "none"; // Hide close eye
+  openEye.style.display = "block"; // Show open eye
+});
+
+openEyeC.addEventListener("click", () => {
+  confirmPassword.type = "text"; // Show password
+  openEyeC.style.display = "none"; // Hide open eye
+  closeEyeC.style.display = "block"; // Show close eye
+});
+
+// Add event listener to close eye icon
+closeEyeC.addEventListener("click", () => {
+  confirmPassword.type = "password"; // Hide password
+  closeEyeC.style.display = "none"; // Hide close eye
+  openEyeC.style.display = "block"; // Show open eye
+});
+
 const setError = (element, message) => {
   const inputControl = element.parentElement;
   const errorDisplay = inputControl.querySelector(".error");
