@@ -3,7 +3,7 @@ const HomePageServer = require("./HomePageServer");
 const SellerFormServer = require("./SellerFormServer");
 const otp = require("./otp");
 const SellerHomePageServer = require("./SellerHomePageServer");
-// const SellerHomePageServer = require('./');
+const Server = require("../Server/server.js");
 // You can continue adding more servers as needed...
 
 console.log("All servers are running...");

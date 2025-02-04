@@ -3,23 +3,29 @@ const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 
-// Get elements
-const passwordField = document.getElementById("password");
-const openEye = document.querySelector(".open_eye");
-const closeEye = document.querySelector(".close_eye");
+document.addEventListener("DOMContentLoaded", () => {
+  const passwordField = document.getElementById("password");
+  const openEye = document.querySelector(".open_eye");
+  const closeEye = document.querySelector(".close_eye");
 
-// Add event listener to open eye icon
-openEye.addEventListener("click", () => {
-  passwordField.type = "text"; // Show password
-  openEye.style.display = "none"; // Hide open eye
-  closeEye.style.display = "block"; // Show close eye
-});
+  // Check if the elements exist
+  if (openEye && closeEye) {
+    // Add event listener to open eye icon
+    openEye.addEventListener("click", () => {
+      passwordField.type = "text"; // Show password
+      openEye.style.display = "none"; // Hide open eye
+      closeEye.style.display = "block"; // Show close eye
+    });
 
-// Add event listener to close eye icon
-closeEye.addEventListener("click", () => {
-  passwordField.type = "password"; // Hide password
-  closeEye.style.display = "none"; // Hide close eye
-  openEye.style.display = "block"; // Show open eye
+    // Add event listener to close eye icon
+    closeEye.addEventListener("click", () => {
+      passwordField.type = "password"; // Hide password
+      closeEye.style.display = "none"; // Hide close eye
+      openEye.style.display = "block"; // Show open eye
+    });
+  } else {
+    console.error("The open_eye or close_eye elements are not found.");
+  }
 });
 
 let uname = true;
@@ -205,7 +211,9 @@ const setSuccess = (element) => {
 };
 
 // Verify OTP and send user data to backend
-document.getElementById("verify-otp").addEventListener("click", function () {
+document.getElementById("verify-otp").addEventListener("click", function (e) {
+  e.preventDefault(); // Prevent any default action
+  e.stopPropagation(); // Stop bubbling up of events
   const otp = document.getElementById("otp").value;
 
   // Send OTP to the backend to verify it
