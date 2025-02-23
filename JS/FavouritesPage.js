@@ -139,7 +139,6 @@ async function toggleFavorite(event, propertyData) {
   loadFavorites();
 }
 
-// Function to load favorites from cookies and display them
 async function loadFavorites() {
   const favorites = await getFavoritesForCurrentUser();
 
@@ -157,7 +156,7 @@ async function loadFavorites() {
     const imageUrl = `JS/${property.firstImage}`; // Assuming `firstImage` is the property image URL
 
     favoritesContainer.innerHTML += `
-      <div class="property-card">
+      <div class="property-card" data-property-id="${property.propertyId}">
         <div class="property-image" style="background-image: url('${imageUrl}');"></div>
         <div class="property-details">
           <div>
@@ -204,6 +203,20 @@ async function loadFavorites() {
         </div>
       </div>
     `;
+
+    // Add event listener to the property card after it is added to the DOM
+    const propertyCard = favoritesContainer.querySelector(
+      `.property-card[data-property-id="${property.propertyId}"]`
+    );
+
+    // Ensure the property card exists before adding event listener
+    if (propertyCard) {
+      propertyCard.addEventListener("click", () => {
+        // Store the selected property in sessionStorage and navigate to the item page
+        sessionStorage.setItem("selectedProperty", JSON.stringify(property));
+        window.location.href = "/itemPage.html";
+      });
+    }
   });
 
   // Add event listeners to all heartWrapper elements after DOM is updated

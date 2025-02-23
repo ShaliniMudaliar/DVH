@@ -2,6 +2,22 @@
   margin: 0;
   padding: 0;
 }
+
+#360-degree-container.hidden {
+  display: none;
+}
+
+/* .product.hidden {
+  display: none;
+} */
+
+.dropdownContent {
+  display: none;
+}
+
+.dropdownContent.show {
+  display: block;
+}
 .product {
   overflow: hidden;
 
@@ -23,6 +39,19 @@
   cursor: pointer;
   border: 1px solid #070707;
 }
+/* Default heart icon color (unfilled) */
+.subThreeDot.fav svg {
+  fill: none; /* Default is unfilled */
+  stroke: #bbb; /* Gray color */
+  /* transition: fill 0.3s ease; Smooth transition for fill */
+}
+
+/* Filled heart icon color (when added to favorites) */
+.subThreeDot.fav.filled svg {
+  fill: #ff5edf; /* Red color when filled (add to favorites) */
+  stroke: #ff5edf; /* Matching stroke color */
+}
+
 .threeDot {
   position: absolute;
   top: 5px;
@@ -54,17 +83,101 @@
   padding: 10px;
 }
 .virtual:hover {
-  background-color: #ecaeff;
+  background-color: #f3d8fb;
   transition: 0.3s;
+  cursor: pointer;
 }
 .fav:hover {
-  background-color: #ecaeff;
+  background-color: #f3d8fb;
   transition: 0.3s;
+  cursor: pointer;
 }
 .share:hover {
-  background-color: #ecaeff;
+  background-color: #f3d8fb;
   transition: 0.3s;
+  cursor: pointer;
 }
+
+/* Style for the modal */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none; /* Initially hidden */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.4); /* Background with transparency */
+
+  /* Centering the modal content */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Adjust width as needed */
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional: add shadow for styling */
+}
+
+textarea {
+  width: 92%;
+  /* height: 51px; */
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star:hover,
+.star.selected {
+  color: gold;
+}
+
+button {
+  background-color: #4caf50; /* Green button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Close button style */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .product__slider-wrap {
   width: auto;
   display: flex;
@@ -150,6 +263,7 @@ hr {
 .property-card {
   display: flex;
   flex-direction: row;
+  cursor: pointer;
   background-color: rgba(238, 200, 245, 0.278);
   border: 1px solid #969292;
   border-radius: 20px;
@@ -672,9 +786,10 @@ header {
 
 .reviews {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   /* margin-top: 20px; */
   align-items: center;
+
   overflow-x: auto;
   scroll-behavior: smooth;
 }
