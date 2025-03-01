@@ -268,7 +268,7 @@ document.getElementById("property-form").onsubmit = function (event) {
     handleCreateSubmit(event);
   }
 };
-const userEmail = localStorage.getItem("username");
+const userEmail = localStorage.getItem("username")||localStorage.getItem("email");
 async function handleCreateSubmit(event) {
   event.preventDefault();
   if (validateForm()) {

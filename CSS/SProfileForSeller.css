@@ -257,6 +257,15 @@ header {
 .show {
   display: block;
 }
+.error {
+  color: #ff3860;
+  font-size: 12px;
+  font-weight: 500;
+  display: block;
+}
+.form-group input.error {
+  border-color: #ff3860;
+}
 
 @media screen and (max-width: 550px) {
   .top-nav,
