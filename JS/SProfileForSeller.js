@@ -198,7 +198,6 @@ document.getElementById("edit-save-btn").addEventListener("click", function () {
   }
 });
 
-
 // Toggle Agent-specific fields visibility
 function toggleFields() {
   const isAgent = document.getElementById('Agent').checked;
@@ -300,16 +299,17 @@ fetch("http://127.0.0.1:5000/api/seller", {
   })
   .then(data => {
     console.log('Success:', data);
-    // Handle success (e.g., show a success message or redirect)
+    alert("Seller details saved successfully!"); 
+    // Redirect to homepage after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = "SellerHomepage.html"; // Update to your actual homepage URL
+    }, 1500);
   })
   .catch((error) => {
     console.error('Error:', error);
     // Handle error (e.g., show an error message)
   });
 }
-
-
-
 
 
 function togglePasswordVisibility(inputId) {

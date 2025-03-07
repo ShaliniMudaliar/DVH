@@ -402,6 +402,7 @@ async function fetchSellerDetails(userId) {
         <li><span>📧</span><a href="mailto:${seller.email}">${seller.email}</a></li>
         <li><span>📞</span><a href="tel:${seller.contactNumber}">${seller.contactNumber}</a></li>
         <li><span>💬</span><a href="https://chat.app.com/user/${seller.userId}">Chat</a></li>
+        <li><span>👨‍💼/👩‍💼</span><a href="Sprofileforbuyer.html">View Seller Profile</a></li>
       `;
     } else {
       document.querySelector(".seller-info ul").innerHTML = "<li>No seller details available</li>";
@@ -413,23 +414,54 @@ async function fetchSellerDetails(userId) {
 // Call the function with property userId
 fetchSellerDetails(property.userId);
 
-async function updateActivityInfo(propertyID) {
-  if (!propertyID) {
-      console.error("❌ Property ID is missing!");
-      return;
-  }
-  // 1️⃣ Track Views in Local Storage
-  let views = localStorage.getItem(`views_${propertyID}`);
-  views = views ? parseInt(views) + 1 : 1; // Increment if exists, else set to 1
-  localStorage.setItem(`views_${propertyID}`, views); // Store updated count
-  // 3️⃣ Update UI Dynamically
-  document.querySelector(".activity-info ul li:nth-child(1) span").textContent = views;  
-}
+// async function updateActivityInfo(propertyID) {
+//   if (!propertyID) {
+//       console.error("❌ Property ID is missing!");
+//       return;
+//   }
+//   // 1️⃣ Track Views in Local Storage
+//   let views = localStorage.getItem(`views_${propertyID}`);
+//   views = views ? parseInt(views) + 1 : 1; // Increment if exists, else set to 1
+//   localStorage.setItem(`views_${propertyID}`, views); // Store updated count
+//   // 3️⃣ Update UI Dynamically
+//   document.querySelector(".activity-info ul li:nth-child(1) span").textContent = views;  
+// }
 
-const propertyID = property.propertyId;
-if (propertyID) {
-    updateActivityInfo(propertyID);
-  } 
+// const propertyID = property.propertyId;
+// if (propertyID) {
+//     updateActivityInfo(propertyID);
+//   } 
+let viewUpdated = false;
+async function updateActivityInfo() {
+  if (viewUpdated) {
+    console.log("🔹 View already updated, skipping...");
+    return;
+}
+viewUpdated = true; // Mark as updated to prevent duplicate calls
+
+      // Increment the view count on the server
+      await fetch(`http://localhost:5003/views/${property.propertyId}`, { 
+        method: "POST", 
+        credentials: "include",
+        headers: { "Content-Type": "application/json" }
+      });
+
+  
+
+  // Fetch updated view count
+  try {
+      const response = await fetch(`http://localhost:5003/views/${property.propertyId}`, { 
+        credentials: "include", 
+        headers: { "Content-Type": "application/json" }
+      });
+      const data = await response.json();
+      document.querySelector(".activity-info ul li:nth-child(1) span").textContent = data.views; 
+      
+  } catch (error) {
+      console.error("Error fetching views:", error);
+  }
+}
+updateActivityInfo();
    
  });
 

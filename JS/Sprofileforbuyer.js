@@ -1,10 +1,14 @@
 document.addEventListener("DOMContentLoaded", async function() {
     // Retrieve stored seller details (assumed to be saved previously)
-    const userId = localStorage.getItem("UserID");
+    const storedProperty = sessionStorage.getItem("selectedProperty");
+    const selectedProperty = JSON.parse(storedProperty); // Parse JSON string
+    const userId = selectedProperty?.userId; // Access userId safely
+
+    // const userId = localStorage.getItem("UserID");
     const email = localStorage.getItem("email");
     
-    if (!userId || !email) {
-      console.error("Seller UserID or email not found in localStorage");
+    if (!userId) {
+      console.error("Seller UserID not found in sessionStorage");
       // Optionally redirect to a login or error page.
       return;
     }
@@ -44,15 +48,47 @@ document.addEventListener("DOMContentLoaded", async function() {
     setTextContent("email", sellerData.email);
 
     // Populate Agent details if available
+    // Populate Agent details if available
+const detailsDiv = document.querySelector(".details");
     if (sellerData.agentData) {
         setTextContent("agent-description", sellerData.agentData.description);
         setTextContent("agent-agency", sellerData.agentData.agency);
         setTextContent("agent-license", sellerData.agentData.agentLicense);
         setTextContent("agent-tax-number", sellerData.agentData.taxNumber);
+        // Show details div if agent data exists
+    detailsDiv.hidden = false;
         // setTextContent("agent-service-area", sellerData.agentData.serviceArea);
+    } else {
+     // Hide details div if no agent data
+    detailsDiv.hidden = true;
     }
+
  generateProfileAvatar(sellerData.firstName, sellerData.lastName,userId);
  
+ function timeAgo(dateString) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+
+  const intervals = {
+    year: 31536000,
+    month: 2592000,
+    week: 604800,
+    day: 86400,
+    hour: 3600,
+    minute: 60,
+  };
+
+  for (const [unit, value] of Object.entries(intervals)) {
+    const count = Math.floor(seconds / value);
+    if (count >= 1) {
+      return `${count} ${unit}${count > 1 ? "s" : ""} ago`;
+    }
+  }
+
+  return "Just now";
+}
+
 const requestUrl_property=`http://127.0.0.1:5002/api/getActiveListings?userId=${encodeURIComponent(userId)}}`;
 
 fetch(requestUrl_property, { method: "GET" })
@@ -68,30 +104,63 @@ fetch(requestUrl_property, { method: "GET" })
       return;
     }
 
-    if (!data.listings || data.listings.length === 0) {
+    if (!data||!data.listings || data.listings.length === 0) {
       listingsContainer.innerHTML = "<p>No active listings found.</p>";
       return;
     }
 
     listingsContainer.innerHTML = ""; // Clear existing content
+    data.listings.forEach(property => {
+      const imageUrl = property.photos?.[0] || "default-image.jpg"; // Handle missing image
+      const timeAgoText = timeAgo(property.createdAt);
+      const propertyCard = document.createElement("div");
+      propertyCard.classList.add("property-card");
+      propertyCard.setAttribute("data-property-id", property.propertyId);
 
-    data.listings.forEach(listing => {
-      const propertyCard = `
-        <div class="property-card">
-          <div class="property-image" style="background-image: url('${listing.photos[1] || 'default-image.jpg'}');"></div>
-          <div class="property-details">
-            <h2 class="property-title">${listing.heading}</h2>
-            <p class="property-description">${listing.address}</p>
-            <div class="property-info">
-              <p class="property-price"> ₹${listing.price}</p>
-              <p class="property-price"> ${listing.squareFeet}</p>
-              <p class="property-date"><strong>Posted : </strong> ${listing.createdAt}</p>
-            </div>
+      propertyCard.innerHTML = `
+        <div class="property-image" style="background-image: url('${imageUrl}');"></div>
+        <div class="property-details">
+          <h2 class="property-title">${property.heading}</h2>
+          <p class="property-description">${property.address}</p>
+          <div class="property-info">
+            <p class="property-price"><strong>Price:</strong> ₹${property.price}</p>
+            <p class="property-price"><strong>Size:</strong> ${property.squareFeet}</p>
+            <p class="property-date"><strong>Posted:</strong>${timeAgoText}</p>
           </div>
-        </div>`;
+        </div>
+      `;
 
-      listingsContainer.innerHTML += propertyCard;
+      // Add event listener to save clicked property and redirect
+      propertyCard.addEventListener("click", () => {
+        sessionStorage.setItem("selectedProperty", JSON.stringify(property));
+        window.location.href = "itemPage.html"; // Redirect to item details page
+      });
+
+      listingsContainer.appendChild(propertyCard);
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   })
   .catch(error => console.error("Error fetching listings:", error));
   const response1 = await fetch(`http://127.0.0.1:5002/api/getPropertyStats?userId=${encodeURIComponent(userId)}`);

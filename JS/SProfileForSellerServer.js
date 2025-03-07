@@ -60,7 +60,7 @@ app.get("/api/getUser", async (req, res) => {
 
 // Function to verify password from MySQL
 async function verifyPassword(emailOrUsername, password) {
-  console.log("Received:", emailOrUsername, password); // Debugging line
+  
 
   try {
     if (!emailOrUsername || !password) {
@@ -88,12 +88,12 @@ async function verifyPassword(emailOrUsername, password) {
 
 // API Route: Save Seller Data
 app.post("/api/seller", async (req, res) => {
-  console.log(req.body); 
   const {emailOrUsername, password, firstName, lastName, contactNumber, age, address, city, state, country, zipCode, agentData } = req.body;
 
   try {
     const isPasswordValid = await verifyPassword(emailOrUsername, password);
     if (!isPasswordValid) {
+      console.log("Password not matched");
       return res.status(401).json({ error: "Password not matched!" });
     }
   } catch (error) {
