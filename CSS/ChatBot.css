@@ -49,6 +49,10 @@
   margin: 20px;
   overflow-x: scroll; */
 }
+.chatSection {
+  height: 78vh;
+  overflow-y: scroll;
+}
 .question {
   max-width: 100vw;
   border: 2px solid rgb(0, 115, 255);

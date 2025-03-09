@@ -142,5 +142,235 @@ async function openEditForm(propertyId) {
   }
 }
 
-// Call the function to fetch and display the property details when the page loads
-window.onload = fetchPropertyDetails;
+//for payment
+const PORT_DI = 3001;
+// Function to fetch userId using the username
+async function getUserIdFromUsername(username) {
+  try {
+    const response = await fetch(`http://localhost:${PORT_DI}/getUserId`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }), // Send the username in the body
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.userId) {
+        console.log("User ID fetched: ", data.userId);
+        return data.userId; // Return the userId
+      } else {
+        console.error("User not found");
+      }
+    } else {
+      throw new Error("Failed to fetch userId");
+    }
+  } catch (error) {
+    console.error("Error fetching userId:", error);
+  }
+  return null; // Return null if an error occurs
+}
+
+// Function to check if the user has already added a property
+async function checkUserProperties(userId) {
+  try {
+    const response = await fetch(
+      `http://localhost:3006/user-properties-count?userId=${userId}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const data = await response.json();
+    console.log("Property count response:", data.propertyCount); // Log the response
+
+    if (data.propertyCount >= 1) {
+      checkSubscriptionStatus(userId); // User has added a property, check subscription
+    } else {
+      window.location.href = "SellerForm.html"; // Redirect to property form
+    }
+  } catch (error) {
+    console.error("Error checking user properties:", error);
+  }
+}
+
+// Function to check the user's subscription status
+async function checkSubscriptionStatus(userId) {
+  try {
+    const response = await fetch(
+      `http://localhost:3006/check-subscription?userId=${userId}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const data = await response.json();
+    console.log(data.propertyCount);
+    console.log(data.active);
+    console.log(data.remainingLimit);
+
+    // Check if subscription is active and if there are remaining properties within the limit
+    if (!data.active) {
+      window.location.href = "Payment.html"; // Redirect to payment page if subscription is inactive
+    } else {
+      // If subscription is active and there are remaining limits for properties
+      if (data.remainingLimit === "Unlimited" || data.remainingLimit > 0) {
+        window.location.href = "SellerForm.html"; // Redirect to property form if subscription is active and there are limits left
+      } else {
+        // If no remaining limit for properties, redirect to payment page
+        window.location.href = "Payment.html";
+      }
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Function to check subscription status
+// async function checkSubscription(userId) {
+//   const userId = userId; // Replace with actual user ID
+
+//   try {
+//     const response = await fetch(`/check-subscription?userId=${userId}`);
+//     const data = await response.json();
+
+//     if (data.active) {
+//       document.getElementById("subscriptionMessage").innerText =
+//         "Your subscription is active!";
+//       document.getElementById("addPropertyButton").style.display = "block"; // Show Add Property button
+//     } else {
+//       document.getElementById("subscriptionMessage").innerText =
+//         "Your subscription is inactive. Please make a payment.";
+//       document.getElementById("paymentOptions").style.display = "block"; // Show payment options
+//     }
+//   } catch (error) {
+//     console.error("Error checking subscription:", error);
+//   }
+// }
+
+// Call the check subscription function when the page loads
+// window.onload = checkSubscription;
+// Event listener for the "Add Property" button
+document
+  .getElementById("addPropertyButton")
+  .addEventListener("click", async (event) => {
+    event.preventDefault();
+    const username = localStorage.getItem("username"); // Get username from localStorage
+    const userId = await getUserIdFromUsername(username);
+    if (userId) {
+      // checkSubscription(userId);
+      checkUserProperties(userId); // Check user properties
+    }
+  });
+
+// // Function to get the paymentId and orderId from Pabbly Webhook
+// async function getPaymentDetailsFromPabbly(userId) {
+//   try {
+//     const response = await fetch(
+//       `https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY5MDYzNzA0MzM1MjZlNTUzMTUxMzMi_pc`,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           userId: userId, // Send the userId to fetch payment details
+//         }),
+//       }
+//     );
+
+//     if (!response.ok) {
+//       throw new Error("Failed to fetch payment details");
+//     }
+
+//     const data = await response.json();
+//     const { payment_id, order_id } = data; // Assuming the response contains these fields
+
+//     if (payment_id && order_id) {
+//       return { payment_id, order_id };
+//     } else {
+//       throw new Error("Payment or Order ID missing in response");
+//     }
+//   } catch (error) {
+//     console.error("Error fetching payment details from Pabbly:", error);
+//     return null;
+//   }
+// }
+// async function getPaymentDetails() {
+//   const username = localStorage.getItem("username"); // Get the username from localStorage
+//   const userId = await getUserIdFromUsername(username); // Get the userId based on the username
+
+//   if (userId) {
+//     // Once you have the userId, pass it to getPaymentDetailsFromPabbly
+//     const { paymentId, orderId } = await getPaymentDetailsFromPabbly(userId);
+
+//     if (paymentId && orderId) {
+//       // Send payment details to your backend
+//       await fetch("http://localhost:3006/payment-success", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           userId: userId,
+//           paymentId: paymentId,
+//           orderId: orderId,
+//         }),
+//       });
+//     }
+//   }
+// }
+// getPaymentDetails();
+
+// async function initiatePayment(plan, paymentButtonId) {
+//   console.log(plan, paymentButtonId);
+//   const username = localStorage.getItem("username"); // Get username from localStorage
+//   const userId = await getUserIdFromUsername(username);
+//   const response = await fetch("/process-payment", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ userId: userId, plan: plan }),
+//   });
+//   const data = await response.json();
+//   const options = {
+//     key: data.key,
+//     amount:
+//       plan === "1 month"
+//         ? 99 * 100
+//         : plan === "6 months"
+//         ? 499 * 100
+//         : 899 * 100,
+//     currency: "INR",
+//     order_id: data.orderId,
+//     handler: async function (response) {
+//       await fetch("/payment-success", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//           // payment_id: response.razorpay_payment_id,
+//           // order_id: response.razorpay_order_id,
+//           userID: userId,
+//         }),
+//       });
+//     },
+//   };
+
+//   const paymentObject = new Razorpay(options);
+//   paymentObject.open();
+// }
+
+// // Attach event listeners to all Razorpay script tags
+// document.querySelectorAll(".buy-button").forEach((script) => {
+//   script.addEventListener("click", function () {
+//     const plan = this.getAttribute("data-plan"); // Get the plan from the data attribute
+//     const paymentButtonId = this.getAttribute("data-payment_button_id"); // Get the Razorpay payment button ID
+//     initiatePayment(plan, paymentButtonId); // Call the function with the selected plan and payment button ID
+//   });
+// });
+// On page load, fetch property details
+window.onload = function () {
+  fetchPropertyDetails();
+};

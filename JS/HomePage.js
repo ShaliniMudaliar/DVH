@@ -62,6 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function myFunction() {
   document.getElementById("filter").classList.toggle("show");
 }
+function chatFunction() {
+  document.getElementById("chooseChat").classList.toggle("show");
+}
 
 window.onclick = function (event) {
   if (!event.target.matches(".filterDropdown")) {

@@ -8,6 +8,19 @@
     <link rel="shortcut icon" href="Img-videos/logo.jpg" type="image/x-icon" />
     <!-- <link rel="stylesheet" href="CSS/HomePage.css" /> -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -174,7 +187,7 @@
           <h2 class="section-title">Overview</h2>
           <div class="property__details">
             <!-- Overview Details -->
-              <!-- <div class="text">
+            <!-- <div class="text">
                 <strong>Possession</strong>
                 <p>Immediately</p>
               </div>
@@ -187,9 +200,9 @@
                 <strong>Furnishing</strong>
                 <p>Semi-furnished</p>
               </div> -->
-            </div> 
-            </div>
-          <!-- </div>
+          </div>
+        </div>
+        <!-- </div>
         </div> -->
         <!--/ Overview Details -->
 
@@ -274,6 +287,7 @@
             </div>
           </div>
         </div>
+        <div id="map" style="height: 400px; width: 100%"></div>
       </div>
       <!-- /Amenities Details -->
 
@@ -305,8 +319,7 @@
       </div>
     </div>
     <!-- Right Section -->
-  </div>
-</div>
+
     <!-- ratings-reviews-section -->
     <div class="section" id="reviews">
       <h2 class="section-title">Reviews</h2>
@@ -490,5 +503,7 @@
     <!-- /similar properties -->
 
     <script src="JS/ItemPage.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   </body>
 </html>

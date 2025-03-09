@@ -1,33 +1,35 @@
- // Prefill email field from localStorage or default value
+// Prefill email field from localStorage or default value
 document.addEventListener("DOMContentLoaded", async function () {
   const emailField = document.getElementById("email");
-  const emailOrUsername = localStorage.getItem("emailOrUsername");
+  const emailOrUsername = localStorage.getItem("username");
 
-    if (!emailOrUsername) {
-        console.error("emailOrUsername not found in localStorage");
-        return;
+  if (!emailOrUsername) {
+    console.error("emailOrUsername not found in localStorage");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:5000/api/getUser?emailOrUsername=${emailOrUsername}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    console.log("Response status:", response.status);
+    if (!response.ok) {
+      throw new Error("Failed to fetch user details");
     }
-
-    try {
-        const response =await fetch(`http://127.0.0.1:5000/api/getUser?emailOrUsername=${encodeURIComponent(emailOrUsername)}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" }
-        });
-        console.log("Response status:", response.status);
-        if (!response.ok) {
-            throw new Error("Failed to fetch user details");
-        }
-        const data = await response.json();
-        console.log("Fetched user details:", data);
-        emailField.value = data.email;
-        emailField.readOnly = true; // Set as readonly
-        // Store UserID and email in localStorage for later use in seller data
+    const data = await response.json();
+    console.log("Fetched user details:", data);
+    emailField.value = data.email;
+    emailField.readOnly = true; // Set as readonly
+    // Store UserID and email in localStorage for later use in seller data
     localStorage.setItem("UserID", data.userID || data.UserID);
     localStorage.setItem("email", data.email || data.Email);
-
-    } catch (error) {
-        console.error("Error fetching user details:", error);
-    }
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+  }
   makeFormEditable();
 });
 
@@ -36,21 +38,21 @@ function validateForm() {
 
   // Regex patterns
   const nameRegex = /^[a-zA-Z\s]+$/; // letters and spaces
-  const phoneRegex = /^\d{10}$/;     // 10-digit numbers
+  const phoneRegex = /^\d{10}$/; // 10-digit numbers
   const ageRegex = /^(1[89]|[2-9]\d|1[01]\d|100)$/; // 18-100
-  const pinCodeRegex = /^\d{6}$/;    // 6-digit numbers
+  const pinCodeRegex = /^\d{6}$/; // 6-digit numbers
 
   // Define all form fields with their fieldName (for error messages)
   const formElements = [
-    { id: "first-name",fieldName: "First Name" },
-    { id: "last-name",fieldName: "Last Name" },
-    { id: "contact-number",fieldName: "Contact Number" },
-    { id: "age",fieldName: "Age" },
-    { id: "address",fieldName: "Address" },
-    { id: "city",fieldName: "City" },
-    { id: "state",fieldName: "State" },
-    { id: "country",fieldName: "Country" },
-    { id: "zip-code",fieldName: "Pin Code" }
+    { id: "first-name", fieldName: "First Name" },
+    { id: "last-name", fieldName: "Last Name" },
+    { id: "contact-number", fieldName: "Contact Number" },
+    { id: "age", fieldName: "Age" },
+    { id: "address", fieldName: "Address" },
+    { id: "city", fieldName: "City" },
+    { id: "state", fieldName: "State" },
+    { id: "country", fieldName: "Country" },
+    { id: "zip-code", fieldName: "Pin Code" },
   ];
 
   // Clear errors, then validate each field
@@ -184,11 +186,10 @@ function clearError(input) {
   input.classList.remove("error");
 }
 
-
 // Attach form validation to submit event
 document.querySelector("form").addEventListener("submit", function (event) {
   if (!validateForm()) {
-      event.preventDefault(); // Prevent form submission if validation fails
+    event.preventDefault(); // Prevent form submission if validation fails
   }
 });
 
@@ -200,13 +201,12 @@ document.getElementById("edit-save-btn").addEventListener("click", function () {
 
 // Toggle Agent-specific fields visibility
 function toggleFields() {
-  const isAgent = document.getElementById('Agent').checked;
-  const agentFields = document.getElementById('AgentList');
-  agentFields.classList.toggle('hidden', !isAgent);
-  agentFields.classList.toggle('show', isAgent);
+  const isAgent = document.getElementById("Agent").checked;
+  const agentFields = document.getElementById("AgentList");
+  agentFields.classList.toggle("hidden", !isAgent);
+  agentFields.classList.toggle("show", isAgent);
 }
 toggleFields();
-
 
 // Toggle edit/save functionality
 function toggleEditSave() {
@@ -225,16 +225,19 @@ function toggleEditSave() {
 
 // Make form fields non-editable
 function makeFormNonEditable() {
-  const inputs = document.querySelectorAll(".profile-form input:not([readonly])");
-  inputs.forEach(input => input.setAttribute("disabled", true));
+  const inputs = document.querySelectorAll(
+    ".profile-form input:not([readonly])"
+  );
+  inputs.forEach((input) => input.setAttribute("disabled", true));
 }
 
 // Make form fields editable
 function makeFormEditable() {
-  const inputs = document.querySelectorAll(".profile-form input:not([readonly])");
-  inputs.forEach(input => input.removeAttribute("disabled"));
+  const inputs = document.querySelectorAll(
+    ".profile-form input:not([readonly])"
+  );
+  inputs.forEach((input) => input.removeAttribute("disabled"));
 }
-
 
 function saveDetails() {
   const firstName = document.getElementById("first-name").value;
@@ -249,18 +252,20 @@ function saveDetails() {
   const password = document.getElementById("password").value;
 
   // Retrieve emailOrUsername from localStorage
-  const emailOrUsername = localStorage.getItem("emailOrUsername");
-  const userID = localStorage.getItem("UserID");  
+  const emailOrUsername = localStorage.getItem("email");
+  const userID = localStorage.getItem("UserID");
   const email = localStorage.getItem("email");
 
   let agentData = {};
-  const isAgent = document.getElementById('Agent') && document.getElementById('Agent').checked;
+  const isAgent =
+    document.getElementById("Agent") &&
+    document.getElementById("Agent").checked;
   if (isAgent) {
     agentData = {
       description: document.getElementById("description").value,
       agency: document.getElementById("Agency").value,
       agentLicense: document.getElementById("AgentLicense").value,
-      taxNumber: document.getElementById("TaxNumber").value
+      taxNumber: document.getElementById("TaxNumber").value,
     };
   } else {
     agentData = null; // Or leave it undefined if you prefer
@@ -270,47 +275,47 @@ function saveDetails() {
     firstName,
     lastName,
     emailOrUsername,
-    userID,       // Added from localStorage
-    email,   
+    userID, // Added from localStorage
+    email,
     contactNumber,
-    age,   
+    age,
     address,
     city,
     state,
     country,
     zipCode,
     password,
-    agentData
+    agentData,
   };
 
-// Sending data to backend (assuming you have a POST API endpoint)
-fetch("http://127.0.0.1:5000/api/seller", {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json', 
-  },
-  body: JSON.stringify(formData),
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
+  // Sending data to backend (assuming you have a POST API endpoint)
+  fetch("http://127.0.0.1:5000/api/seller", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
   })
-  .then(data => {
-    console.log('Success:', data);
-    alert("Seller details saved successfully!"); 
-    // Redirect to homepage after 1.5 seconds
-    setTimeout(() => {
-      window.location.href = "SellerHomepage.html"; // Update to your actual homepage URL
-    }, 1500);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-    // Handle error (e.g., show an error message)
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Success:", data);
+      // Handle success (e.g., show a success message or redirect)
+      alert("Seller details saved successfully!");
+      // Redirect to homepage after 1.5 seconds
+      setTimeout(() => {
+        window.location.href = "SellerHomepage.html"; // Update to your actual homepage URL
+      }, 1500);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      // Handle error (e.g., show an error message)
+    });
 }
-
 
 function togglePasswordVisibility(inputId) {
   const passwordInput = document.getElementById(inputId);
@@ -326,7 +331,6 @@ function togglePasswordVisibility(inputId) {
     toggleIcon.classList.add("fa-eye");
   }
 }
-
 
 window.onclick = function (event) {
   if (!event.target.matches(".item")) {

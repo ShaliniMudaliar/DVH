@@ -47,12 +47,14 @@ function viewIn360() {
   }
 
   // Manually trigger the VR mode (enter VR)
-  const vrButton = document
-    .querySelector("a-scene")
-    .querySelector("a-camera")
-    .querySelector("a-entity");
+  const vrButton = document.querySelector("a-scene").querySelector("a-camera");
   if (vrButton) {
-    vrButton.emit("enter-vr"); // Triggering VR manually
+    // Use A-Frame's 'enterVR' method to trigger VR mode
+    if (aframeScene.hasAttribute("vr-mode-ui")) {
+      aframeScene.enterVR();
+    } else {
+      console.error("VR mode is not enabled in A-Frame scene.");
+    }
   }
 
   // Hide the dropdown menu
@@ -208,29 +210,6 @@ function getUsername() {
   return username;
 }
 
-// Add event listener to the favorite button after userId is set
-async function initialize() {
-  const username = getUsername();
-  if (username) {
-    userId = await getUserIdFromUsername(username); // Wait for the userId to be fetched
-    if (!userId) {
-      console.error("User ID is still not available");
-    } else {
-      // Now we can safely add the event listener to the favorite button
-      const favButton = document.querySelector(".subThreeDot.fav");
-      if (favButton) {
-        favButton.addEventListener("click", toggleFavorite);
-      }
-
-      // After initialization, update the favorite icon based on cookie data
-      const property = JSON.parse(sessionStorage.getItem("selectedProperty"));
-      if (property && property.propertyId) {
-        updateFavoriteIcon(property.propertyId);
-      }
-    }
-  }
-}
-
 // Function to handle image click to toggle 360-degree view
 function handleImageClick(event) {
   if (isFirstClick) {
@@ -280,50 +259,76 @@ window.onload = async function () {
 
       document.querySelector(".center1 h3").textContent = property.heading;
       document.querySelector(".center1 p").textContent = property.address;
-     
+
       // Dynamically set Price or Rent Amount
-        const priceLabel = document.querySelector(".center2 div:nth-child(1) h3");
-        const priceValue = document.querySelector(".center2 div:nth-child(1) p");
+      const priceLabel = document.querySelector(".center2 div:nth-child(1) h3");
+      const priceValue = document.querySelector(".center2 div:nth-child(1) p");
 
-        if (property.sellOrRent === "rent") {
-          priceLabel.textContent = "Rent";
-          priceValue.textContent = `₹${Number(property.price).toLocaleString()}`;
-        } else {
-          priceLabel.textContent = "Price";
-          priceValue.textContent = `₹${Number(property.price).toLocaleString()}`;
-        }
-        // Set Built-up Area
-        document.querySelector(".center2 div:nth-child(2) p").textContent = `${property.squareFeet} Sq.Ft`;
+      if (property.sellOrRent === "rent") {
+        priceLabel.textContent = "Rent";
+        priceValue.textContent = `₹${Number(property.price).toLocaleString()}`;
+      } else {
+        priceLabel.textContent = "Price";
+        priceValue.textContent = `₹${Number(property.price).toLocaleString()}`;
+      }
+      // Set Built-up Area
+      document.querySelector(
+        ".center2 div:nth-child(2) p"
+      ).textContent = `${property.squareFeet} Sq.Ft`;
 
-        // Overview Section
-    const overviewContainer = document.querySelector(".property__details");
-    overviewContainer.innerHTML = ""; // Clear existing content
+      // Overview Section
+      const overviewContainer = document.querySelector(".property__details");
+      overviewContainer.innerHTML = ""; // Clear existing content
 
-    const overviewDetails = [
-      { label: "Property Type", value: property.propertyType, icon: "https://cdn-icons-png.flaticon.com/128/2590/2590504.png" },
-      { label: "Year Built", value: property.yearBuilt, icon: "https://cdn-icons-png.flaticon.com/128/2370/2370264.png" },
-      { label: "Bedroom", value: property.bedrooms, icon: "https://cdn-icons-png.flaticon.com/128/2642/2642268.png" },
-      { label: "Bathroom", value: property.bathrooms, icon: "https://cdn-icons-png.flaticon.com/128/3289/3289742.png" },
-      { label: "Floor", value: property.floor, icon: "https://cdn-icons-png.flaticon.com/128/906/906805.png" },
-      { label: "Facing", value: property.facing, icon: "https://cdn-icons-png.flaticon.com/128/3205/3205767.png" }
-    ];
+      const overviewDetails = [
+        {
+          label: "Property Type",
+          value: property.propertyType,
+          icon: "https://cdn-icons-png.flaticon.com/128/2590/2590504.png",
+        },
+        {
+          label: "Year Built",
+          value: property.yearBuilt,
+          icon: "https://cdn-icons-png.flaticon.com/128/2370/2370264.png",
+        },
+        {
+          label: "Bedroom",
+          value: property.bedrooms,
+          icon: "https://cdn-icons-png.flaticon.com/128/2642/2642268.png",
+        },
+        {
+          label: "Bathroom",
+          value: property.bathrooms,
+          icon: "https://cdn-icons-png.flaticon.com/128/3289/3289742.png",
+        },
+        {
+          label: "Floor",
+          value: property.floor,
+          icon: "https://cdn-icons-png.flaticon.com/128/906/906805.png",
+        },
+        {
+          label: "Facing",
+          value: property.facing,
+          icon: "https://cdn-icons-png.flaticon.com/128/3205/3205767.png",
+        },
+      ];
 
-    // Add Deposit Amount only if it is a rental property
-if (property.sellOrRent === "rent") {
-  overviewDetails.push({
-    label: "Deposit Amount",
-    value: `₹${Number(property.depositAmount || 0).toLocaleString()}`,
-    icon: "https://cdn-icons-png.flaticon.com/128/7444/7444847.png"
-  });
-}
+      // Add Deposit Amount only if it is a rental property
+      if (property.sellOrRent === "rent") {
+        overviewDetails.push({
+          label: "Deposit Amount",
+          value: `₹${Number(property.depositAmount || 0).toLocaleString()}`,
+          icon: "https://cdn-icons-png.flaticon.com/128/7444/7444847.png",
+        });
+      }
 
-    // Dynamically generate the overview items
-    for (let i = 0; i < overviewDetails.length; i += 2) {
-      const detailRow = document.createElement("div");
-      detailRow.classList.add("detail-item");
+      // Dynamically generate the overview items
+      for (let i = 0; i < overviewDetails.length; i += 2) {
+        const detailRow = document.createElement("div");
+        detailRow.classList.add("detail-item");
 
-      // Create first item in row
-      detailRow.innerHTML += `
+        // Create first item in row
+        detailRow.innerHTML += `
         <div class="icon"><img src="${overviewDetails[i].icon}" /></div>
         <div class="text">
           <strong>${overviewDetails[i].label}</strong>
@@ -331,139 +336,146 @@ if (property.sellOrRent === "rent") {
         </div>
       `;
 
-      // Check if there is a second item in the row
-      if (overviewDetails[i + 1]) {
-        detailRow.innerHTML += `
+        // Check if there is a second item in the row
+        if (overviewDetails[i + 1]) {
+          detailRow.innerHTML += `
           <div class="icon"><img src="${overviewDetails[i + 1].icon}" /></div>
           <div class="text">
             <strong>${overviewDetails[i + 1].label}</strong>
             <p>${overviewDetails[i + 1].value}</p>
           </div>
         `;
+        }
+
+        overviewContainer.appendChild(detailRow);
       }
 
-      overviewContainer.appendChild(detailRow);
-    }
+      // Description Section
+      document.querySelector(".description-content p").innerHTML =
+        property.description.replace(/\r\n/g, "<br>");
 
-    // Description Section
-    document.querySelector(".description-content p").innerHTML = property.description.replace(/\r\n/g, "<br>");
+      const amenitiesIcons = {
+        Hall: "https://cdn-icons-png.flaticon.com/128/6688/6688715.png",
+        gym: "https://cdn-icons-png.flaticon.com/128/6061/6061858.png",
+        ground: "https://cdn-icons-png.flaticon.com/128/2883/2883680.png",
+        library: "https://cdn-icons-png.flaticon.com/128/5186/5186208.png",
+        firesystem: "https://cdn-icons-png.flaticon.com/128/11389/11389913.png",
+        indoorgames: "https://cdn-icons-png.flaticon.com/128/6651/6651749.png",
+        solar: "https://cdn-icons-png.flaticon.com/128/12996/12996887.png",
+        swimmingpool: "https://cdn-icons-png.flaticon.com/128/2784/2784593.png",
+        rainwater: "https://cdn-icons-png.flaticon.com/128/16998/16998783.png",
+        parking: "https://cdn-icons-png.flaticon.com/128/708/708949.png",
+        garden: "https://cdn-icons-png.flaticon.com/128/2204/2204154.png",
+        watersupply: "https://cdn-icons-png.flaticon.com/128/2634/2634366.png",
+        security: "https://cdn-icons-png.flaticon.com/128/2642/2642550.png",
+        lift: "https://cdn-icons-png.flaticon.com/128/3503/3503695.png",
+        streetlight: "https://cdn-icons-png.flaticon.com/128/2434/2434097.png",
+      };
 
-    const amenitiesIcons = {
-      Hall: "https://cdn-icons-png.flaticon.com/128/6688/6688715.png",
-      gym: "https://cdn-icons-png.flaticon.com/128/6061/6061858.png",
-      ground:"https://cdn-icons-png.flaticon.com/128/2883/2883680.png",
-      library:"https://cdn-icons-png.flaticon.com/128/5186/5186208.png",
-      firesystem:"https://cdn-icons-png.flaticon.com/128/11389/11389913.png",
-      indoorgames:"https://cdn-icons-png.flaticon.com/128/6651/6651749.png",
-      solar:"https://cdn-icons-png.flaticon.com/128/12996/12996887.png",
-      swimmingpool: "https://cdn-icons-png.flaticon.com/128/2784/2784593.png",
-      rainwater: "https://cdn-icons-png.flaticon.com/128/16998/16998783.png",
-      parking: "https://cdn-icons-png.flaticon.com/128/708/708949.png",
-      garden: "https://cdn-icons-png.flaticon.com/128/2204/2204154.png",
-      watersupply: "https://cdn-icons-png.flaticon.com/128/2634/2634366.png",
-      security: "https://cdn-icons-png.flaticon.com/128/2642/2642550.png",
-      lift:"https://cdn-icons-png.flaticon.com/128/3503/3503695.png",
-      streetlight: "https://cdn-icons-png.flaticon.com/128/2434/2434097.png"
-    };
+      // Get Amenities Container
+      const amenitiesContainer = document.querySelector(".amenities-details");
+      amenitiesContainer.innerHTML = ""; // Clear existing content
 
-    // Get Amenities Container
-const amenitiesContainer = document.querySelector(".amenities-details");
-amenitiesContainer.innerHTML = ""; // Clear existing content
+      // Check if amenities exist
+      if (property.amenities && property.amenities.length > 0) {
+        property.amenities.forEach((amenity) => {
+          const amenityItem = document.createElement("div");
+          amenityItem.classList.add("amenity-item");
 
-// Check if amenities exist
-if (property.amenities && property.amenities.length > 0) {
-  property.amenities.forEach((amenity) => {
-    const amenityItem = document.createElement("div");
-    amenityItem.classList.add("amenity-item");
+          // Get icon based on amenity name (fallback to a default icon if not found)
+          const iconUrl =
+            amenitiesIcons[amenity] ||
+            "https://cdn-icons-png.flaticon.com/128/2784/2784593.png";
 
-    // Get icon based on amenity name (fallback to a default icon if not found)
-    const iconUrl = amenitiesIcons[amenity] || "https://cdn-icons-png.flaticon.com/128/2784/2784593.png";
-
-// Populate HTML
-amenityItem.innerHTML = `
+          // Populate HTML
+          amenityItem.innerHTML = `
 <div class="icon">
   <img src="${iconUrl}" />
 </div>
 <p>${amenity.charAt(0).toUpperCase() + amenity.slice(1)}</p>
 `;
 
-amenitiesContainer.appendChild(amenityItem);
-});
-}
+          amenitiesContainer.appendChild(amenityItem);
+        });
+      }
 
-// Function to fetch seller details based on userId
-async function fetchSellerDetails(userId) {
-  try {
-    const response = await fetch(`http://localhost:5003/sellers/${userId}`); // Replace with actual API endpoint
-    const seller = await response.json();
+      // Function to fetch seller details based on userId
+      async function fetchSellerDetails(userId) {
+        try {
+          const response = await fetch(
+            `http://localhost:5003/sellers/${userId}`
+          ); // Replace with actual API endpoint
+          const seller = await response.json();
 
-    if (seller) {
-      document.querySelector(".seller-info ul").innerHTML = `
+          if (seller) {
+            document.querySelector(".seller-info ul").innerHTML = `
         <li><span>📧</span><a href="mailto:${seller.email}">${seller.email}</a></li>
         <li><span>📞</span><a href="tel:${seller.contactNumber}">${seller.contactNumber}</a></li>
         <li><span>💬</span><a href="https://chat.app.com/user/${seller.userId}">Chat</a></li>
         <li><span>👨‍💼/👩‍💼</span><a href="Sprofileforbuyer.html">View Seller Profile</a></li>
       `;
-    } else {
-      document.querySelector(".seller-info ul").innerHTML = "<li>No seller details available</li>";
-    }
-  } catch (error) {
-    console.error("Error fetching seller details:", error);
-  }
-}
-// Call the function with property userId
-fetchSellerDetails(property.userId);
+          } else {
+            document.querySelector(".seller-info ul").innerHTML =
+              "<li>No seller details available</li>";
+          }
+        } catch (error) {
+          console.error("Error fetching seller details:", error);
+        }
+      }
+      // Call the function with property userId
+      fetchSellerDetails(property.userId);
 
-// async function updateActivityInfo(propertyID) {
-//   if (!propertyID) {
-//       console.error("❌ Property ID is missing!");
-//       return;
-//   }
-//   // 1️⃣ Track Views in Local Storage
-//   let views = localStorage.getItem(`views_${propertyID}`);
-//   views = views ? parseInt(views) + 1 : 1; // Increment if exists, else set to 1
-//   localStorage.setItem(`views_${propertyID}`, views); // Store updated count
-//   // 3️⃣ Update UI Dynamically
-//   document.querySelector(".activity-info ul li:nth-child(1) span").textContent = views;  
-// }
+      // async function updateActivityInfo(propertyID) {
+      //   if (!propertyID) {
+      //       console.error("❌ Property ID is missing!");
+      //       return;
+      //   }
+      //   // 1️⃣ Track Views in Local Storage
+      //   let views = localStorage.getItem(`views_${propertyID}`);
+      //   views = views ? parseInt(views) + 1 : 1; // Increment if exists, else set to 1
+      //   localStorage.setItem(`views_${propertyID}`, views); // Store updated count
+      //   // 3️⃣ Update UI Dynamically
+      //   document.querySelector(".activity-info ul li:nth-child(1) span").textContent = views;
+      // }
 
-// const propertyID = property.propertyId;
-// if (propertyID) {
-//     updateActivityInfo(propertyID);
-//   } 
-let viewUpdated = false;
-async function updateActivityInfo() {
-  if (viewUpdated) {
-    console.log("🔹 View already updated, skipping...");
-    return;
-}
-viewUpdated = true; // Mark as updated to prevent duplicate calls
+      // const propertyID = property.propertyId;
+      // if (propertyID) {
+      //     updateActivityInfo(propertyID);
+      //   }
+      let viewUpdated = false;
+      async function updateActivityInfo() {
+        if (viewUpdated) {
+          console.log("🔹 View already updated, skipping...");
+          return;
+        }
+        viewUpdated = true; // Mark as updated to prevent duplicate calls
 
-      // Increment the view count on the server
-      await fetch(`http://localhost:5003/views/${property.propertyId}`, { 
-        method: "POST", 
-        credentials: "include",
-        headers: { "Content-Type": "application/json" }
-      });
+        // Increment the view count on the server
+        await fetch(`http://localhost:5003/views/${property.propertyId}`, {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        });
 
-  
-
-  // Fetch updated view count
-  try {
-      const response = await fetch(`http://localhost:5003/views/${property.propertyId}`, { 
-        credentials: "include", 
-        headers: { "Content-Type": "application/json" }
-      });
-      const data = await response.json();
-      document.querySelector(".activity-info ul li:nth-child(1) span").textContent = data.views; 
-      
-  } catch (error) {
-      console.error("Error fetching views:", error);
-  }
-}
-updateActivityInfo();
-   
- });
+        // Fetch updated view count
+        try {
+          const response = await fetch(
+            `http://localhost:5003/views/${property.propertyId}`,
+            {
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          const data = await response.json();
+          document.querySelector(
+            ".activity-info ul li:nth-child(1) span"
+          ).textContent = data.views;
+        } catch (error) {
+          console.error("Error fetching views:", error);
+        }
+      }
+      updateActivityInfo();
+    });
 
     // Add event listener to the main image for 360-degree view functionality
     mainImage.addEventListener("click", handleImageClick);
@@ -476,6 +488,53 @@ updateActivityInfo();
     fetchProperties();
   }
 };
+// Run all the functions once the page is loaded
+// window.onload = async function () {
+//   initialize(); // Fetch the userId and add the event listener
+
+//   const property = JSON.parse(sessionStorage.getItem("selectedProperty"));
+//   if (property) {
+//     const mainImage = document.getElementById("main-image");
+//     if (property.allImage && property.allImage.length > 0) {
+//       mainImage.src = `JS/${property.allImage[0]}`;
+//     }
+
+//     const smallImagesContainer = document.querySelector(".product__slider");
+//     smallImagesContainer.innerHTML = "";
+
+//     property.allImage.forEach((imageUrl, index) => {
+//       const imageElement = document.createElement("img");
+//       imageElement.src = `JS/${imageUrl}`;
+//       imageElement.alt = `Property Image ${index + 1}`;
+//       imageElement.classList.add("product__image");
+//       smallImagesContainer.appendChild(imageElement);
+
+//       imageElement.addEventListener("click", (event) => {
+//         mainImage.src = event.target.src;
+
+//         const activeImage = document.querySelector(".product__image--active");
+//         if (activeImage) {
+//           activeImage.classList.remove("product__image--active");
+//         }
+//         event.target.classList.add("product__image--active");
+//       });
+
+//       if (index === 0) {
+//         imageElement.classList.add("product__image--active");
+//       }
+//     });
+
+//     // Add event listener to the main image for 360-degree view functionality
+//     mainImage.addEventListener("click", handleImageClick);
+
+//     const favIcon = document.querySelector(".subThreeDot.fav");
+//     if (favIcon) {
+//       favIcon.setAttribute("data-property-id", property.propertyId);
+//     }
+//     await displayReviews(property.propertyId);
+//     fetchProperties();
+//   }
+// };
 // Get the modal
 var modal = document.getElementById("reviewModal");
 
@@ -541,7 +600,7 @@ document.getElementById("submitReview").onclick = function () {
   var propertyId = property.propertyId;
   console.log(property.propertyId);
   // Get the username from localStorage
-  var username = localStorage.getItem("username") || localStorage.getItem("email") ;
+  var username = localStorage.getItem("username");
 
   if (!username) {
     alert("You need to be logged in to submit a review");
@@ -801,3 +860,80 @@ async function fetchProperties() {
     console.error("Error fetching properties:", error);
   }
 }
+async function initialize() {
+  const username = getUsername();
+  if (username) {
+    userId = await getUserIdFromUsername(username); // Wait for the userId to be fetched
+    if (!userId) {
+      console.error("User ID is still not available");
+    } else {
+      // Now we can safely add the event listener to the favorite button
+      const favButton = document.querySelector(".subThreeDot.fav");
+      if (favButton) {
+        favButton.addEventListener("click", toggleFavorite);
+      }
+
+      // After initialization, update the favorite icon based on cookie data
+      const property = JSON.parse(sessionStorage.getItem("selectedProperty"));
+      if (property && property.propertyId) {
+        updateFavoriteIcon(property.propertyId);
+      }
+
+      // Map functionality (Uncommented and fixed)
+      if (property && property.address) {
+        // const propertyAddress = property.address;
+        const propertyCity = property.city;
+        const propertyState = property.state;
+        const propertyZipcode = property.zipcode;
+        const address =
+          propertyCity + ", " + propertyState + ", " + propertyZipcode;
+        // const address = "Shivaji Nagar, Pune, Maharashtra, India";
+
+        console.log("Property Address:", address);
+
+        try {
+          // Get coordinates for the address
+          const { lat, lon } = await getCoordinatesFromAddress(address);
+          // Initialize the map with coordinates
+          initMap(lat, lon);
+        } catch (error) {
+          console.error("Error loading map:", error);
+        }
+      }
+    }
+  }
+}
+
+// Function to initialize the map
+function initMap(lat, lon) {
+  const map = L.map("map").setView([lat, lon], 13); // Zoom level 13
+
+  // Add OpenStreetMap tile layer
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  // Add a marker at the property location
+  L.marker([lat, lon]).addTo(map).bindPopup("Property Location").openPopup();
+}
+
+// Function to geocode address using Nominatim (OpenStreetMap)
+async function getCoordinatesFromAddress(address) {
+  const encodedAddress = encodeURIComponent(address); // Add country to address for more accuracy
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}`
+  );
+  const data = await response.json();
+
+  console.log("Geocoding API Response:", data); // Log the API response for debugging
+
+  if (data && data.length > 0) {
+    const { lat, lon } = data[0];
+    return { lat, lon };
+  } else {
+    throw new Error("Unable to geocode address");
+  }
+}
+
+// Ensure that the HTML contains a div with id="map" where the map will be rendered

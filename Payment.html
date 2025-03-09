@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing Plans</title>
+    <link rel="stylesheet" href="CSS/Payment.css" />
+    <link rel="shortcut icon" href="Img-videos/logo.jpg" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Kalnia+Glaze:wght@100..700&family=Playwrite+NL:wght@100..400&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+  <body>
+    <div class="center">
+      <video loop autoplay muted class="BackgroundVideo">
+        <source src="Img-videos/loginBackgroundVideo2.mp4" type="" />
+      </video>
+      <h2 class="antonio">Subscription Plan</h2>
+      <div class="pricing-container josefin-sans">
+        <div class="card">
+          <div class="price">&#8377;99</div>
+          <div class="title">1 month</div>
+          <div class="features">
+            <p>✔ List up to 4 properties</p>
+          </div>
+          <button
+            class="buy-button"
+            data-plan="1 month"
+            data-payment_button_id="pl_Q2H1JvTUAvTNNp"
+          >
+            Buy Now
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="price">&#8377;499</div>
+          <div class="title">6 months</div>
+          <div class="features">
+            <p>✔ List up to 30 properties</p>
+          </div>
+          <button
+            class="buy-button"
+            data-plan="6 month"
+            data-payment_button_id="pl_Q2H7RXfoEYY2Hx"
+          >
+            Buy Now
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="price">&#8377;899</div>
+          <div class="title">12 months</div>
+          <div class="features">
+            <p>✔ List unlimited properties</p>
+          </div>
+          <button
+            class="buy-button"
+            data-plan="12 month"
+            data-payment_button_id="pl_Q2H9o7HalOmZN6"
+          >
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="JS/Payment.js"></script>
+  </body>
+</html>
