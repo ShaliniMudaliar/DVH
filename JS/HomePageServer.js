@@ -92,6 +92,7 @@ async function getAllProperties(callback) {
       sellOrRent: property.sellOrRent,
       zipcode: property.zipcode,
       propertyType: property.propertyType,
+      furnishingType: property.furnishingType,
       bedrooms: property.bedrooms,
       bathrooms: property.bathrooms,
       yearBuilt: property.yearBuilt,

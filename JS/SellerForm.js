@@ -19,6 +19,11 @@ $(document).ready(function () {
     allowClear: true,
     tags: true,
   });
+  $("#furnishing_type").select2({
+    placeholder: "Select Furnishing type",
+    allowClear: true,
+    tags: true,
+  });
 
   $("#facing").select2({
     placeholder: "Select Facing",
@@ -170,6 +175,7 @@ async function fetchPropertyDetailsForEdit(propertyId) {
     document.getElementById("state").value = property.state;
     document.getElementById("zipcode").value = property.zipcode;
     document.getElementById("property_type").value = property.propertyType;
+    document.getElementById("furnishing_type").value = property.furnishingType;
     document.getElementById("bedrooms").value = property.bedrooms;
     document.getElementById("bathrooms").value = property.bathrooms;
     document.getElementById("year_built").value = property.yearBuilt;
@@ -181,6 +187,7 @@ async function fetchPropertyDetailsForEdit(propertyId) {
     $("#city").val(property.city).trigger("change");
     $("#state").val(property.state).trigger("change");
     $("#property_type").val(property.propertyType).trigger("change");
+    $("#furnishing_type").val(property.furnishingType).trigger("change");
     $("#facing").val(property.facing).trigger("change");
 
     // Pre-select the amenities
@@ -268,7 +275,8 @@ document.getElementById("property-form").onsubmit = function (event) {
     handleCreateSubmit(event);
   }
 };
-const userEmail = localStorage.getItem("username")||localStorage.getItem("email");
+const userEmail =
+  localStorage.getItem("username") || localStorage.getItem("email");
 async function handleCreateSubmit(event) {
   event.preventDefault();
   if (validateForm()) {
@@ -297,6 +305,7 @@ async function handleCreateSubmit(event) {
     const state = document.getElementById("state").value;
     const zipcode = document.getElementById("zipcode").value;
     const propertyType = document.getElementById("property_type").value;
+    const furnishingType = document.getElementById("furnishing_type").value;
     const bedrooms = document.getElementById("bedrooms").value;
     const bathrooms = document.getElementById("bathrooms").value;
     const yearBuilt = document.getElementById("year_built").value;
@@ -351,6 +360,7 @@ async function handleCreateSubmit(event) {
     formData.append("state", state);
     formData.append("zipcode", zipcode);
     formData.append("propertyType", propertyType);
+    formData.append("furnishingType", furnishingType);
     formData.append("bedrooms", bedrooms);
     formData.append("bathrooms", bathrooms);
     formData.append("yearBuilt", yearBuilt);
@@ -387,6 +397,7 @@ async function handleCreateSubmit(event) {
       })
       .then((data) => {
         console.log("Property data saved successfully:", data);
+        window.location.href = "SellerHomePage.html"; // Redirect after successful update
         // alert("Property saved successfully!");
       })
       .catch((error) => {
@@ -408,6 +419,7 @@ async function handleUpdateSubmit(event, propertyId) {
   const state = document.getElementById("state").value;
   const zipcode = document.getElementById("zipcode").value;
   const propertyType = document.getElementById("property_type").value;
+  const furnishingType = document.getElementById("furnishing_type").value;
   const bedrooms = document.getElementById("bedrooms").value;
   const bathrooms = document.getElementById("bathrooms").value;
   const yearBuilt = document.getElementById("year_built").value;
@@ -432,6 +444,7 @@ async function handleUpdateSubmit(event, propertyId) {
   formData.append("state", state);
   formData.append("zipcode", zipcode);
   formData.append("propertyType", propertyType);
+  formData.append("furnishingType", furnishingType);
   formData.append("bedrooms", bedrooms);
   formData.append("bathrooms", bathrooms);
   formData.append("yearBuilt", yearBuilt);

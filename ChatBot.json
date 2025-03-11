@@ -1,0 +1,40 @@
+{
+  "q_and_a": [
+    {
+      "question": "How can I search for properties?",
+      "answer": "You can use the search bar at the top of the homepage. Enter the city or locality, choose whether you’re looking to rent or buy, and select your preferred property type. You can also use map-based search and advanced filters for a more precise search."
+    },
+    {
+      "question": "How can I filter properties based on my budget?",
+      "answer": "After entering your search, use the budget filter to set your price range. You can also apply additional filters like property type, number of bedrooms, and amenities to narrow your search."
+    },
+    {
+      "question": "Can I search for properties near my current location?",
+      "answer": ""
+    },
+    {
+      "question": "How can I see more details about a property?",
+      "answer": ""
+    },
+    {
+      "question": "How can I contact the property owner or agent?",
+      "answer": ""
+    },
+    {
+      "question": "Can I schedule a visit to a property?",
+      "answer": ""
+    },
+    {
+      "question": "How can I save properties I’m interested in?",
+      "answer": ""
+    },
+    {
+      "question": "Can I get alerts for new properties?",
+      "answer": ""
+    },
+    {
+      "question": "How do I make an offer on a property?",
+      "answer": ""
+    }
+  ]
+}

@@ -59,18 +59,41 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", handleKeydown);
 });
 
-function myFunction() {
-  document.getElementById("filter").classList.toggle("show");
-}
+// // Toggle dropdown visibility when filter button is clicked
+// document
+//   .querySelector(".filter.filterDropdown")
+//   .addEventListener("click", function (event) {
+//     const filterButton = event.target.closest(".filterDropdown");
+
+//     if (filterButton) {
+//       myFunction(); // Toggle the filter dropdown visibility
+//     }
+//   });
+
+// function myFunction() {
+//   document.getElementById("filter").classList.toggle("show");
+// }
+// Toggle dropdown visibility when filter button is clicked
+document
+  .querySelector(".filter.filterDropdown")
+  .addEventListener("click", function (event) {
+    const filterDropdown = document.querySelector(".dropdownFilter");
+
+    // Toggle the 'show' class to show or hide the dropdown
+    filterDropdown.classList.toggle("show");
+  });
 function chatFunction() {
   document.getElementById("chooseChat").classList.toggle("show");
 }
 
 window.onclick = function (event) {
-  if (!event.target.matches(".filterDropdown")) {
+  // Check if the clicked element is inside the filter section or the filter button
+  if (
+    !event.target.matches(".filterDropdown") &&
+    !event.target.closest(".dropdownFilter")
+  ) {
     var dropdowns = document.getElementsByClassName("dropdownContent");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
+    for (let i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];
       if (openDropdown.classList.contains("show")) {
         openDropdown.classList.remove("show");
@@ -174,22 +197,44 @@ async function fetchAllPropertyDetails(userId) {
       console.error("Failed to parse favorites cookie:", error);
       favorites = []; // Fallback to an empty array if parsing fails
     }
+    // Function to format the price as Lakhs or Crore
+    // function formatPrice(price) {
+    //   if (price >= 10000000) {
+    //     // If price is greater than or equal to 1 Crore
+    //     return `₹${(price / 10000000).toFixed(1)} Cr`; // Show in Crores (1 decimal)
+    //   } else if (price >= 100000) {
+    //     // If price is greater than or equal to 1 Lakh but less than 1 Crore
+    //     return `₹${(price / 100000).toFixed(1)} Lakh`; // Show in Lakhs (1 decimal)
+    //   } else {
+    //     // For prices less than 1 Lakh, keep them in normal format
+    //     return `₹${new Intl.NumberFormat().format(price)}`;
+    //   }
+    // }
 
-    propertyData.forEach((property) => {
-      const imageUrl = `JS/${property.firstImage}`;
-      const isFavorite = favorites.some(
-        (fav) => fav.propertyId === property.propertyId
-      );
+    // Function to display properties
+    function displayProperties(propertiesToDisplay) {
+      propertyContainer.innerHTML = ""; // Clear the container before displaying new properties
 
-      propertyContainer.innerHTML += `
+      if (propertiesToDisplay.length === 0) {
+        propertyContainer.innerHTML = "<p>No properties match your search.</p>";
+      } else {
+        propertiesToDisplay.forEach((property) => {
+          const imageUrl = `JS/${property.firstImage}`;
+          const isFavorite = favorites.some(
+            (fav) => fav.propertyId === property.propertyId
+          );
+          // Format the price with commas
+          const formattedPrice = new Intl.NumberFormat().format(property.price);
+          // const formattedPrice = formatPrice(property.price);
+          propertyContainer.innerHTML += `
         <div class="property-card" data-property-id="${property.propertyId}">
           <div class="property-image" style="background-image: url('${imageUrl}');"></div>
           <div class="property-details">
             <div>
               <h2 class="property-title">${property.heading}</h2>
               <p class="property-description">${property.address}, ${
-        property.city
-      }, ${property.state}</p>
+            property.city
+          }, ${property.state}</p>
             </div>
             <div class="property-info">
               <div class="property-icons">
@@ -213,13 +258,123 @@ async function fetchAllPropertyDetails(userId) {
                 </svg>
                 <p>1.2K</p>
               </div>
-              <div class="property-price">Price: ₹${property.price}</div>
+              <div class="property-price">Price: ₹${formattedPrice}</div>
               <div class="property-date">Posted: ${property.createdAtAgo}</div>
             </div>
           </div>
         </div>
       `;
+        });
+      }
+    }
+    // Reset filters function
+    function resetFilters() {
+      // Reset all checkboxes (BHK, Furnishing, Property Type)
+      document
+        .querySelectorAll(".dropdownFilter input[type='checkbox']")
+        .forEach((checkbox) => {
+          checkbox.checked = false;
+        });
+
+      // Reset the price range to its default max value
+      const priceRangeInput = document.getElementById("priceRange");
+      priceRangeInput.value = 10000000; // Reset to default max value
+
+      // Update the displayed price value text
+      document.getElementById("priceValue").textContent = "₹1,00,00,000"; // Reset price value text
+
+      // Instead of filtering right after reset, just show all properties or leave them unfiltered
+      displayProperties(propertyData); // Display all properties (no filter applied)
+    }
+
+    // Add event listener for the Reset button to handle the reset functionality
+    document
+      .querySelector(".filterReset")
+      .addEventListener("click", resetFilters);
+
+    // Function to filter properties
+    function filterProperties() {
+      const selectedBhkTypes = Array.from(
+        document.querySelectorAll(".bhk:checked")
+      ).map((checkbox) => checkbox.value);
+      const selectedPrice = document.getElementById("priceRange").value;
+      const selectedFurnishing = Array.from(
+        document.querySelectorAll(".furnishing input[type='checkbox']:checked")
+      ).map((checkbox) => checkbox.value);
+      const selectedPropertyTypes = Array.from(
+        document.querySelectorAll(".propertyType:checked")
+      ).map((checkbox) => checkbox.value);
+
+      // Assuming `propertyData` is your property list array
+      const filteredProperties = propertyData.filter((property) => {
+        const isBhkMatch =
+          selectedBhkTypes.length === 0 ||
+          selectedBhkTypes.includes(property.bedrooms);
+        const isPriceMatch = parseInt(property.price) <= selectedPrice;
+        const isFurnishingMatch =
+          selectedFurnishing.length === 0 ||
+          selectedFurnishing.includes(property.furnishingType);
+        const isPropertyTypeMatch =
+          selectedPropertyTypes.length === 0 ||
+          selectedPropertyTypes.includes(property.propertyType);
+
+        return (
+          isBhkMatch && isPriceMatch && isFurnishingMatch && isPropertyTypeMatch
+        );
+      });
+
+      // Update the display with filtered properties
+      displayProperties(filteredProperties);
+    }
+    // Add event listeners for checkboxes (e.g., BHK, Furnishing, Property Type)
+    document.querySelectorAll(".bhk").forEach((checkbox) => {
+      checkbox.addEventListener("change", filterProperties);
     });
+    document
+      .querySelectorAll(".furnishing input[type='checkbox']")
+      .forEach((checkbox) => {
+        checkbox.addEventListener("change", filterProperties);
+      });
+    document.querySelectorAll(".propertyType").forEach((checkbox) => {
+      checkbox.addEventListener("change", filterProperties);
+    });
+
+    // Update the price value display when the range slider changes
+    document
+      .getElementById("priceRange")
+      .addEventListener("input", function () {
+        const priceRangeValue = this.value;
+
+        // Format the price value with commas
+        const formattedPrice = new Intl.NumberFormat().format(priceRangeValue);
+
+        // Update the text to show the new price value
+        document.getElementById("priceValue").textContent =
+          "₹" + formattedPrice;
+        filterProperties();
+      });
+
+    // Filter properties based on location search
+    function filterPropertiesByLocation() {
+      const searchQuery = document
+        .getElementById("locationSearch")
+        .value.toLowerCase();
+      const filteredProperties = propertyData.filter(
+        (property) =>
+          property.city.toLowerCase().includes(searchQuery) ||
+          property.address.toLowerCase().includes(searchQuery) ||
+          property.state.toLowerCase().includes(searchQuery)
+      );
+      displayProperties(filteredProperties); // Display the filtered properties
+    }
+
+    // Initial display of all properties
+    displayProperties(propertyData);
+
+    // Add event listener to the search input
+    document
+      .getElementById("locationSearch")
+      .addEventListener("input", filterPropertiesByLocation);
     // Hide the loading spinner after data is loaded
     document.getElementById("loading").style.display = "none";
 
