@@ -411,7 +411,7 @@ window.onload = async function () {
             document.querySelector(".seller-info ul").innerHTML = `
         <li><span>📧</span><a href="mailto:${seller.email}">${seller.email}</a></li>
         <li><span>📞</span><a href="tel:${seller.contactNumber}">${seller.contactNumber}</a></li>
-        <li><span>💬</span><a href="https://chat.app.com/user/${seller.userId}">Chat</a></li>
+        <li><span>💬</span><a href="LiveChatWithSeller.html">Chat</a></li>
         <li><span>👨‍💼/👩‍💼</span><a href="Sprofileforbuyer.html">View Seller Profile</a></li>
       `;
           } else {

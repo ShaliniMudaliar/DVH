@@ -10,6 +10,7 @@ const ItemPageServer = require("./ItemPageServer.js");
 const review = require("./ReviewServer.js");
 const Payment = require("./PaymentServer.js");
 const ChatBot = require("./ChatBotServer.js");
+const LiveChatWithSeller = require("./LiveChatWithSellerServer.js");
 // You can continue adding more servers as needed...
 
 console.log("All servers are running...");
