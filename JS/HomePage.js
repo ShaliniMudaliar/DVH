@@ -74,14 +74,20 @@ document.addEventListener("DOMContentLoaded", () => {
 //   document.getElementById("filter").classList.toggle("show");
 // }
 // Toggle dropdown visibility when filter button is clicked
-document
-  .querySelector(".filter.filterDropdown")
-  .addEventListener("click", function (event) {
-    const filterDropdown = document.querySelector(".dropdownFilter");
+function myFunction() {
+  const filterDropdown = document.querySelector(".dropdownFilter");
 
-    // Toggle the 'show' class to show or hide the dropdown
-    filterDropdown.classList.toggle("show");
-  });
+  // Toggle the 'show' class to show or hide the dropdown
+  filterDropdown.classList.toggle("show");
+}
+// document
+//   .querySelector(".filter.filterDropdown")
+//   .addEventListener("click", function (event) {
+//     const filterDropdown = document.querySelector(".dropdownFilter");
+
+//     // Toggle the 'show' class to show or hide the dropdown
+//     filterDropdown.classList.toggle("show");
+//   });
 function chatFunction() {
   document.getElementById("chooseChat").classList.toggle("show");
 }
@@ -168,7 +174,8 @@ function toggleFavorite(event, propertyData, userId) {
 }
 
 // Function to get all property details from the backend
-async function fetchAllPropertyDetails(userId) {
+// Function to fetch properties and display based on the filter
+async function fetchAllPropertyDetails(userId, filter = "all") {
   try {
     // Show the loading spinner
     document.getElementById("loading").style.display = "flex";
@@ -186,6 +193,16 @@ async function fetchAllPropertyDetails(userId) {
       return;
     }
 
+    // Filter properties based on 'filter' value (Buy, Rent, or All)
+    const filteredProperties = propertyData.filter((property) => {
+      if (filter === "buy") {
+        return property.sellOrRent === "sell";
+      } else if (filter === "rent") {
+        return property.sellOrRent === "rent";
+      }
+      return true; // Show all properties by default
+    });
+
     const propertyContainer = document.querySelector(".propertyContainer");
     propertyContainer.innerHTML = "";
     let favorites = [];
@@ -197,19 +214,6 @@ async function fetchAllPropertyDetails(userId) {
       console.error("Failed to parse favorites cookie:", error);
       favorites = []; // Fallback to an empty array if parsing fails
     }
-    // Function to format the price as Lakhs or Crore
-    // function formatPrice(price) {
-    //   if (price >= 10000000) {
-    //     // If price is greater than or equal to 1 Crore
-    //     return `₹${(price / 10000000).toFixed(1)} Cr`; // Show in Crores (1 decimal)
-    //   } else if (price >= 100000) {
-    //     // If price is greater than or equal to 1 Lakh but less than 1 Crore
-    //     return `₹${(price / 100000).toFixed(1)} Lakh`; // Show in Lakhs (1 decimal)
-    //   } else {
-    //     // For prices less than 1 Lakh, keep them in normal format
-    //     return `₹${new Intl.NumberFormat().format(price)}`;
-    //   }
-    // }
 
     // Function to display properties
     function displayProperties(propertiesToDisplay) {
@@ -225,48 +229,53 @@ async function fetchAllPropertyDetails(userId) {
           );
           // Format the price with commas
           const formattedPrice = new Intl.NumberFormat().format(property.price);
-          // const formattedPrice = formatPrice(property.price);
+
           propertyContainer.innerHTML += `
-        <div class="property-card" data-property-id="${property.propertyId}">
-          <div class="property-image" style="background-image: url('${imageUrl}');"></div>
-          <div class="property-details">
-            <div>
-              <h2 class="property-title">${property.heading}</h2>
-              <p class="property-description">${property.address}, ${
+            <div class="property-card" data-property-id="${
+              property.propertyId
+            }">
+              <div class="property-image" style="background-image: url('${imageUrl}');"></div>
+              <div class="property-details">
+                <div>
+                  <h2 class="property-title">${property.heading}</h2>
+                  <p class="property-description">${property.address}, ${
             property.city
           }, ${property.state}</p>
-            </div>
-            <div class="property-info">
-              <div class="property-icons">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 heart ${
-                  isFavorite ? "filled" : ""
-                }" data-property-id="${property.propertyId}">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                </svg>
+                </div>
+                <div class="property-info">
+                  <div class="property-icons">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 heart ${
+                      isFavorite ? "filled" : ""
+                    }" data-property-id="${property.propertyId}">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
+                  </div>
+                  <div class="property-views">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="18px" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 eye">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                    </svg>
+                    <p>1.2K</p>
+                  </div>
+                  <div class="property-price">Price: ₹${formattedPrice}</div>
+                  <div class="property-date">Posted: ${
+                    property.createdAtAgo
+                  }</div>
+                </div>
               </div>
-              <div class="property-views">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="18px" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 eye">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                </svg>
-                <p>1.2K</p>
-              </div>
-              <div class="property-price">Price: ₹${formattedPrice}</div>
-              <div class="property-date">Posted: ${property.createdAtAgo}</div>
             </div>
-          </div>
-        </div>
-      `;
+          `;
         });
       }
     }
+
     // Reset filters function
     function resetFilters() {
       // Reset all checkboxes (BHK, Furnishing, Property Type)
@@ -305,7 +314,6 @@ async function fetchAllPropertyDetails(userId) {
         document.querySelectorAll(".propertyType:checked")
       ).map((checkbox) => checkbox.value);
 
-      // Assuming `propertyData` is your property list array
       const filteredProperties = propertyData.filter((property) => {
         const isBhkMatch =
           selectedBhkTypes.length === 0 ||
@@ -326,6 +334,7 @@ async function fetchAllPropertyDetails(userId) {
       // Update the display with filtered properties
       displayProperties(filteredProperties);
     }
+
     // Add event listeners for checkboxes (e.g., BHK, Furnishing, Property Type)
     document.querySelectorAll(".bhk").forEach((checkbox) => {
       checkbox.addEventListener("change", filterProperties);
@@ -345,10 +354,8 @@ async function fetchAllPropertyDetails(userId) {
       .addEventListener("input", function () {
         const priceRangeValue = this.value;
 
-        // Format the price value with commas
         const formattedPrice = new Intl.NumberFormat().format(priceRangeValue);
 
-        // Update the text to show the new price value
         document.getElementById("priceValue").textContent =
           "₹" + formattedPrice;
         filterProperties();
@@ -369,35 +376,30 @@ async function fetchAllPropertyDetails(userId) {
     }
 
     // Initial display of all properties
-    displayProperties(propertyData);
+    displayProperties(filteredProperties);
 
     // Add event listener to the search input
     document
       .getElementById("locationSearch")
       .addEventListener("input", filterPropertiesByLocation);
+
     // Hide the loading spinner after data is loaded
     document.getElementById("loading").style.display = "none";
 
     // Add event listener using event delegation
     propertyContainer.addEventListener("click", (event) => {
-      // Check if the clicked target is an SVG or any element inside it
       if (event.target.closest("svg")) {
-        // If an SVG was clicked, stop the event from propagating
         event.stopPropagation();
         return; // Prevent further action
       }
 
-      // Check if the clicked target is a property card (if it's a direct child of .property-card)
       if (event.target.closest(".property-card")) {
         const propertyCard = event.target.closest(".property-card");
         const propertyId = propertyCard.getAttribute("data-property-id");
         const property = propertyData.find((p) => p.propertyId === propertyId);
 
         if (property) {
-          // Store the property details in sessionStorage
           sessionStorage.setItem("selectedProperty", JSON.stringify(property));
-
-          // Redirect to the item page
           window.location.href = "itempage.html";
         }
       }
@@ -417,7 +419,32 @@ async function fetchAllPropertyDetails(userId) {
     document.getElementById("loading").style.display = "none"; // Hide spinner if there's an error
   }
 }
+document.getElementById("buyLink").addEventListener("click", () => {
+  console.log("Buy link clicked");
+  fetchAllPropertyDetails(userId, "buy");
+});
 
+document.getElementById("rentLink").addEventListener("click", () => {
+  console.log("Rent link clicked");
+  fetchAllPropertyDetails(userId, "rent");
+});
+const navLinks = document.querySelectorAll(".nav-links a");
+
+// Function to handle adding/removing the 'active' class
+function setActiveLink() {
+  navLinks.forEach((link) => {
+    link.classList.remove("active"); // Remove active class from all links
+  });
+
+  // Add active class to the clicked link
+  this.classList.add("active");
+}
+
+// Add event listener for each link
+navLinks.forEach((link) => {
+  link.addEventListener("click", setActiveLink);
+});
+let userId = null;
 // Function to get the userId from the backend based on username
 async function getUserIdFromUsername(username) {
   try {
@@ -432,6 +459,7 @@ async function getUserIdFromUsername(username) {
     if (response.ok) {
       const data = await response.json();
       if (data.userId) {
+        userId = data.userId;
         fetchAllPropertyDetails(data.userId);
       } else {
         console.error("User ID not found in the response");
@@ -444,12 +472,19 @@ async function getUserIdFromUsername(username) {
   }
 }
 
+function logout() {
+  localStorage.removeItem("username");
+  window.location.href = "Login.html";
+}
 // This function is called on page load to fetch userId and load properties
 window.onload = () => {
   const username = localStorage.getItem("username"); // Get the username from localStorage
   if (username) {
     getUserIdFromUsername(username); // Get the userId using the username
+    const homeLink = document.getElementById("homeLink");
+    homeLink.classList.add("active"); // Make "Home" active by default on page load
   } else {
-    console.error("Username not found in localStorage");
+    // Redirect to the login page
+    window.location.href = "Login.html";
   }
 };

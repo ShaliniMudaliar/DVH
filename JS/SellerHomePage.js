@@ -1,5 +1,7 @@
 const PORT = 3003;
-
+function chatFunction() {
+  document.getElementById("chooseChat").classList.toggle("show");
+}
 // Function to get property details from the backend
 async function fetchPropertyDetails() {
   const emailOrUsername =
@@ -40,7 +42,8 @@ async function fetchPropertyDetails() {
       // Construct image URL
       const imageUrl = `JS/${property.firstImage}`;
       console.log(`Image URL: ${imageUrl}`);
-
+      // Format the price with commas
+      const formattedPrice = new Intl.NumberFormat().format(property.price);
       // Dynamically create and insert the property card into the page
       propertyContainer.innerHTML += `
       <div class="property-card">
@@ -70,7 +73,7 @@ async function fetchPropertyDetails() {
               </svg>
               <p>1.2K</p>
             </div>
-            <div class="property-price">Price: ₹${property.price}</div>
+            <div class="property-price">Price: ₹${formattedPrice}</div>
             <div class="property-date">
               <a href="SellerForm.html?propertyId=${property.propertyId}" class="edit-button">
                 <div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width="17px">
@@ -87,17 +90,17 @@ async function fetchPropertyDetails() {
     `;
     });
 
-    // Hide the loading spinner after data is loaded
+    // Hide the loading spinner
     document.getElementById("loading").style.display = "none";
-    // console.log(property.propertyId);
+
     // Add event listener for editing the property
     const editButtons = document.querySelectorAll(".edit-button");
     editButtons.forEach((button) => {
-      button.addEventListener("click", (event) => {
+      button.addEventListener("click", async (event) => {
         const propertyId = event.target
           .closest(".edit-button")
           .getAttribute("data-id");
-        openEditForm(propertyId);
+        await openEditForm(propertyId);
       });
     });
   } catch (error) {
@@ -105,21 +108,43 @@ async function fetchPropertyDetails() {
     document.querySelector(".propertyContainer").innerHTML =
       "<p>No Property Added yet.</p>";
 
-    // Hide the loading spinner after data is loaded
-    document.getElementById("loading").style.display = "none";
+    document.getElementById("loading").style.display = "none"; // Hide the loading spinner
   }
+}
+
+// Function to check if a property can be edited
+function canEditProperty(propertyId) {
+  console.log(propertyId);
+  let editCount = localStorage.getItem(`editCount_${propertyId}`);
+
+  if (!editCount) {
+    localStorage.setItem(`editCount_${propertyId}`, 0);
+    editCount = 0;
+  }
+
+  if (editCount < 3) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Function to update the property edit count
+function updateEditCount(propertyId) {
+  console.log(propertyId);
+  let editCount = parseInt(localStorage.getItem(`editCount_${propertyId}`));
+
+  editCount += 1;
+
+  localStorage.setItem(`editCount_${propertyId}`, editCount);
 }
 
 // Function to open the edit form with the property details
 async function openEditForm(propertyId) {
-  // Get the propertyId from the URL query parameters
-  // const urlParams = new URLSearchParams(window.location.search);
-  // const propertyId = urlParams.get("propertyId"); // Extract propertyId from the URL
-
-  // if (!propertyId) {
-  //   alert("No property ID found in the URL.");
-  //   return;
-  // }
+  if (!canEditProperty(propertyId)) {
+    alert("You have reached the maximum number of edits for this property.");
+    return;
+  }
 
   const response = await fetch(
     `http://localhost:${PORT}/getPropertyDetailsById?id=${propertyId}`
@@ -127,18 +152,17 @@ async function openEditForm(propertyId) {
   const property = await response.json();
 
   if (property) {
-    // Populate the edit form with the property details
     document.getElementById("property-heading").value = property.heading;
     document.getElementById("property-address").value = property.address;
     document.getElementById("property-city").value = property.city;
     document.getElementById("property-state").value = property.state;
     document.getElementById("property-price").value = property.price;
-
-    // Set the property ID for later use
     document.getElementById("edit-property-id").value = property._id;
 
-    // Show the edit form
     document.getElementById("edit-property-form").style.display = "block";
+
+    // After the edit form is opened, update the edit count
+    updateEditCount(propertyId);
   }
 }
 
@@ -261,11 +285,33 @@ document
     const username = localStorage.getItem("username"); // Get username from localStorage
     const userId = await getUserIdFromUsername(username);
     if (userId) {
-      // checkSubscription(userId);
-      checkUserProperties(userId); // Check user properties
+      const profileExists = await checkSellerProfile(userId); // Check if the seller's profile exists
+
+      if (!profileExists) {
+        // If the profile doesn't exist, redirect to the seller profile creation page
+        window.location.href = "SProfileForSeller.html";
+      } else {
+        // Profile exists, proceed with the property adding process
+        checkUserProperties(userId); // Check user properties
+      }
     }
   });
 
+// Function to check if the seller's profile exists
+async function checkSellerProfile(userId) {
+  try {
+    const response = await fetch(
+      `http://localhost:${PORT}/api/checkSellerProfile?userId=${userId}`
+    );
+    const data = await response.json();
+    console.log(data.profileExists);
+    // Return the profile existence status
+    return data.profileExists;
+  } catch (error) {
+    console.error("Error checking seller profile:", error);
+    return false;
+  }
+}
 // // Function to get the paymentId and orderId from Pabbly Webhook
 // async function getPaymentDetailsFromPabbly(userId) {
 //   try {

@@ -113,7 +113,35 @@ async function getPropertyDetails(userId, callback) {
     await client.close();
   }
 }
+// Endpoint to check if a seller's profile exists
+app.get("/api/checkSellerProfile", async (req, res) => {
+  let { userId } = req.query; // Extract userId from the query parameters
+  console.log("Received userId:", userId);
 
+  // Ensure the userId is a string (just in case it's passed as something else)
+  userId = String(userId); // Convert userId to string
+  const client = new MongoClient(mongoUrl);
+  console.log("Connected to MongoDB");
+  try {
+    await client.connect(); // Connect to the MongoDB client
+    const db = client.db(dbName); // Get the database
+    const sellerCollection = db.collection("Seller"); // Your seller collection
+
+    // Query MongoDB to check if a profile exists for the given userId
+    const sellerProfile = await sellerCollection.findOne({ userID: userId });
+
+    if (sellerProfile) {
+      // If a profile exists
+      return res.json({ profileExists: true });
+    } else {
+      // If no profile exists
+      return res.json({ profileExists: false });
+    }
+  } catch (error) {
+    console.error("Error checking seller profile:", error);
+    return res.status(500).json({ profileExists: false });
+  }
+});
 // Helper function to calculate the time difference in "X days ago" format
 function getTimeAgo(date) {
   const now = new Date();

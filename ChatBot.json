@@ -2,39 +2,51 @@
   "q_and_a": [
     {
       "question": "How can I search for properties?",
-      "answer": "You can use the search bar at the top of the homepage. Enter the city or locality, choose whether you’re looking to rent or buy, and select your preferred property type. You can also use map-based search and advanced filters for a more precise search."
+      "answer": "You can use the search bar at the top of the homepage. Enter the city or locality, choose whether you’re looking to rent or buy, and select your preferred property type."
     },
     {
       "question": "How can I filter properties based on my budget?",
       "answer": "After entering your search, use the budget filter to set your price range. You can also apply additional filters like property type, number of bedrooms, and amenities to narrow your search."
     },
     {
-      "question": "Can I search for properties near my current location?",
-      "answer": ""
+      "question": " How do I list my property for sale or rent?",
+      "answer": "Click 'Add Property,' fill in the form with details like property type, location, price, size, bedrooms, bathrooms, amenities, and images, then submit"
     },
     {
       "question": "How can I see more details about a property?",
-      "answer": ""
+      "answer": "Click on any property listing to view detailed information, including property size, amenities, price, images, and location."
     },
     {
       "question": "How can I contact the property owner or agent?",
-      "answer": ""
-    },
-    {
-      "question": "Can I schedule a visit to a property?",
-      "answer": ""
-    },
-    {
-      "question": "How can I save properties I’m interested in?",
-      "answer": ""
-    },
-    {
-      "question": "Can I get alerts for new properties?",
-      "answer": ""
+      "answer": "On the property details page, you’ll find a Seller/Agent detail section at right side. You can call, send a message, or email the owner/agent directly through the websites"
     },
     {
       "question": "How do I make an offer on a property?",
-      "answer": ""
+      "answer": "You can make an offer by contacting the property owner or agent directly through the messaging option on the property details page."
+    },
+    {
+      "question": "How can I save properties I’m interested in?",
+      "answer": "Click the 'heart icon' button on any property listing to add it to your favorites. You can view all saved properties in the 'My Favorites' section of your account. (Note: You may need to create an account to save properties.)"
+    },
+    {
+      "question": "How can I edit a property I've added?",
+      "answer": " Login, go to 'Sell,' click 'Edit' next to your listing, update the details, and save your changes."
+    },
+    {
+      "question": "How can I delete a property I've added?",
+      "answer": "You cannot delete a property once it has been added."
+    },
+    {
+      "question": "How can I save properties I’m interested in?",
+      "answer": "Click the 'heart icon' button on any property listing to add it to your favorites. You can view all saved properties in the 'My Favorites' section of your account. (Note: You may need to create an account to save properties.)"
+    },
+    {
+      "question": "How many free properties can I add?",
+      "answer": "The first property is free to add. After that, you will need to purchase a subscription. Depending on the subscription you choose, you can add additional properties."
+    },
+    {
+      "question": "What are the subscription plans?",
+      "answer": "Here are the available subscription plans:1 month: Allows you to add up to 4 properties.6 months: Allows you to add up to 30 properties.12 months: Gives you unlimited property additions."
     }
   ]
 }

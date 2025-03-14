@@ -28,9 +28,9 @@
         </div>
         <div class="nav-links">
             <a href="HomePage.html">Home</a>
-            <a href="#">About</a>
-            <a href="#">Buy</a>
-            <a href="#">Rent</a>
+            <!-- <a href="#">About</a> -->
+            <a href="HomePage.html">Buy</a>
+            <a href="HomePage.html">Rent</a>
             <a href="SellerHomePage.html">Sell</a>
         </div>
         <div class="user-icon">
@@ -38,29 +38,69 @@
         </div>
     </div>
         
-        <div class="bottom-nav">
-            <div class="search-bar">
-                <input type="text" placeholder="Search_by_Location" >
+    <div class="bottom-nav">
+      <div class="search-bar">
+          <input type="text"id="locationSearch" placeholder="Search_by_Location" oninput="filterPropertiesByLocation" >
+      </div>
+      <button class="filter filterDropdown" onclick="myFunction()">
+          <img src="https://cdn-icons-png.flaticon.com/128/7854/7854753.png" alt="filter" />
+          <span>Filter</span>
+      </button>
+      <div class="menu-items">
+        
+          <div class="menu-item" >
+            <a href="#" ><img src="https://cdn-icons-png.flaticon.com/128/2076/2076218.png" alt="chatbot" onclick="chatFunction()" class="item"/></a> 
+          </div>
+          <div class="hidden" id="chooseChat">
+            <div class="chatOption">
+              <div ><a href="ChatBot.html" class="chatB chat">Chat with Bot</a></div>
+              <div><a href="LiveChatWithSeller.html" class="chatS chat">Chat with Seller</a></div>
             </div>
-            <button class="filter">
-                <img src="https://cdn-icons-png.flaticon.com/128/7854/7854753.png" alt="filter" />
-                <span>Filter</span>
-            </button>
-            <div class="menu-items">
-              <div class="menu-item" >
-                <a href="#" ><img src="https://cdn-icons-png.flaticon.com/128/2076/2076218.png" alt="chatbot" onclick="chatFunction()" class="item"/></a> 
-              </div>
-              <div class="hidden" id="chooseChat">
-                <div class="chatOption">
-                  <div ><a href="ChatBot.html" class="chatB chat">Chat with Bot</a></div>
-                  <div><a href="LiveChatWithSeller.html" class="chatS chat">Chat with Seller</a></div>
-                </div>
-             </div>
-                <!-- <div class="menu-item">
-                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/151/151910.png" alt="fav" /></a>
-                </div> -->
-            </div>
+         </div>
+          
+      </div>
+      <div class="dropdownFilter dropdownContent" id="filter">
+        <div class="filterReset" >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>
+          <div>Reset</div>
         </div>
+        <div>
+          <div class="boldType">BHK Type</div>
+          <div class="bhkList">
+            <div><input type="checkbox" class="bhk" value="1" id="1rk" /> <label for="1rk">1 RK</label></div>
+            <div><input type="checkbox" class="bhk" value="1" id="1bhk"/> <label for="1bhk">1 BHK</label></div>
+            <div><input type="checkbox" class="bhk" value="2" id="2bhk"/> <label for="2bhk">2 BHK</label></div>
+            <div><input type="checkbox" class="bhk" value="3" id="3bhk"/> <label for="3bhk">3 BHK</label></div>
+            <div><input type="checkbox" class="bhk" value="4" id="4bhk"/> <label for="4bhk">4 BHK</label></div>
+            <div><input type="checkbox" class="bhk" value="10" id="10bhk"/> <label for="10bhk">4+ BHK</label></div>
+          </div>
+        </div>
+        <div>
+          <div class="boldType">Price Range: &#8377;0 to &#8377; 1 Cr</div>
+          <input type="range" id="priceRange" min="0" max="10000000" step="10000" value="10000000" />
+          <span id="priceValue">&#8377;1,00,00,000</span>
+        </div>
+        <div>
+          <div class="boldType">Furnishing</div>
+          <div class="furnishing">
+            <div><input type="checkbox" class="furnishing" value="Full" id="full"/> <label for="full">Full</label></div>
+            <div><input type="checkbox" class="furnishing" value="Semi"id="semi"/> <label for="semi">Semi</label></div>
+            <div><input type="checkbox" class="furnishing" value="None" id="none"/> <label for="none">none</label></div>
+          </div>
+        </div>
+        <div>
+          <div class="boldType">Property Type</div>
+          <div class="filterProperty">
+            <div><input type="checkbox" class="propertyType" value="Apartment" id="Apartment"/> <label for="Apartment">Apartment</label></div>
+            <div><input type="checkbox" class="propertyType" value="Chawl" id="Chawl"/> <label for="Chawl">Chawl</label></div>
+            <div><input type="checkbox" class="propertyType" value="Bunglow" id="Bunglow"/> <label for="Bunglow">Bunglow</label></div>
+            <div><input type="checkbox" class="propertyType" value="Villa" id="Villa"/> <label for="Villa">Villa</label></div>
+          </div>
+        </div>
+      </div>
+      </div>
     </header>
 <!-- /NavBar -->
   <!-- Property Card starts -->   
@@ -165,6 +205,6 @@
 </div>
 <script src="js/FavouritesPage.js"></script>
 <script src="js/SProfileForSeller.js"></script>
-
+<script src="js/HomePage.js"></script>
 </body>
 </html>

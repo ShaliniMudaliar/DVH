@@ -86,6 +86,26 @@ header {
   background-color: #f4c2ef49;
   border-bottom: 2px solid #d3c9e3;
 }
+.side {
+  display: flex;
+  align-items: center;
+}
+.logout {
+  padding-left: 5px;
+}
+.logoutBtn {
+  padding: 7px 20px;
+  border-radius: 15px;
+  border: rgb(202, 106, 106) solid 3px;
+  background-color: transparent;
+  color: #4a4a4a;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+.logoutBtn:hover {
+  background-color: rgb(202, 106, 106);
+  color: white;
+}
 .logo {
   display: flex;
   align-items: center;
@@ -131,6 +151,25 @@ header {
   transition: color 0.3s;
   font-size: large;
 }
+/* Default hover style */
+.nav-links a:hover {
+  color: #f37a16;
+  text-decoration: underline;
+}
+
+/* Active link style */
+.nav-links a.active {
+  color: #f37a16;
+  text-decoration: underline;
+}
+
+/* Focus style for accessibility (helps with keyboard navigation) */
+.nav-links a:focus {
+  color: #f37a16;
+  text-decoration: underline;
+}
+
+/* Hover for other states */
 .nav-links a:hover {
   color: #f37a16;
   text-decoration: underline;

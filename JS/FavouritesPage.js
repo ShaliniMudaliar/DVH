@@ -11,7 +11,32 @@ function setCookie(name, value, days) {
 function getUsername() {
   return window.localStorage.getItem("username"); // Get username from localStorage
 }
+// Toggle dropdown visibility when filter button is clicked
+function myFunction() {
+  const filterDropdown = document.querySelector(".dropdownFilter");
 
+  // Toggle the 'show' class to show or hide the dropdown
+  filterDropdown.classList.toggle("show");
+}
+function chatFunction() {
+  document.getElementById("chooseChat").classList.toggle("show");
+}
+
+window.onclick = function (event) {
+  // Check if the clicked element is inside the filter section or the filter button
+  if (
+    !event.target.matches(".filterDropdown") &&
+    !event.target.closest(".dropdownFilter")
+  ) {
+    var dropdowns = document.getElementsByClassName("dropdownContent");
+    for (let i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains("show")) {
+        openDropdown.classList.remove("show");
+      }
+    }
+  }
+};
 // Function to get a cookie value by name
 function getCookie(name) {
   const nameEQ = name + "=";
@@ -147,23 +172,37 @@ async function loadFavorites() {
       "<p>No favorites yet.</p>";
     return;
   }
+  console.log("Favorites data:", favorites);
 
-  const favoritesContainer = document.querySelector(".propertyContainer");
-  favoritesContainer.innerHTML = "";
+  function displayProperties(favorites) {
+    const favoritesContainer = document.querySelector(".propertyContainer");
+    favoritesContainer.innerHTML = ""; // Clear previous content
 
-  // Loop through each favorite and display it
-  favorites.forEach((property) => {
-    const imageUrl = `JS/${property.firstImage}`; // Assuming `firstImage` is the property image URL
+    // If no favorites, show a message
+    if (favorites.length === 0) {
+      favoritesContainer.innerHTML = "<p>No favorites yet.</p>";
+      return;
+    }
 
-    favoritesContainer.innerHTML += `
-      <div class="property-card" data-property-id="${property.propertyId}">
+    favorites.forEach((property) => {
+      const imageUrl = `JS/${property.firstImage}`; // Image URL
+      const formattedPrice = new Intl.NumberFormat().format(property.price); // Format price
+
+      // Create property card
+      const propertyCard = document.createElement("div");
+      propertyCard.classList.add("property-card");
+      propertyCard.setAttribute("data-property-id", property.propertyId);
+
+      // Set the inner HTML of the property card
+      propertyCard.innerHTML = `
+     
         <div class="property-image" style="background-image: url('${imageUrl}');"></div>
         <div class="property-details">
           <div>
             <h2 class="property-title">${property.heading}</h2>
             <p class="property-description">${property.address}, ${
-      property.city
-    }, ${property.state}</p>
+        property.city
+      }, ${property.state}</p>
           </div>
           <div class="property-info">
             <div class="property-icons">
@@ -172,14 +211,14 @@ async function loadFavorites() {
                   ? "filled"
                   : ""
               }" data-property-id="${property.propertyId}" data-heading="${
-      property.heading
-    }" data-price="${property.price}" data-address="${
-      property.address
-    }" data-city="${property.city}" data-state="${
-      property.state
-    }" data-firstImage="${property.firstImage}" data-createdAtAgo="${
-      property.createdAtAgo
-    }">
+        property.heading
+      }" data-price="${property.price}" data-address="${
+        property.address
+      }" data-city="${property.city}" data-state="${
+        property.state
+      }" data-firstImage="${property.firstImage}" data-createdAtAgo="${
+        property.createdAtAgo
+      }">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
               </svg>
                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -197,27 +236,164 @@ async function loadFavorites() {
                 </svg>
                 <p>1.2K</p>
               </div>
-              <div class="property-price">Price: ₹${property.price}</div>
+              <div class="property-price">Price: ₹${formattedPrice}</div>
               <div class="property-date">Posted: ${property.createdAtAgo}</div>
              </div>
         </div>
-      </div>
+    
     `;
 
-    // Add event listener to the property card after it is added to the DOM
-    const propertyCard = favoritesContainer.querySelector(
-      `.property-card[data-property-id="${property.propertyId}"]`
-    );
+      // Append the property card to the container
+      favoritesContainer.appendChild(propertyCard);
 
-    // Ensure the property card exists before adding event listener
-    if (propertyCard) {
+      // Add event listener to heart icon for toggling favorite status
+      const heartIcon = propertyCard.querySelector(".heart");
+      heartIcon.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevent triggering the card click event
+
+        const propertyId = heartIcon.getAttribute("data-property-id");
+
+        // Toggle the heart icon class
+        if (heartIcon.classList.contains("filled")) {
+          // Remove from favorites
+          favorites = favorites.filter((fav) => fav.propertyId !== propertyId);
+          heartIcon.classList.remove("filled");
+        } else {
+          // Add to favorites
+          const propertyToAdd = {
+            propertyId: propertyId,
+            firstImage: property.firstImage,
+            heading: property.heading,
+            address: property.address,
+            city: property.city,
+            state: property.state,
+            price: property.price,
+            createdAtAgo: property.createdAtAgo,
+          };
+          favorites.push(propertyToAdd);
+          heartIcon.classList.add("filled");
+        }
+
+        // Update the favorites in the sessionStorage (or wherever you're storing them)
+        sessionStorage.setItem("favorites", JSON.stringify(favorites));
+
+        console.log("Updated favorites:", favorites);
+      });
+
+      // Add click event listener to the card
       propertyCard.addEventListener("click", () => {
-        // Store the selected property in sessionStorage and navigate to the item page
+        console.log("Property selected:", property);
         sessionStorage.setItem("selectedProperty", JSON.stringify(property));
         window.location.href = "/itemPage.html";
       });
-    }
+    });
+  }
+
+  // Reset filters function
+  function resetFilters() {
+    // Reset all checkboxes (BHK, Furnishing, Property Type)
+    document
+      .querySelectorAll(".dropdownFilter input[type='checkbox']")
+      .forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+
+    // Reset the price range to its default max value
+    const priceRangeInput = document.getElementById("priceRange");
+    priceRangeInput.value = 10000000; // Reset to default max value
+
+    // Update the displayed price value text
+    document.getElementById("priceValue").textContent = "₹1,00,00,000"; // Reset price value text
+
+    // Instead of filtering right after reset, just show all properties or leave them unfiltered
+    displayProperties(propertyData); // Display all properties (no filter applied)
+  }
+
+  // Add event listener for the Reset button to handle the reset functionality
+  document
+    .querySelector(".filterReset")
+    .addEventListener("click", resetFilters);
+
+  // Function to filter properties
+  function filterProperties() {
+    const selectedBhkTypes = Array.from(
+      document.querySelectorAll(".bhk:checked")
+    ).map((checkbox) => checkbox.value);
+    const selectedPrice = document.getElementById("priceRange").value;
+    const selectedFurnishing = Array.from(
+      document.querySelectorAll(".furnishing input[type='checkbox']:checked")
+    ).map((checkbox) => checkbox.value);
+    const selectedPropertyTypes = Array.from(
+      document.querySelectorAll(".propertyType:checked")
+    ).map((checkbox) => checkbox.value);
+
+    // Assuming `propertyData` is your property list array
+    const filteredProperties = favorites.filter((property) => {
+      const isBhkMatch =
+        selectedBhkTypes.length === 0 ||
+        selectedBhkTypes.includes(property.bedrooms);
+      const isPriceMatch = parseInt(property.price) <= selectedPrice;
+      const isFurnishingMatch =
+        selectedFurnishing.length === 0 ||
+        selectedFurnishing.includes(property.furnishingType);
+      const isPropertyTypeMatch =
+        selectedPropertyTypes.length === 0 ||
+        selectedPropertyTypes.includes(property.propertyType);
+
+      return (
+        isBhkMatch && isPriceMatch && isFurnishingMatch && isPropertyTypeMatch
+      );
+    });
+
+    // Update the display with filtered properties
+    displayProperties(filteredProperties);
+  }
+  // Add event listeners for checkboxes (e.g., BHK, Furnishing, Property Type)
+  document.querySelectorAll(".bhk").forEach((checkbox) => {
+    checkbox.addEventListener("change", filterProperties);
   });
+  document
+    .querySelectorAll(".furnishing input[type='checkbox']")
+    .forEach((checkbox) => {
+      checkbox.addEventListener("change", filterProperties);
+    });
+  document.querySelectorAll(".propertyType").forEach((checkbox) => {
+    checkbox.addEventListener("change", filterProperties);
+  });
+
+  // Update the price value display when the range slider changes
+  document.getElementById("priceRange").addEventListener("input", function () {
+    const priceRangeValue = this.value;
+
+    // Format the price value with commas
+    const formattedPrice = new Intl.NumberFormat().format(priceRangeValue);
+
+    // Update the text to show the new price value
+    document.getElementById("priceValue").textContent = "₹" + formattedPrice;
+    filterProperties();
+  });
+
+  // Filter properties based on location search
+  function filterPropertiesByLocation() {
+    const searchQuery = document
+      .getElementById("locationSearch")
+      .value.toLowerCase();
+    const filteredProperties = favorites.filter(
+      (property) =>
+        property.city.toLowerCase().includes(searchQuery) ||
+        property.address.toLowerCase().includes(searchQuery) ||
+        property.state.toLowerCase().includes(searchQuery)
+    );
+    displayProperties(filteredProperties); // Display the filtered properties
+  }
+
+  // Initial display of all properties
+  displayProperties(favorites);
+
+  // Add event listener to the search input
+  document
+    .getElementById("locationSearch")
+    .addEventListener("input", filterPropertiesByLocation);
 
   // Add event listeners to all heartWrapper elements after DOM is updated
   const heartWrapperElements = document.querySelectorAll(".heart");
