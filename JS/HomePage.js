@@ -214,7 +214,42 @@ async function fetchAllPropertyDetails(userId, filter = "all") {
       console.error("Failed to parse favorites cookie:", error);
       favorites = []; // Fallback to an empty array if parsing fails
     }
+    // Function to increment the view count for a property
+    function incrementViewCount(propertyId) {
+      console.log("inside view");
+      fetch("http://localhost:3001/api/incrementViewCount", {
+        // Adjust URL as needed
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ propertyId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Get the view element within the property card
+          const viewElement = document.querySelector(
+            `[data-property-id="${propertyId}"] .view-count`
+          );
+          if (viewElement) {
+            // Update the view count inside the <p> element
+            viewElement.innerText = `${formatViews(data.updatedViewCount)}`; // Update the view count
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating view count:", error);
+        });
+    }
 
+    // Function to format views in human-readable form (e.g., 1.2K for 1200 views)
+    function formatViews(viewCount) {
+      if (viewCount >= 1000) {
+        console.log(viewCount);
+        return (viewCount / 1000).toFixed(1) + "K"; // Format as 1.2K for example
+      }
+      console.log(viewCount);
+      return viewCount;
+    }
     // Function to display properties
     function displayProperties(propertiesToDisplay) {
       propertyContainer.innerHTML = ""; // Clear the container before displaying new properties
@@ -227,6 +262,7 @@ async function fetchAllPropertyDetails(userId, filter = "all") {
           const isFavorite = favorites.some(
             (fav) => fav.propertyId === property.propertyId
           );
+
           // Format the price with commas
           const formattedPrice = new Intl.NumberFormat().format(property.price);
 
@@ -262,7 +298,9 @@ async function fetchAllPropertyDetails(userId, filter = "all") {
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                     </svg>
-                    <p>1.2K</p>
+                     <p class="view-count">${formatViews(
+                       property.views || 0
+                     )}</p>
                   </div>
                   <div class="property-price">Price: ₹${formattedPrice}</div>
                   <div class="property-date">Posted: ${
@@ -272,6 +310,13 @@ async function fetchAllPropertyDetails(userId, filter = "all") {
               </div>
             </div>
           `;
+        });
+        // Add event listener for property cards to track views
+        document.querySelectorAll(".property-card").forEach((card) => {
+          card.addEventListener("click", () => {
+            const propertyId = card.getAttribute("data-property-id");
+            incrementViewCount(propertyId); // Increment view count when a property is clicked
+          });
         });
       }
     }

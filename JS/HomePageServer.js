@@ -101,6 +101,7 @@ async function getAllProperties(callback) {
       facing: property.facing,
       amenities: property.amenities,
       createdAtAgo: getTimeAgo(property.createdAt),
+      views: property.views || 0, // Ensure views exist
     }));
 
     callback(null, propertyData);
@@ -138,6 +139,50 @@ function getTimeAgo(date) {
   return `${diffInYears} years ago`;
 }
 
+// Add the new endpoint to increment view count
+app.post("/api/incrementViewCount", async (req, res) => {
+  const { propertyId } = req.body;
+
+  if (!propertyId) {
+    return res.status(400).json({ error: "Property ID is required" });
+  }
+
+  const client = new MongoClient(mongoUrl);
+
+  try {
+    await client.connect();
+    const db = client.db(dbName);
+    const propertiesCollection = db.collection("Property");
+
+    // Find the property in MongoDB by propertyId
+    const property = await propertiesCollection.findOne({ propertyId });
+
+    if (!property) {
+      return res.status(404).json({ error: "Property not found" });
+    }
+
+    // Increment the view count using $inc operator
+    await propertiesCollection.updateOne(
+      { propertyId },
+      { $inc: { views: 1 } } // Increment the views field
+    );
+
+    // Fetch the updated property with the incremented view count
+    const updatedProperty = await propertiesCollection.findOne({ propertyId });
+
+    // Return the updated view count
+    res.status(200).json({ updatedViewCount: updatedProperty.views });
+  } catch (err) {
+    console.error("Error incrementing view count:", err);
+    res
+      .status(500)
+      .json({ error: "Error incrementing view count", message: err.message });
+  } finally {
+    await client.close();
+  }
+});
+
+// Route to fetch all properties
 app.get("/getAllProperties", (req, res) => {
   getAllProperties((error, propertyData) => {
     if (error) {

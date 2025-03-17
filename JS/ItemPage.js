@@ -302,6 +302,11 @@ window.onload = async function () {
           icon: "https://cdn-icons-png.flaticon.com/128/3289/3289742.png",
         },
         {
+          label: "Furnishing",
+          value: property.furnishingType,
+          icon: "https://cdn-icons-png.flaticon.com/128/15878/15878089.png",
+        },
+        {
           label: "Floor",
           value: property.floor,
           icon: "https://cdn-icons-png.flaticon.com/128/906/906805.png",
@@ -411,7 +416,7 @@ window.onload = async function () {
             document.querySelector(".seller-info ul").innerHTML = `
         <li><span>📧</span><a href="mailto:${seller.email}">${seller.email}</a></li>
         <li><span>📞</span><a href="tel:${seller.contactNumber}">${seller.contactNumber}</a></li>
-        <li><span>💬</span><a href="LiveChatWithSeller.html">Chat</a></li>
+         <li><span>💬</span><a href="LiveChatWithSeller.html">Chat</a></li>
         <li><span>👨‍💼/👩‍💼</span><a href="Sprofileforbuyer.html">View Seller Profile</a></li>
       `;
           } else {
@@ -424,6 +429,9 @@ window.onload = async function () {
       }
       // Call the function with property userId
       fetchSellerDetails(property.userId);
+      document.querySelector(
+        ".activity-info ul li:nth-child(1) span"
+      ).textContent = property.views + 1;
 
       // async function updateActivityInfo(propertyID) {
       //   if (!propertyID) {
@@ -431,10 +439,7 @@ window.onload = async function () {
       //       return;
       //   }
       //   // 1️⃣ Track Views in Local Storage
-      //   let views = localStorage.getItem(`views_${propertyID}`);
-      //   views = views ? parseInt(views) + 1 : 1; // Increment if exists, else set to 1
-      //   localStorage.setItem(`views_${propertyID}`, views); // Store updated count
-      //   // 3️⃣ Update UI Dynamically
+      //    // 3️⃣ Update UI Dynamically
       //   document.querySelector(".activity-info ul li:nth-child(1) span").textContent = views;
       // }
 
