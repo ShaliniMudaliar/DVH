@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   try {
+
     const response = await fetch(
       `http://127.0.0.1:5000/api/getUser?emailOrUsername=${emailOrUsername}`,
       {
@@ -27,11 +28,44 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Store UserID and email in localStorage for later use in seller data
     localStorage.setItem("UserID", data.userID || data.UserID);
     localStorage.setItem("email", data.email || data.Email);
+
+    const userID = localStorage.getItem("UserID");  
+ // STEP 2: Try to get existing seller data from MongoDB
+ const sellerResponse = await fetch(
+  `http://127.0.0.1:5000/api/seller/details?userID=${userID}`
+);
+
+if (sellerResponse.ok) {// Debugging log
+  const sellerData = await sellerResponse.json();
+  console.log("Fetched seller data:", sellerData);
+  prefillSellerForm(sellerData);
+}
   } catch (error) {
-    console.error("Error fetching user details:", error);
+    console.error("Error fetching initial details:", error);
   }
   makeFormEditable();
 });
+
+function prefillSellerForm(data) {
+  document.getElementById("first-name").value = data.firstName || "";
+  document.getElementById("last-name").value = data.lastName || "";
+  document.getElementById("contact-number").value = data.contactNumber || "";
+  document.getElementById("age").value = data.age || "";
+  document.getElementById("address").value = data.address || "";
+  document.getElementById("city").value = data.city || "";
+  document.getElementById("state").value = data.state || "";
+  document.getElementById("country").value = data.country || "";
+  document.getElementById("zip-code").value = data.zipCode || "";
+
+  if (data.agentData) {
+    document.getElementById("Agent").checked = true;
+    toggleFields();
+    document.getElementById("description").value = data.agentData.description || "";
+    document.getElementById("Agency").value = data.agentData.agency || "";
+    document.getElementById("AgentLicense").value = data.agentData.agentLicense || "";
+    document.getElementById("TaxNumber").value = data.agentData.taxNumber || "";
+  }
+}
 
 function validateForm() {
   let isValid = true;

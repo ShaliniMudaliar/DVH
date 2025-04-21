@@ -58,6 +58,31 @@ app.get("/api/getUser", async (req, res) => {
   }
 });
 
+// 🟢 GET /api/seller/details — Fetch seller details from MongoDB
+app.get("/api/seller/details", async (req, res) => {
+  const { userID, email } = req.query;
+
+  if (!userID && !email) {
+    return res.status(400).json({ error: "userID or email is required" });
+  }
+
+  try {
+    const sellersCollection = mongoDB.collection("Seller");
+    const query = userID ? { userID } : { email };
+    const seller = await sellersCollection.findOne(query);
+
+    if (seller) {
+      res.json(seller);
+    } else {
+      res.status(404).json({ message: "No seller data found" });
+    }
+  } catch (err) {
+    console.error("MongoDB error:", err);
+    res.status(500).json({ error: "Failed to fetch seller details" });
+  }
+});
+
+
 // Function to verify password from MySQL
 async function verifyPassword(emailOrUsername, password) {
   console.log("Received:", emailOrUsername, password); // Debugging line

@@ -57,7 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Listen for keyboard events
   document.addEventListener("keydown", handleKeydown);
+
+  
 });
+
+
 
 // // Toggle dropdown visibility when filter button is clicked
 // document
@@ -231,16 +235,12 @@ async function fetchAllPropertyDetails(userId, filter = "all") {
           const formattedPrice = new Intl.NumberFormat().format(property.price);
 
           propertyContainer.innerHTML += `
-            <div class="property-card" data-property-id="${
-              property.propertyId
-            }">
+            <div class="property-card" data-property-id="${property.propertyId}" data-address="${property.address}">
               <div class="property-image" style="background-image: url('${imageUrl}');"></div>
               <div class="property-details">
                 <div>
                   <h2 class="property-title">${property.heading}</h2>
-                  <p class="property-description">${property.address}, ${
-            property.city
-          }, ${property.state}</p>
+                  <p class="property-description">${property.address}, ${property.city}, ${property.state}</p>
                 </div>
                 <div class="property-info">
                   <div class="property-icons">
@@ -249,13 +249,17 @@ async function fetchAllPropertyDetails(userId, filter = "all") {
                     }" data-property-id="${property.propertyId}">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                     </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                     
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 share-button" data-property-id="${property.propertyId}">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
                     </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    
+                     
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 location-button" data-property-id="${property.propertyId}" data-address="${property.address}">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                     </svg>
+                   
                   </div>
                   <div class="property-views">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="18px" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 eye">
@@ -275,6 +279,154 @@ async function fetchAllPropertyDetails(userId, filter = "all") {
         });
       }
     }
+
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //   document.body.addEventListener("click", function (event) {
+    //     const shareLink = event.target.closest("a.share-button");
+    //     const locationLink = event.target.closest("a.location-button");
+    
+    //     // Prevent default link behavior
+    //     if (shareLink || locationLink) {
+    //       event.preventDefault();
+    //       console.log("Default link action prevented");
+    //     }
+    
+    //     if (shareLink) {
+    //       const card = shareLink.closest(".property-card");
+    //       const propertyId = card?.getAttribute("data-property-id");
+    //       if (!propertyId) return alert("No property ID");
+    
+    //       const shareableLink = `${window.location.origin}/property/${propertyId}`;
+    //       navigator.clipboard.writeText(shareableLink)
+    //         .then(() => alert("Copied: " + shareableLink))
+    //         .catch(err => alert("Copy failed: " + err));
+    //     }
+    
+    //     if (locationLink) {
+    //       const card = locationLink.closest(".property-card");
+    //       const address = card?.getAttribute("data-address");
+    //       console.log("Location clicked, property address:", address); // Debugging: check if address is fetched
+    //       if (!address) return alert("No address");
+    
+    //       const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+    //       console.log("Opening map for address:", mapUrl); // Debugging: check the generated URL
+    //       window.open(mapUrl, "_blank");
+    //     }
+    //   });
+    // });
+   
+    
+  //   document.addEventListener("click", function (event) {
+  //     // Handle Share Button
+  //     const shareIcon = event.target.closest(".share-button");
+  //     if (shareIcon) {
+  //         console.log("📤 Share button clicked!", shareIcon);
+          
+  //         const propertyCard = shareIcon.closest(".property-card");
+  //         if (!propertyCard) {
+  //             console.error("⚠️ Error: Property card not found!");
+  //             return;
+  //         }
+  
+  //         const propertyId = propertyCard.getAttribute("data-property-id");
+  //         if (!propertyId) {
+  //             console.error("⚠️ Error: Property ID not found!");
+  //             return;
+  //         }
+  
+  //         const shareableLink = `http://localhost:3000/property/${propertyId}`;
+  //         navigator.clipboard.writeText(shareableLink).then(() => {
+  //             alert("🔗 Link copied to clipboard: " + shareableLink);
+  //         }).catch(err => {
+  //             console.error("⚠️ Failed to copy link: ", err);
+  //         });
+  //         return; // Exit after handling share button
+  //     }
+  
+  //     // Handle Location Button
+  //     const locationIcon = event.target.closest(".location-button");
+  //     if (locationIcon) {
+  //         console.log("📍 Location button clicked!", locationIcon);
+  
+  //         const propertyCard = locationIcon.closest(".property-card");
+  //         if (!propertyCard) {
+  //             console.error("⚠️ Error: Property card not found!");
+  //             return;
+  //         }
+  
+  //         const address = propertyCard.getAttribute("data-address");
+  //         if (!address) {
+  //             console.error("⚠️ Error: Property address not found!");
+  //             return;
+  //         }
+  
+  //         const mapsURL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  //         window.open(mapsURL, "_blank");
+  //         return; // Exit after handling location button
+  //     }
+  // });
+  
+
+
+
+  //   document.addEventListener("click", function(event) {
+  //     console.log("Click detected on:", event.target);
+
+  //     let target = event.target;
+    
+  //   // Check if clicking inside an SVG
+  //   if (target.tagName === "path") {
+  //       target = target.closest("svg"); // Get the parent SVG
+  //   }
+
+  //   console.log("Clicked element:", target); // Log what was clicked
+
+  //   if (target.classList.contains("share-button")) {
+  //       console.log("Share button clicked!");
+  //       alert("Share button was clicked!");
+  //   }
+  
+  //     const propertyCard = target.closest(".property-card");
+  //     if (!propertyCard) return;
+  
+  //     // Handle Share Button Click
+  //     if (target.classList.contains("share-button")) {
+  //       console.log("Share button clicked!"); // Debugging Log
+  //         const propertyId = propertyCard.getAttribute("data-property-id");
+  //         if (!propertyId) {
+  //           console.error("Property ID not found!");
+  //           return;
+  //       }
+
+  //         const shareableLink = `http://localhost:3000/property/${propertyId}`;
+  //         console.log("Generated Link:", shareableLink); // Debugging Log
+          
+  //         navigator.clipboard.writeText(shareableLink)
+  //         .then(() => {
+  //           alert("Link copied to clipboard: " + shareableLink);
+  //       }).catch(err => {
+  //           console.error("Failed to copy: ", err);
+  //       });
+         
+  //     }
+
+  //     // Handle Location Button
+  //     if (target.classList.contains("location-button")) {
+  //         console.log("Location button clicked!"); // Debugging Log
+  
+  //         const address = propertyCard.getAttribute("data-address");
+  //         if (!address) {
+  //             console.error("Property address not found!");
+  //             return;
+  //         }
+  
+  //         const mapsURL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  //         window.open(mapsURL, "_blank"); // Open in new tab
+  
+  //     }
+  // });
+
 
     // Reset filters function
     function resetFilters() {

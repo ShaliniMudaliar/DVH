@@ -56,11 +56,9 @@ function viewIn360() {
       console.error("VR mode is not enabled in A-Frame scene.");
     }
   }
-
   // Hide the dropdown menu
   document.getElementById("threeDotDropDown").classList.remove("show");
 }
-
 // Single window.onclick function to handle both dropdown and modal clicks
 window.onclick = function (event) {
   // Handle dropdown

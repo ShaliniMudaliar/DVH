@@ -91,65 +91,124 @@ document.addEventListener("DOMContentLoaded", async function () {
       return "Just now";
     }
 
-    const requestUrl_property = `http://127.0.0.1:5002/api/getActiveListings?userId=${encodeURIComponent(
-      userId
-    )}}`;
+    // const requestUrl_property = `http://127.0.0.1:5002/api/getActiveListings?userId=${encodeURIComponent(
+    //   userId
+    // )}`;
 
-    fetch(requestUrl_property, { method: "GET" })
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch property listings");
-        return response.json();
-      })
-      .then((data) => {
-        const listingsContainer = document.getElementById(
-          "active-listings-container"
-        );
+    // fetch(requestUrl_property, { method: "GET" })
+    //   .then((response) => {
+    //     if (!response.ok) throw new Error("Failed to fetch property listings");
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     const listingsContainer = document.getElementById("active-listings-container");
+    //     if (!listingsContainer) {
+    //       console.error("Container not found in HTML");
+    //       return;
+    //     }
 
-        if (!listingsContainer) {
-          console.error("Container not found in HTML");
-          return;
-        }
+    //     if (!data || !data.listings || data.listings.length === 0) {
+    //       listingsContainer.innerHTML = "<p>No active listings found.</p>";
+    //       return;
+    //     }
 
-        if (!data || !data.listings || data.listings.length === 0) {
+    //     listingsContainer.innerHTML = ""; // Clear existing content
+    //     data.listings.forEach((property) => {
+    //       const imageUrl = property.photos?.[0] || "default-image.jpg"; // Handle missing image
+    //       const timeAgoText = timeAgo(property.createdAt);
+          
+    //       const propertyCard = document.createElement("div");
+    //       propertyCard.classList.add("property-card");
+    //       propertyCard.setAttribute("data-property-id", property.propertyId);
+
+    //       propertyCard.innerHTML = `
+    //   <div class="property-image" style="background-image: url('JS/${imageUrl}');"></div>
+    //   <div class="property-details">
+    //     <h2 class="property-title">${property.heading}</h2>
+    //     <p class="property-description">${property.address}</p>
+    //     <div class="property-info">
+    //       <p class="property-price"><strong>Price:</strong> ₹${property.price}</p>
+    //       <p class="property-price"><strong>Size:</strong> ${property.squareFeet}</p>
+    //       <p class="property-date"><strong>Posted:</strong>${timeAgoText}</p>
+    //     </div>
+    //   </div>
+    // `;
+
+    //       // Add event listener to save clicked property and redirect
+    //       propertyCard.addEventListener("click", () => {
+    //         sessionStorage.setItem(
+    //           "selectedProperty",
+    //           JSON.stringify(property)
+    //         );
+    //         window.location.href = "ItemPage.html"; // Redirect to item details page
+    //       });
+
+    //       listingsContainer.appendChild(propertyCard);
+    //     });
+    //   })
+    //   .catch((error) => console.error("Error fetching listings:", error));
+    
+    async function fetchActiveListings(userId) {
+      const listingsContainer = document.getElementById("active-listings-container");
+    
+      if (!listingsContainer) {
+        console.error("❌ 'active-listings-container' not found in the DOM.");
+        return;
+      }
+    
+      const requestUrl = `http://127.0.0.1:5002/api/getActiveListings?userId=${encodeURIComponent(userId)}`;
+    
+      try {
+        const response = await fetch(requestUrl);
+        if (!response.ok) throw new Error("Failed to fetch listings");
+    
+        const data = await response.json();
+    
+        if (!data || !Array.isArray(data.listings) || data.listings.length === 0) {
           listingsContainer.innerHTML = "<p>No active listings found.</p>";
           return;
         }
-
-        listingsContainer.innerHTML = ""; // Clear existing content
+    
+        listingsContainer.innerHTML = ""; // clear previous cards
+    
         data.listings.forEach((property) => {
-          const imageUrl = property.photos?.[0] || "default-image.jpg"; // Handle missing image
+          const imageUrl = property.photos?.[0] || "default-image.jpg";
           const timeAgoText = timeAgo(property.createdAt);
+    
           const propertyCard = document.createElement("div");
           propertyCard.classList.add("property-card");
           propertyCard.setAttribute("data-property-id", property.propertyId);
-
+    
           propertyCard.innerHTML = `
-      <div class="property-image" style="background-image: url('JS/${imageUrl}');"></div>
-      <div class="property-details">
-        <h2 class="property-title">${property.heading}</h2>
-        <p class="property-description">${property.address}</p>
-        <div class="property-info">
-          <p class="property-price"><strong>Price:</strong> ₹${property.price}</p>
-          <p class="property-price"><strong>Size:</strong> ${property.squareFeet}</p>
-          <p class="property-date"><strong>Posted:</strong>${timeAgoText}</p>
-        </div>
-      </div>
-    `;
-
-          // Add event listener to save clicked property and redirect
+            <div class="property-image" style="background-image: url('JS/${imageUrl}');"></div>
+            <div class="property-details">
+              <h2 class="property-title">${property.heading}</h2>
+              <p class="property-description">${property.address}</p>
+              <div class="property-info">
+                <p><strong>Price:</strong> ₹${property.price}</p>
+                <p><strong>Size:</strong> ${property.squareFeet || "N/A"} sq.ft</p>
+                <p><strong>Posted:</strong> ${timeAgoText}</p>
+              </div>
+            </div>
+          `;
+    
+          // Add click event
           propertyCard.addEventListener("click", () => {
-            sessionStorage.setItem(
-              "selectedProperty",
-              JSON.stringify(property)
-            );
-            window.location.href = "itemPage.html"; // Redirect to item details page
+            sessionStorage.setItem("selectedProperty", JSON.stringify(property));
+            window.location.href = "ItemPage.html";
           });
-
+    
           listingsContainer.appendChild(propertyCard);
         });
-      })
-      .catch((error) => console.error("Error fetching listings:", error));
-    const response1 = await fetch(
+      } catch (error) {
+        console.error("❌ Error fetching active listings:", error);
+        listingsContainer.innerHTML = "<p>Error loading listings.</p>";
+      }
+    }
+    
+    fetchActiveListings(userId);
+
+      const response1 = await fetch(
       `http://127.0.0.1:5002/api/getPropertyStats?userId=${encodeURIComponent(
         userId
       )}`
