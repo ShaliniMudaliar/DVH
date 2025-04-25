@@ -79,7 +79,7 @@ async function getAllProperties(callback) {
     // Map through properties and format the required data
     const propertyData = properties.map((property) => ({
       firstImage: property.photos ? property.photos[0] : "",
-      allImage: property.photos,
+      photos: property.photos,
       propertyId: property.propertyId,
       heading: property.heading,
       address: property.address,

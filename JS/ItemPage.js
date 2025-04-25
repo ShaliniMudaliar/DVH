@@ -56,9 +56,11 @@ function viewIn360() {
       console.error("VR mode is not enabled in A-Frame scene.");
     }
   }
+
   // Hide the dropdown menu
   document.getElementById("threeDotDropDown").classList.remove("show");
 }
+
 // Single window.onclick function to handle both dropdown and modal clicks
 window.onclick = function (event) {
   // Handle dropdown
@@ -227,14 +229,14 @@ window.onload = async function () {
   const property = JSON.parse(sessionStorage.getItem("selectedProperty"));
   if (property) {
     const mainImage = document.getElementById("main-image");
-    if (property.allImage && property.allImage.length > 0) {
-      mainImage.src = `JS/${property.allImage[0]}`;
+    if (property.photos && property.photos.length > 0) {
+      mainImage.src = `JS/${property.photos[0]}`;
     }
 
     const smallImagesContainer = document.querySelector(".product__slider");
     smallImagesContainer.innerHTML = "";
 
-    property.allImage.forEach((imageUrl, index) => {
+    property.photos.forEach((imageUrl, index) => {
       const imageElement = document.createElement("img");
       imageElement.src = `JS/${imageUrl}`;
       imageElement.alt = `Property Image ${index + 1}`;

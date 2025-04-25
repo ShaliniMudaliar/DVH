@@ -97,9 +97,6 @@ app.get("/api/getActiveListings", async (req, res) => {
   try {
     // Convert userId to integer for MongoDB query if necessary
     const userIdInt = parseInt(userId, 10);
-    if (isNaN(userIdInt)) {
-      return res.status(400).json({ error: "Invalid userId format" });
-    } 
     const propertyCollection = mongoDB.collection("Property");
     // Log userId for debugging
 

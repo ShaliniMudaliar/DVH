@@ -8,10 +8,10 @@ app.use(express.json());
 // app.use(cors());
 app.use(
   cors({
-    origin: "http://127.0.0.1:3007", // Your frontend origin
-    credentials: true,
-    methods: ["GET", "POST"], // Allow specific HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow headers // Allow sessions & cookies
+    // origin: "http://127.0.0.1:3005", // Your frontend origin
+    // credentials: true,
+    // methods: ["GET", "POST"], // Allow specific HTTP methods
+    // allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow headers // Allow sessions & cookies
   })
 );
 
